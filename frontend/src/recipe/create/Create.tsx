@@ -11,6 +11,7 @@ interface CreateFormState {
 	yeastAmount: string;
 	honeyTypes: { honey: string; amount: string; unit: string }[];
 	addons: { addon: string; amount: string; unit: string }[];
+	chemicals: { chemical: string; amount: string; unit: string }[];
 }
 
 const CreateForm: React.FC = () => {
@@ -22,6 +23,7 @@ const CreateForm: React.FC = () => {
 		yeastAmount: "",
 		honeyTypes: [],
 		addons: [],
+		chemicals: [],
 	});
 
 	const handleInputChange = (field: keyof CreateFormState, value: string) => {
@@ -70,6 +72,30 @@ const CreateForm: React.FC = () => {
 		setFormState({
 			...formState,
 			addons: updatedAddons,
+		});
+	};
+
+	const handleChemicalChange = (
+		index: number,
+		field: keyof (typeof formState.chemicals)[number],
+		value: string
+	) => {
+		const updatedChemicals = [...formState.chemicals];
+		updatedChemicals[index][field] = value;
+
+		setFormState({
+			...formState,
+			chemicals: updatedChemicals,
+		});
+	};
+
+	const handleRemoveChemical = (index: number) => {
+		const updatedChemicals = [...formState.chemicals];
+		updatedChemicals.splice(index, 1);
+
+		setFormState({
+			...formState,
+			chemicals: updatedChemicals,
 		});
 	};
 
@@ -214,6 +240,52 @@ const CreateForm: React.FC = () => {
 		));
 	};
 
+	const renderChemicalInputs = () => {
+		return formState.chemicals.map((chemical, index) => (
+			<div id="chemicals-container" key={index}>
+				<input
+					type="text"
+					value={chemical.chemical}
+					onChange={(event) =>
+						handleChemicalChange(
+							index,
+							"chemical",
+							event.target.value
+						)
+					}
+					placeholder="Chemical"
+				/>
+				<input
+					type="text"
+					value={chemical.amount}
+					onChange={(event) =>
+						handleChemicalChange(
+							index,
+							"amount",
+							event.target.value
+						)
+					}
+					placeholder="Amount"
+				/>
+				<select
+					value={chemical.unit}
+					onChange={(event) =>
+						handleChemicalChange(index, "unit", event.target.value)
+					}
+				>
+					<option value="g">g</option>
+					<option value="oz">oz</option>
+				</select>
+				<button
+					type="button"
+					onClick={() => handleRemoveChemical(index)}
+				>
+					Remove
+				</button>
+			</div>
+		));
+	};
+
 	return (
 		<form id="create-form" onSubmit={handleFormSubmit}>
 			<h3>Recipe Name</h3>
@@ -296,6 +368,25 @@ const CreateForm: React.FC = () => {
 					}
 				>
 					Add Honey
+				</button>
+			</div>
+
+			<div>
+				<h3>Chemicals</h3>
+				{renderChemicalInputs()}
+				<button
+					type="button"
+					onClick={() =>
+						setFormState({
+							...formState,
+							chemicals: [
+								...formState.chemicals,
+								{ chemical: "", amount: "", unit: "g" },
+							],
+						})
+					}
+				>
+					Add Chemical
 				</button>
 			</div>
 
