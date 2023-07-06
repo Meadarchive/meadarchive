@@ -10,7 +10,6 @@ interface CreateFormState {
 	addons: { addon: string; amount: string; unit: string }[]; // Include 'amount' property
 }
 
-
 const CreateForm: React.FC = () => {
 	const [formState, setFormState] = useState<CreateFormState>({
 		liquids: [],
@@ -55,13 +54,12 @@ const CreateForm: React.FC = () => {
 	) => {
 		const updatedAddons = [...formState.addons];
 		updatedAddons[index][field] = value;
-	
+
 		setFormState({
 			...formState,
 			addons: updatedAddons,
 		});
 	};
-	
 
 	const handleRemoveLiquid = (index: number) => {
 		const updatedLiquids = [...formState.liquids];
@@ -183,8 +181,13 @@ const CreateForm: React.FC = () => {
 				<input
 					type="text"
 					value={addon.amount}
-					onChange={(event) =>
-						handleAddonChange(index, "amount", event.target.value) // Handle amount change
+					onChange={
+						(event) =>
+							handleAddonChange(
+								index,
+								"amount",
+								event.target.value
+							) // Handle amount change
 					}
 					placeholder="Amount"
 				/>
@@ -228,17 +231,19 @@ const CreateForm: React.FC = () => {
 			<div>
 				<h3>Yeast</h3>
 				<div id="yeast-container">
-					<input
-						type="text"
-						value={formState.yeastType}
-						onChange={(event) =>
-							setFormState({
-								...formState,
-								yeastType: event.target.value,
-							})
-						}
-						placeholder="Yeast Type"
-					/>
+					<div>
+						<input
+							type="text"
+							value={formState.yeastType}
+							onChange={(event) =>
+								setFormState({
+									...formState,
+									yeastType: event.target.value,
+								})
+							}
+							placeholder="Yeast Type"
+						/>
+					</div>
 					<div id="yeast-amount-container">
 						<input
 							type="text"
@@ -251,9 +256,7 @@ const CreateForm: React.FC = () => {
 							}
 							placeholder="Yeast Amount"
 						/>
-						<div className="symbol-container">
-							g
-						</div>
+						<div className="symbol-container">g</div>
 					</div>
 				</div>
 			</div>
@@ -287,7 +290,7 @@ const CreateForm: React.FC = () => {
 							...formState,
 							addons: [
 								...formState.addons,
-								{ addon: "", amount:"" ,unit: "g" },
+								{ addon: "", amount: "", unit: "g" },
 							],
 						})
 					}

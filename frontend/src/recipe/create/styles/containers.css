@@ -8,22 +8,26 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-    max-width:1000px;
+	max-width: 1000px;
+}
+
+#yeast-container > div {
+	width: 100%;
 }
 
 #create-form {
-    margin-top: 1rem;
+	margin-top: 1rem;
 }
 
 @media (max-width: 600px) {
-    #liquids-container,
-    #yeast-container,
-    #honey-container,
-    #addons-container {
-        flex-direction: column;
-    }
+	#liquids-container,
+	#yeast-container,
+	#honey-container,
+	#addons-container {
+		flex-direction: column;
+	}
 }
 
 h3 {
-    margin-left: 1rem;
+	margin-left: 1rem;
 }
