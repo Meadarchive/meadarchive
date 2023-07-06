@@ -1,0 +1,16 @@
+#yeast-amount-container {
+	position: relative;
+	display: inline-block;
+}
+
+.symbol-container {
+	position: absolute;
+	top: 50%;
+	right: 1rem;
+	transform: translateY(-50%);
+}
+
+.symbol {
+	width: 10px; /* Adjust this value based on your preference */
+	height: auto;
+}
