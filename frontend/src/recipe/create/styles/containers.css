@@ -1,7 +1,9 @@
 #liquids-container,
 #yeast-container,
 #honey-container,
-#addons-container {
+#addons-container,
+#recipe-name-container,
+#recipe-description-container{
 	padding: 1rem;
 	display: flex;
 	gap: 1rem;

@@ -1,23 +1,35 @@
 import React, { useState } from "react";
+import MDEditor from "@uiw/react-md-editor";
 import "./styles/containers.css";
 import "./styles/form.css";
 
 interface CreateFormState {
+	recipeName: string;
+	recipeDescription: string;
 	liquids: { liquid: string; amount: string; unit: string }[];
 	yeastType: string;
 	yeastAmount: string;
 	honeyTypes: { honey: string; amount: string; unit: string }[];
-	addons: { addon: string; amount: string; unit: string }[]; // Include 'amount' property
+	addons: { addon: string; amount: string; unit: string }[];
 }
 
 const CreateForm: React.FC = () => {
 	const [formState, setFormState] = useState<CreateFormState>({
+		recipeName: "",
+		recipeDescription: "",
 		liquids: [],
 		yeastType: "",
 		yeastAmount: "",
 		honeyTypes: [],
 		addons: [],
 	});
+
+	const handleInputChange = (field: keyof CreateFormState, value: string) => {
+		setFormState({
+			...formState,
+			[field]: value,
+		});
+	};
 
 	const handleLiquidChange = (
 		index: number,
@@ -181,13 +193,8 @@ const CreateForm: React.FC = () => {
 				<input
 					type="text"
 					value={addon.amount}
-					onChange={
-						(event) =>
-							handleAddonChange(
-								index,
-								"amount",
-								event.target.value
-							) // Handle amount change
+					onChange={(event) =>
+						handleAddonChange(index, "amount", event.target.value)
 					}
 					placeholder="Amount"
 				/>
@@ -209,6 +216,18 @@ const CreateForm: React.FC = () => {
 
 	return (
 		<form id="create-form" onSubmit={handleFormSubmit}>
+			<h3>Recipe Name</h3>
+			<div id="recipe-name-container">
+				<input
+					type="text"
+					value={formState.recipeName}
+					onChange={(event) =>
+						handleInputChange("recipeName", event.target.value)
+					}
+					placeholder="Recipe Name"
+				/>
+			</div>
+
 			<div>
 				<h3>Liquids and Amounts</h3>
 				{renderLiquidInputs()}
@@ -236,10 +255,10 @@ const CreateForm: React.FC = () => {
 							type="text"
 							value={formState.yeastType}
 							onChange={(event) =>
-								setFormState({
-									...formState,
-									yeastType: event.target.value,
-								})
+								handleInputChange(
+									"yeastType",
+									event.target.value
+								)
 							}
 							placeholder="Yeast Type"
 						/>
@@ -249,10 +268,10 @@ const CreateForm: React.FC = () => {
 							type="text"
 							value={formState.yeastAmount}
 							onChange={(event) =>
-								setFormState({
-									...formState,
-									yeastAmount: event.target.value,
-								})
+								handleInputChange(
+									"yeastAmount",
+									event.target.value
+								)
 							}
 							placeholder="Yeast Amount"
 						/>
@@ -297,6 +316,20 @@ const CreateForm: React.FC = () => {
 				>
 					Add Addon
 				</button>
+			</div>
+
+			<div>
+				<h3>Recipe Description</h3>
+				<div id="recipe-description-container">
+					<MDEditor
+						value={formState.recipeDescription}
+						onChange={(value) =>
+							handleInputChange("recipeDescription", value || "")
+						}
+						placeholder="Recipe Description"
+						style={{ height: "300px" }}
+					/>
+				</div>
 			</div>
 
 			<button type="submit">Submit</button>
