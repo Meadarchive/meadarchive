@@ -1,0 +1,29 @@
+#liquids-container,
+#yeast-container,
+#honey-container,
+#addons-container {
+	padding: 1rem;
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+    max-width:1000px;
+}
+
+#create-form {
+    margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    #liquids-container,
+    #yeast-container,
+    #honey-container,
+    #addons-container {
+        flex-direction: column;
+    }
+}
+
+h3 {
+    margin-left: 1rem;
+}

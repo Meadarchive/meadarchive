@@ -1,0 +1,14 @@
+:root {
+	/* css variables */
+	--background: #121212;
+	--highlight: #db4105;
+	--highlight-secondary: #ff6d00;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	background: var(--background);
+	color: white;
+}
