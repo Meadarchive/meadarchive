@@ -6,12 +6,15 @@ export interface Options {
 	};
 }
 
-// template for fetch request
-// eslint-disable-next-line prefer-const
-export let options: Options = {
-	method: "GET",
-	headers: {
-		accept: "application/json",
-		authorization: `key`,
-	},
-};
+import firebase from "../service/firebase";
+
+export function setOptions(user: firebase.User | null) {
+	let options: Options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			authorization: `${user?.getIdToken()}`,
+		},
+	};
+	return options;
+}
