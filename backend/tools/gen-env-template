@@ -13,11 +13,16 @@ if [ "$1" == "prod" ]; then
     echo "Generating .env file for PROD environment"
     RUN_MODE="production"
     PORT=5443
+    NAMESPACE="prod"
+    FIREBASE_CREDS_PATH="$HOME/.etc/meadarchive/firebase-creds.json"
+
 
 elif [ "$1" == "dev" ]; then
     echo "Generating .env file for DEV environment"
     RUN_MODE="development"
     PORT=5080
+    NAMESPACE="dev"
+    FIREBASE_CREDS_PATH="$HOME/.etc/meadarchive/dev-firebase-creds.json"
 
 else
     echo "Invalid arguments. Usage: $0 [prod] or [dev]"
@@ -25,7 +30,12 @@ else
 fi
 
 env_file_content="RUN_MODE=\"$RUN_MODE\"\n"
-env_file_content+="PORT=\"$PORT\""
+env_file_content+="PORT=\"$PORT\"\n"
+env_file_content+="NAMESPACE=\"$NAMESPACE\"\n"
+env_file_content+="FIREBASE_CREDS_PATH=\"$FIREBASE_CREDS_PATH\"\n"
+env_file_content+="PROJECT_NAME=\"meadarchive\"\n"
+
+
 
 echo -e $env_file_content > .env
 
