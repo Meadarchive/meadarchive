@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Tool used to generate a .env file for the project. Use `prod` positional argument to generate values for production
+
+# Check if any argument is provided
+if [ $# -gt 1 ]; then
+    echo "Invalid arguments. Usage: $0 [prod] or [dev]"
+    exit 1
+fi
+
+# Check if the script is run with 'prod' or 'dev' argument
+if [ "$1" == "prod" ]; then
+    echo "Generating .env file for PROD environment"
+    RUN_MODE="production"
+    PORT=5443
+
+elif [ "$1" == "dev" ]; then
+    echo "Generating .env file for DEV environment"
+    RUN_MODE="development"
+    PORT=5080
+
+else
+    echo "Invalid arguments. Usage: $0 [prod] or [dev]"
+    exit 1
+fi
+
+env_file_content="RUN_MODE=\"$RUN_MODE\"\n"
+env_file_content+="PORT=\"$PORT\""
+
+echo -e $env_file_content > .env
+
+echo "Created new .env file"
