@@ -14,8 +14,8 @@ import Header from "../header/Header";
 export default function Router() {
 	return (
 		<>
-			<Header />
 			<BrowserRouter>
+				<Header />
 				<Routes>
 					<Route path="/" element={<Homepage />} />
 					<Route path="/dashboard" element={<Dashboard />} />

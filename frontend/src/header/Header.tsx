@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SignIn from "../auth/SignIn";
 import SignOut from "../auth/SignOut";
 import { useAuth } from "../hooks/useAuth";
@@ -9,9 +10,9 @@ export default function Header() {
 	console.log(user);
 	return (
 		<div id="header-container">
-			<div id="header-logo">Logo here</div>
+			<Link to="/" id="header-logo">Logo here</Link>
 			<div id="header-browse">Browse </div>
-			<div id="header-create-recipe">Create recipe</div>
+			<Link to="/recipe/create" id="header-create-recipe">Create recipe</Link>
 			<div id="header-see-batches">My batches</div>
 			{user ? <SignOut /> : <SignIn />}
 		</div>
