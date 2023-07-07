@@ -58,7 +58,9 @@ npm install
 sudo npm install ts-node -g
 ```
 
-### Check that the configured ports are open in the firewall (defaults in example)#
+<br>
+
+### Check that the configured ports are open in the firewall (defaults in example)
 ```bash
 sudo ufw allow 5080
 sudo ufw allow 5443
