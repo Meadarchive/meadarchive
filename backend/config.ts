@@ -5,10 +5,16 @@ dotenv.config()
 
 export interface Config {
     port: number,
-    RUN_MODE: string
+    run_mode: string,
+    firebase_creds_file: string,
+    namespace: string,
+    project_name: string
 }
 
 export let config: Config = {
     port: process.env.PORT as unknown as number,
-    RUN_MODE: process.env.RUN_MODE as string
+    run_mode: process.env.RUN_MODE as string,
+    firebase_creds_file: process.env.FIREBASE_CREDS_PATH as string,
+    namespace: process.env.NAMESPACE as string, 
+    project_name: process.env.PROJECT_NAME as string
 };
