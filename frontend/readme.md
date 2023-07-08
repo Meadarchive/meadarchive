@@ -13,6 +13,7 @@ VITE_SERVER_URL="<server_url>"
 # quickstart for dev server
 ```
 npm i
+npm i firebase
 npm run dev
 ```
 
