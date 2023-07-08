@@ -13,6 +13,8 @@ interface CreateFormState {
 	honeyTypes: { honey: string; amount: string; unit: string }[];
 	addons: { addon: string; amount: string; unit: string }[];
 	chemicals: { chemical: string; amount: string; unit: string }[];
+	recipeSize: string;
+	recipeSizeUnit: string;
 }
 
 const CreateForm: React.FC = () => {
@@ -25,6 +27,8 @@ const CreateForm: React.FC = () => {
 		honeyTypes: [],
 		addons: [],
 		chemicals: [],
+		recipeSize: "1",
+		recipeSizeUnit: "",
 	});
 
 	const handleInputChange = (field: keyof CreateFormState, value: string) => {
@@ -127,6 +131,26 @@ const CreateForm: React.FC = () => {
 		setFormState({
 			...formState,
 			addons: updatedAddons,
+		});
+	};
+
+	const handleRecipeSizeChange = (
+		field: keyof CreateFormState,
+		value: string
+	) => {
+		setFormState({
+			...formState,
+			[field]: value,
+		});
+	};
+
+	const handleRecipeSizeUnitChange = (
+		field: keyof CreateFormState,
+		value: string
+	) => {
+		setFormState({
+			...formState,
+			[field]: value,
 		});
 	};
 
@@ -411,6 +435,35 @@ const CreateForm: React.FC = () => {
 			</div>
 
 			<div>
+				<h3>Recipe Size</h3>
+				<div id="recipe-size-container">
+					<input
+						type="text"
+						value={formState.recipeSize}
+						onChange={(event) =>
+							handleRecipeSizeChange(
+								"recipeSize",
+								event.target.value
+							)
+						}
+						placeholder="Amount"
+					/>
+					<select
+						value={formState.recipeSizeUnit}
+						onChange={(event) =>
+							handleRecipeSizeUnitChange(
+								"recipeSizeUnit",
+								event.target.value
+							)
+						}
+					>
+						<option value="gallon">gallons</option>
+						<option value="litre">litres</option>
+					</select>
+				</div>
+			</div>
+
+			<div>
 				<h3>Recipe Description</h3>
 				<div id="recipe-description-container">
 					<MDEditor
@@ -420,7 +473,7 @@ const CreateForm: React.FC = () => {
 						}
 						previewOptions={{
 							rehypePlugins: [[rehypeSanitize]],
-						  }}
+						}}
 						placeholder="Recipe Description"
 						style={{ height: "300px" }}
 					/>

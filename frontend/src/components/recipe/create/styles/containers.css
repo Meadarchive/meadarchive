@@ -3,7 +3,8 @@
 #honey-container,
 #addons-container,
 #recipe-name-container,
-#chemicals-container {
+#chemicals-container,
+#recipe-size-container {
 	padding: 1rem;
 	display: flex;
 	gap: 1rem;
