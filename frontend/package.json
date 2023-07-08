@@ -13,7 +13,8 @@
     "@uiw/react-md-editor": "^3.23.3",
     "firebase": "^10.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-google-button": "^0.7.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
