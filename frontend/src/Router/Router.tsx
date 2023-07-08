@@ -19,10 +19,24 @@ export default function Router() {
 				<Header />
 				<Routes>
 					<Route path="/" element={<Homepage />} />
-					<Route path="/dashboard" element={<Dashboard />} />
+					<Route
+						path="/dashboard"
+						element={
+							<PrivateRoute>
+								<Dashboard />
+							</PrivateRoute>
+						}
+					/>
 					<Route path="/profile/:uid" element={<Profile />} />
 					<Route path="/recipe/:rid" element={<RecipeView />} />
-					<Route path="/recipe/:rid/edit" element={<RecipeEdit />} />
+					<Route
+						path="/recipe/:rid/edit"
+						element={
+							<PrivateRoute>
+								<RecipeEdit />
+							</PrivateRoute>
+						}
+					/>
 					<Route
 						path="/recipe/create"
 						element={
@@ -32,8 +46,22 @@ export default function Router() {
 						}
 					/>
 					<Route path="/batch/:rid" element={<BatchView />} />
-					<Route path="/batch/:rid/edit" element={<BatchEdit />} />
-					<Route path="/batch/create" element={<BatchCreate />} />
+					<Route
+						path="/batch/:rid/edit"
+						element={
+							<PrivateRoute>
+								<BatchEdit />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/batch/create"
+						element={
+							<PrivateRoute>
+								<BatchCreate />
+							</PrivateRoute>
+						}
+					/>
 					<Route path="*" element={<NoPath />} />
 				</Routes>
 			</BrowserRouter>
