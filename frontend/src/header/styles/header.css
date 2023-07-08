@@ -8,6 +8,10 @@
 	border-radius: 2px;
 }
 
+#header-container > div:nth-child(5) > div > span {
+	background: none; 
+}
+
 @media (max-width: 600px) {
 	#header-container {
 		flex-direction: column;
