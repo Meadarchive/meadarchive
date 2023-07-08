@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "../dashboard/Dashboard";
-import Homepage from "../homepage/Homepage";
-import Profile from "../profile/Profile";
-import RecipeEdit from "../recipe/edit/Edit";
-import RecipeView from "../recipe/view/View";
-import RecipeCreate from "../recipe/create/Create";
-import BatchCreate from "../batch/Create";
-import BatchEdit from "../batch/Create";
-import BatchView from "../batch/Create";
-import NoPath from "../nopath/NoPath";
-import Header from "../header/Header";
+import Dashboard from "../components/dashboard/Dashboard";
+import Homepage from "../components/homepage/Homepage";
+import Profile from "../components/profile/Profile";
+import RecipeEdit from "../components/recipe/edit/Edit";
+import RecipeView from "../components/recipe/view/View";
+import RecipeCreate from "../components/recipe/create/Create";
+import BatchCreate from "../components/batch/Create";
+import BatchEdit from "../components/batch/Create";
+import BatchView from "../components/batch/Create";
+import NoPath from "../components/nopath/NoPath";
+import Header from "../components/header/Header";
 
 export default function Router() {
 	return (
