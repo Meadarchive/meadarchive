@@ -10,6 +10,7 @@ import BatchEdit from "../components/batch/Create";
 import BatchView from "../components/batch/Create";
 import NoPath from "../components/nopath/NoPath";
 import Header from "../components/header/Header";
+import PrivateRoute from "./PrivateRoute";
 
 export default function Router() {
 	return (
@@ -18,14 +19,49 @@ export default function Router() {
 				<Header />
 				<Routes>
 					<Route path="/" element={<Homepage />} />
-					<Route path="/dashboard" element={<Dashboard />} />
+					<Route
+						path="/dashboard"
+						element={
+							<PrivateRoute>
+								<Dashboard />
+							</PrivateRoute>
+						}
+					/>
 					<Route path="/profile/:uid" element={<Profile />} />
 					<Route path="/recipe/:rid" element={<RecipeView />} />
-					<Route path="/recipe/:rid/edit" element={<RecipeEdit />} />
-					<Route path="/recipe/create" element={<RecipeCreate />} />
+					<Route
+						path="/recipe/:rid/edit"
+						element={
+							<PrivateRoute>
+								<RecipeEdit />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/recipe/create"
+						element={
+							<PrivateRoute>
+								<RecipeCreate />
+							</PrivateRoute>
+						}
+					/>
 					<Route path="/batch/:rid" element={<BatchView />} />
-					<Route path="/batch/:rid/edit" element={<BatchEdit />} />
-					<Route path="/batch/create" element={<BatchCreate />} />
+					<Route
+						path="/batch/:rid/edit"
+						element={
+							<PrivateRoute>
+								<BatchEdit />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/batch/create"
+						element={
+							<PrivateRoute>
+								<BatchCreate />
+							</PrivateRoute>
+						}
+					/>
 					<Route path="*" element={<NoPath />} />
 				</Routes>
 			</BrowserRouter>
