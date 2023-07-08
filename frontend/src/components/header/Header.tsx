@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import SignIn from "../auth/SignIn";
-import SignOut from "../auth/SignOut";
-import { useAuth } from "../hooks/useAuth";
+import SignIn from "../../auth/SignIn";
+import SignOut from "../../auth/SignOut";
+import { useAuth } from "../../hooks/useAuth";
 import "./styles/header.css";
 
 export default function Header() {
