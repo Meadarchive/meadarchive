@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
+import rehypeSanitize from "rehype-sanitize";
 import "./styles/containers.css";
 import "./styles/form.css";
 
@@ -417,6 +418,9 @@ const CreateForm: React.FC = () => {
 						onChange={(value) =>
 							handleInputChange("recipeDescription", value || "")
 						}
+						previewOptions={{
+							rehypePlugins: [[rehypeSanitize]],
+						  }}
 						placeholder="Recipe Description"
 						style={{ height: "300px" }}
 					/>
