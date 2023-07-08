@@ -7,13 +7,13 @@ import "./styles/form.css";
 interface CreateFormState {
 	recipeName: string;
 	recipeDescription: string;
-	liquids: { liquid: string; amount: string; unit: string }[];
+	liquids: { liquid: string; amount: number; unit: string }[];
 	yeastType: string;
-	yeastAmount: string;
-	honeyTypes: { honey: string; amount: string; unit: string }[];
-	addons: { addon: string; amount: string; unit: string }[];
-	chemicals: { chemical: string; amount: string; unit: string }[];
-	recipeSize: string;
+	yeastAmount: number;
+	honeyTypes: { honey: string; amount: number; unit: string }[];
+	addons: { addon: string; amount: number; unit: string }[];
+	chemicals: { chemical: string; amount: number; unit: string }[];
+	recipeSize: number;
 	recipeSizeUnit: string;
 }
 
@@ -23,11 +23,11 @@ const CreateForm: React.FC = () => {
 		recipeDescription: "",
 		liquids: [],
 		yeastType: "",
-		yeastAmount: "",
+		yeastAmount: 0,
 		honeyTypes: [],
 		addons: [],
 		chemicals: [],
-		recipeSize: "1",
+		recipeSize: 1,
 		recipeSizeUnit: "",
 	});
 
@@ -44,7 +44,10 @@ const CreateForm: React.FC = () => {
 		value: string
 	) => {
 		const updatedLiquids = [...formState.liquids];
-		updatedLiquids[index][field] = value;
+		updatedLiquids[index] = {
+			...updatedLiquids[index],
+			[field]: value,
+		};
 
 		setFormState({
 			...formState,
@@ -58,7 +61,10 @@ const CreateForm: React.FC = () => {
 		value: string
 	) => {
 		const updatedHoneyTypes = [...formState.honeyTypes];
-		updatedHoneyTypes[index][field] = value;
+		updatedHoneyTypes[index] = {
+			...updatedHoneyTypes[index],
+			[field]: value,
+		};
 
 		setFormState({
 			...formState,
@@ -72,7 +78,10 @@ const CreateForm: React.FC = () => {
 		value: string
 	) => {
 		const updatedAddons = [...formState.addons];
-		updatedAddons[index][field] = value;
+		updatedAddons[index] = {
+			...updatedAddons[index],
+			[field]: value,
+		};
 
 		setFormState({
 			...formState,
@@ -86,7 +95,10 @@ const CreateForm: React.FC = () => {
 		value: string
 	) => {
 		const updatedChemicals = [...formState.chemicals];
-		updatedChemicals[index][field] = value;
+		updatedChemicals[index] = {
+			...updatedChemicals[index],
+			[field]: value,
+		};
 
 		setFormState({
 			...formState,
@@ -156,8 +168,32 @@ const CreateForm: React.FC = () => {
 
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+
+		// Convert numbers to integers
+		const parsedFormState = {
+			...formState,
+			liquids: formState.liquids.map((liquid) => ({
+				...liquid,
+				amount: Number(liquid.amount),
+			})),
+			yeastAmount: Number(formState.yeastAmount),
+			honeyTypes: formState.honeyTypes.map((honey) => ({
+				...honey,
+				amount: Number(honey.amount),
+			})),
+			addons: formState.addons.map((addon) => ({
+				...addon,
+				amount: Number(addon.amount),
+			})),
+			chemicals: formState.chemicals.map((chemical) => ({
+				...chemical,
+				amount: Number(chemical.amount),
+			})),
+			recipeSize: Number(formState.recipeSize),
+		};
+
 		// You can perform additional actions with the form data here
-		console.log("Form submitted:", formState);
+		console.log("Form submitted:", parsedFormState);
 	};
 
 	const renderLiquidInputs = () => {
@@ -172,7 +208,7 @@ const CreateForm: React.FC = () => {
 					placeholder="Liquid"
 				/>
 				<input
-					type="text"
+					type="number"
 					value={liquid.amount}
 					onChange={(event) =>
 						handleLiquidChange(index, "amount", event.target.value)
@@ -207,7 +243,7 @@ const CreateForm: React.FC = () => {
 					placeholder="Honey"
 				/>
 				<input
-					type="text"
+					type="number"
 					value={honey.amount}
 					onChange={(event) =>
 						handleHoneyChange(index, "amount", event.target.value)
@@ -242,7 +278,7 @@ const CreateForm: React.FC = () => {
 					placeholder="Addon"
 				/>
 				<input
-					type="text"
+					type="number"
 					value={addon.amount}
 					onChange={(event) =>
 						handleAddonChange(index, "amount", event.target.value)
@@ -281,7 +317,7 @@ const CreateForm: React.FC = () => {
 					placeholder="Chemical"
 				/>
 				<input
-					type="text"
+					type="number"
 					value={chemical.amount}
 					onChange={(event) =>
 						handleChemicalChange(
@@ -335,7 +371,7 @@ const CreateForm: React.FC = () => {
 							...formState,
 							liquids: [
 								...formState.liquids,
-								{ liquid: "", amount: "", unit: "ml" },
+								{ liquid: "", amount: 0, unit: "ml" },
 							],
 						})
 					}
@@ -362,7 +398,7 @@ const CreateForm: React.FC = () => {
 					</div>
 					<div id="yeast-amount-container">
 						<input
-							type="text"
+							type="number"
 							value={formState.yeastAmount}
 							onChange={(event) =>
 								handleInputChange(
@@ -387,7 +423,7 @@ const CreateForm: React.FC = () => {
 							...formState,
 							honeyTypes: [
 								...formState.honeyTypes,
-								{ honey: "", amount: "", unit: "g" },
+								{ honey: "", amount: 0, unit: "g" },
 							],
 						})
 					}
@@ -406,7 +442,7 @@ const CreateForm: React.FC = () => {
 							...formState,
 							chemicals: [
 								...formState.chemicals,
-								{ chemical: "", amount: "", unit: "g" },
+								{ chemical: "", amount: 0, unit: "g" },
 							],
 						})
 					}
@@ -425,7 +461,7 @@ const CreateForm: React.FC = () => {
 							...formState,
 							addons: [
 								...formState.addons,
-								{ addon: "", amount: "", unit: "g" },
+								{ addon: "", amount: 0, unit: "g" },
 							],
 						})
 					}
@@ -438,7 +474,7 @@ const CreateForm: React.FC = () => {
 				<h3>Recipe Size</h3>
 				<div id="recipe-size-container">
 					<input
-						type="text"
+						type="number"
 						value={formState.recipeSize}
 						onChange={(event) =>
 							handleRecipeSizeChange(
