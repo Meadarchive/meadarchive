@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 interface PrivateRouteProps {
-	children: Element;
+	children: JSX.Element;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children: Element }) => {
