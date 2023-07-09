@@ -1,5 +1,5 @@
-import { firebaseApp } from "./firebaseApp"
+import { firebaseApp, db } from "./firebaseApp"
 
 export async function genUserAuthToken(uuid: string){
-    return await firebaseApp.auth().createCustomToken(uuid)
+    return firebaseApp.auth().createCustomToken(uuid)
 }
