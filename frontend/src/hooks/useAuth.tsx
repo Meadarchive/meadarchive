@@ -25,6 +25,11 @@ export const useAuth = () => {
 				console.log(res);
 				handleUser(res.user);
 			})
+			.finally(
+				() =>
+					// redirect to homepage
+					(window.location.href = "/")
+			)
 			.catch((error: firebase.auth.Error): void => setAuthError(error));
 	};
 
