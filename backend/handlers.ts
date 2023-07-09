@@ -27,7 +27,7 @@ export async function createRecipe(req: express.Request, res: express.Response){
         try{
             RecipeSchema.parse(recipe);
         } catch (error){
-            res.status(500).send({"error": error})
+            res.status(400).send({"error": error})
             return
         }
 
