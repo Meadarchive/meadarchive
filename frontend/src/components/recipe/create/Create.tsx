@@ -3,19 +3,10 @@ import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import "./styles/containers.css";
 import "./styles/form.css";
+import { getOptions } from "../../../helpers/options";
+import { useAuth } from "../../../hooks/useAuth";
+import CreateFormState from "./interfaces/CreateFormState";
 
-interface CreateFormState {
-	recipeName: string;
-	recipeDescription: string;
-	liquids: { liquid: string; amount: number; unit: string }[];
-	yeastType: string;
-	yeastAmount: number;
-	honeyTypes: { honey: string; amount: number; unit: string }[];
-	addons: { addon: string; amount: number; unit: string }[];
-	chemicals: { chemical: string; amount: number; unit: string }[];
-	recipeSize: number;
-	recipeSizeUnit: string;
-}
 
 const CreateForm: React.FC = () => {
 	const [formState, setFormState] = useState<CreateFormState>({
@@ -28,8 +19,10 @@ const CreateForm: React.FC = () => {
 		addons: [],
 		chemicals: [],
 		recipeSize: 1,
-		recipeSizeUnit: "",
+		recipeSizeUnit: "gallons",
 	});
+
+	const user = useAuth().user;
 
 	const handleInputChange = (field: keyof CreateFormState, value: string) => {
 		setFormState({
@@ -166,7 +159,7 @@ const CreateForm: React.FC = () => {
 		});
 	};
 
-	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		// Convert numbers to integers
@@ -191,6 +184,16 @@ const CreateForm: React.FC = () => {
 			})),
 			recipeSize: Number(formState.recipeSize),
 		};
+
+		// post to import.meta.env.VITE_SERVER_URL with options from ../../../helpers/options.tsx
+
+		const options = await getOptions(user, parsedFormState)
+
+		console.log(options)
+
+		let res = await fetch(`${import.meta.env.VITE_SERVER_URL}/recipe/create`, options)
+		let data = await res.json()
+		console.log(data)
 
 		// You can perform additional actions with the form data here
 		console.log("Form submitted:", parsedFormState);
