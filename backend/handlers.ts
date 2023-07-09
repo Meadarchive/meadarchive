@@ -20,7 +20,7 @@ export async function createRecipe(req: express.Request, res: express.Response){
     try{
 
         // Extract user uid and recipe data
-        const uid = res.locals.user.uid
+        const userID: string = res.locals.user.uid
         const recipe: Recipe = req.body
 
         // Validate recipe schema
@@ -34,7 +34,7 @@ export async function createRecipe(req: express.Request, res: express.Response){
         // Generate uuid for the recipe
         const recipeID = uuidv4()
 
-        await insertRecipe(recipe, recipeID, config.recipesCollectionName)
+        await insertRecipe(recipe, recipeID, config.recipesCollectionName, userID)
 
         res.status(200).send({"msg": "Authorized", "recipeID": recipeID})
 
