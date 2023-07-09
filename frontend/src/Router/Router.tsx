@@ -11,6 +11,7 @@ import BatchView from "../components/batch/Create";
 import NoPath from "../components/nopath/NoPath";
 import Header from "../components/header/Header";
 import PrivateRoute from "./PrivateRoute";
+import SignInPage from "../components/sign-in/SignInPage";
 
 export default function Router() {
 	return (
@@ -19,6 +20,7 @@ export default function Router() {
 				<Header />
 				<Routes>
 					<Route path="/" element={<Homepage />} />
+					<Route path="/sign-in" element={<SignInPage />} />
 					<Route
 						path="/dashboard"
 						element={

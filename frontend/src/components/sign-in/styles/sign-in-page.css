@@ -1,0 +1,17 @@
+#root > div:nth-child(2) > div > div > span {
+	background: none;
+}
+
+#sign-in-page-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+    height: 100%;
+}
+
+#sign-in-page-title {
+	font-size: 1.5rem;
+    font-weight: bold;
+	margin-bottom: 1rem;
+}
