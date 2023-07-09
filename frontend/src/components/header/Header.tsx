@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import SignIn from "../../auth/SignIn";
 import SignOut from "../../auth/SignOut";
 import { useAuth } from "../../hooks/useAuth";
 import "./styles/header.css";
@@ -14,7 +13,7 @@ export default function Header() {
 			<div id="header-browse">Browse </div>
 			<Link to="/recipe/create" id="header-create-recipe">Create recipe</Link>
 			<div id="header-see-batches">My batches</div>
-			{user ? <SignOut /> : <SignIn />}
+			{user ? <SignOut /> : <Link to="/sign-in">Sign in</Link>}
 		</div>
 	);
 }
