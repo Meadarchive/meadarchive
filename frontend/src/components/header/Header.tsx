@@ -9,11 +9,23 @@ export default function Header() {
 	console.log(user);
 	return (
 		<div id="header-container">
-			<Link to="/" id="header-logo">Logo here</Link>
-			<div id="header-browse">Browse </div>
-			<Link to="/recipe/create" id="header-create-recipe">Create recipe</Link>
-			<div id="header-see-batches">My batches</div>
-			{user ? <SignOut /> : <Link to="/sign-in">Sign in</Link>}
+			<div id="header-logo-container">
+				<Link to="/" id="header-logo">
+					Logo here
+				</Link>
+			</div>
+			<div id="header-rest-container">
+				<Link to="/browse" id="header-browse">
+					Browse{" "}
+				</Link>
+				<Link to="/recipe/create" id="header-create-recipe">
+					Create recipe
+				</Link>
+				<Link to="dashboard" id="header-see-batches">
+					My dashboard
+				</Link>
+				{user ? <SignOut /> : <Link to="/sign-in">Sign in</Link>}
+			</div>
 		</div>
 	);
 }
