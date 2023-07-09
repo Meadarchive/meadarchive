@@ -5,7 +5,8 @@
   "main": "app.ts",
   "scripts": {
     "gen-env": "tools/gen-env-template dev",
-    "gen-env-prod": "tools/gen-env-template prod"
+    "gen-env-prod": "tools/gen-env-template prod",
+    "gen-auth-token": "ts-node tools/genTestAuthToken.ts"
   },
   "author": "",
   "license": "ISC",

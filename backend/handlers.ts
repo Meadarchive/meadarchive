@@ -25,12 +25,13 @@ export async function createRecipe(req: express.Request, res: express.Response){
             RecipeSchema.parse(recipe);
         } catch (error){
             res.status(500).send({"error": error})
+            return
         }
 
         // Generate uuid for the recipe
         const recipeID = uuidv4()
 
-        res.status(200).send({"msg": "Authorized", "recipeID":recipeID})
+        res.status(200).send({"msg": "Authorized", "recipeID": recipeID})
 
 
     } catch (err){
