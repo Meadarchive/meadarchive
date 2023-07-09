@@ -25,7 +25,19 @@
 
 #header-rest-container > * {
 	background: var(--background-secondary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
 }
+
+#header-rest-container > * > * {
+	background: var(--background-secondary);
+	display: flex;
+	align-items: center;
+	justify-content: space-center;
+}
+
 
 #header-logo-container, #header-logo-container > * {
 	background: var(--background-secondary);
