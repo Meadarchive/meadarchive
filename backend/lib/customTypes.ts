@@ -40,4 +40,8 @@ export const RecipeSchema = z.object({
 
 export type Recipe = z.infer<typeof RecipeSchema>
 
+export interface DictionaryOfRecipes {
+    [key: string] : Recipe
+}
+
 
