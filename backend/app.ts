@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors"
 
 import { config } from "./config";
-import { healthStatus,  createRecipe } from "./handlers";
+import { healthStatus,  createRecipe, getRecipe } from "./handlers";
 import { authMiddleware } from "./lib/authMiddleware"
 import { restrictAccessMiddleware } from "./lib/restrictAccessMiddleware"
 
@@ -18,6 +18,7 @@ app.use(authMiddleware)
 
 
 app.get("/health" , healthStatus);
+app.get("/recipe", restrictAccessMiddleware, getRecipe)
 app.post("/recipe/create", restrictAccessMiddleware, createRecipe)
 
 
