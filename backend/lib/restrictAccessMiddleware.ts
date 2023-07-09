@@ -12,7 +12,7 @@ export async function restrictAccessMiddleware(req: express.Request, res: expres
         next()
 
     } catch(err){
-        res.status(500).json({ msg: 'Internal Server Error During Acess Verification' });
+        res.status(500).json({ error: 'Internal Server Error During Acess Verification' });
     }
     
 }
