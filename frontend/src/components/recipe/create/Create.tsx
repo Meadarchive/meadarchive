@@ -6,6 +6,7 @@ import "./styles/form.css";
 import { getOptions } from "../../../helpers/options";
 import { useAuth } from "../../../hooks/useAuth";
 import CreateFormState from "./interfaces/CreateFormState";
+import { useNavigate } from "react-router-dom";
 
 
 const CreateForm: React.FC = () => {
@@ -22,6 +23,7 @@ const CreateForm: React.FC = () => {
 		recipeSizeUnit: "gallons",
 	});
 
+	const navigate = useNavigate();
 	const user = useAuth().user;
 
 	const handleInputChange = (field: keyof CreateFormState, value: string) => {
@@ -197,6 +199,9 @@ const CreateForm: React.FC = () => {
 
 		// You can perform additional actions with the form data here
 		console.log("Form submitted:", parsedFormState);
+
+		// redirect to recipe page
+		navigate(`/recipe/${data.recipeID}`)
 	};
 
 	const renderLiquidInputs = () => {
