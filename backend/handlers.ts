@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { config } from "./config"
 import { Recipe, RecipeSchema } from "./lib/customTypes";
-import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe } from "./lib/recipeLib"
+import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
 
 
 export async function healthStatus(req: express.Request, res: express.Response) {
@@ -70,25 +70,35 @@ export async function deleteRecipe(req: express.Request, res: express.Response){
     try{
         const userID: string = res.locals.user.uid
 
-
         if (!req.query.recipeID){
-            res.status(400).send({"msg": `Recipe ID is null or undefined`})
+            res.status(400).send({"erorr": `Recipe ID is null or undefined`})
             return
         }
 
-        const RecipeID = req.query.recipeID as string 
+        const RecipeID = req.query.recipeID as string
 
-        const recipeExists = await firebaseDeleteRecipe(RecipeID, config.recipesCollectionName)
+        const recipeExists = await checkIfRecipeExists(RecipeID, config.recipesCollectionName)
 
-        if (recipeExists){
-            res.status(200).send({"msg": `Deleted recipe with id ${RecipeID}`})
-        } else {
+        if(!recipeExists){
             res.status(400).send({"error": `No recipe with id '${RecipeID}' exists`})
+            return
         }
+
+        const userOwnsRecipe =  await checkIfUserOwnsRecipe(RecipeID, config.recipesCollectionName, userID)
+
+        if (!userOwnsRecipe){
+            res.status(400).send({"error": `User does not own this recipe`})
+            return
+        }
+
+        await firebaseDeleteRecipe(RecipeID, config.recipesCollectionName)
+
+        res.status(200).send({"msg": `Successfully deleted recipe with id: '${RecipeID}'`})
+
 
     } catch (err){
         console.log(err)
-        res.status(500).send({ "error": "Internal server error while getting the recipe"});
+        res.status(500).send({ "error": `Internal server error while deleting recipe '${req.query.recipeID}'`});
     }
 }  
 

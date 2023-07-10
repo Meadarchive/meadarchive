@@ -47,17 +47,38 @@ export async function firebaseGetRecipes(recipeID: string | null, userID: string
 
 }
 
+export async function checkIfUserOwnsRecipe(recipeID: string, collectionName: string, userID: string){
+    const docRef = db.collection(collectionName).doc(recipeID)
+
+    const doc = await docRef.get()
+
+    const recipe = doc.data()
+
+    const owner = recipe ? recipe.author : null;
+
+    if (owner && owner == userID){
+        return true
+    }
+
+    return false
+}
+
+export async function checkIfRecipeExists(recipeID: string, collectionName: string){
+
+    const docRef = db.collection(collectionName).doc(recipeID)
+
+    const doc = await docRef.get()
+
+    return doc.exists
+
+}
+
 export async function firebaseDeleteRecipe(recipeID: string, collectionName: string){
     const docRef = db.collection(collectionName).doc(recipeID)
 
     const doc = await docRef.get()
 
-    if (doc.exists){
-        await docRef.delete()
-        return true
-    }
-
-    return false
+    await docRef.delete()
 
 
 }
