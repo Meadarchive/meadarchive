@@ -49,12 +49,13 @@ export async function firebaseGetRecipes(recipeID: string | null, userID: string
 
 export async function firebaseDeleteRecipe(recipeID: string, collectionName: string){
     const docRef = db.collection(collectionName).doc(recipeID)
-    const doc = await docRef.get();
+
+    const doc = await docRef.get()
 
     if (doc.exists){
         await docRef.delete()
         return true
-    } 
+    }
 
     return false
 
