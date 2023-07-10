@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RecipeInterface from "./interfaces/RecipeInterface";
+import MarkdownPreview from "@uiw/react-markdown-preview";
 
 export default function View() {
 	// get recipe id from url
 	let params = useParams();
-	let rid:string = params.rid ? params.rid : "";
+	let rid: string = params.rid ? params.rid : "";
 
 	const [recipe, setRecipe] = useState<RecipeInterface>();
 
@@ -25,32 +26,34 @@ export default function View() {
 		<div>
 			{recipe ? (
 				<div>
-					<p>Author: {recipe.author}</p>
+					<div>Author: {recipe.author}</div>
 					<h1>{recipe.recipeName}</h1>
-					<p>Yeast Type: {recipe.yeastType}</p>
-					<p>
+					<div>Yeast Type: {recipe.yeastType}</div>
+					<div>
 						Recipe Size: {recipe.recipeSize} {recipe.recipeSizeUnit}
-					</p>
-					<p>Recipe Description: {recipe.recipeDescription}</p>
+					</div>
+					<div>
+						Recipe Description:{" "}
+						<MarkdownPreview source={recipe.recipeDescription} />
+					</div>
 
 					<h2>Honey Types</h2>
 					{recipe.honeyTypes.map((honeyType, index) => (
 						<div key={index}>
-							<p>
+							<div>
 								Amount: {honeyType.amount} {honeyType.unit}
-							</p>
-							<p>Honey: {honeyType.honey}</p>
+							</div>
+							<div>Honey: {honeyType.honey}</div>
 						</div>
 					))}
-
 
 					<h2>Liquids</h2>
 					{recipe.liquids.map((liquid, index) => (
 						<div key={index}>
-							<p>
+							<div>
 								Amount: {liquid.amount} {liquid.unit}
-							</p>
-							<p>Liquid: {liquid.liquid}</p>
+							</div>
+							<div>Liquid: {liquid.liquid}</div>
 						</div>
 					))}
 
@@ -62,7 +65,7 @@ export default function View() {
 							))}
 						</ul>
 					) : (
-						<p>No chemicals used</p>
+						<div>No chemicals used</div>
 					)}
 
 					<h2>Addons</h2>
@@ -73,7 +76,7 @@ export default function View() {
 							))}
 						</ul>
 					) : (
-						<p>No chemicals used</p>
+						<div>No chemicals used</div>
 					)}
 				</div>
 			) : (
