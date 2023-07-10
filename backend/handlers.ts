@@ -48,9 +48,6 @@ export async function createRecipe(req: express.Request, res: express.Response){
 export async function getRecipe(req: express.Request, res: express.Response){
     try{
 
-        // Extract user uid and recipe data
-        const userID: string = res.locals.user.uid
-
         const searchUserID = req.query.userID as string | null
         const searchRecipeID = req.query.recipeID as string | null
 
