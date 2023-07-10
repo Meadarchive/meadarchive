@@ -3,7 +3,7 @@ import bodyParser from "body-parser"
 import cors from "cors"
 
 import { config } from "./config"
-import { healthStatus,  createRecipe, getRecipe } from "./handlers"
+import { healthStatus,  createRecipe, getRecipe, deleteRecipe} from "./handlers"
 import { authMiddleware } from "./lib/authMiddleware"
 import { restrictAccessMiddleware } from "./lib/restrictAccessMiddleware"
 
@@ -19,6 +19,8 @@ app.use(authMiddleware)
 
 app.get("/health" , healthStatus)
 app.get("/recipe",  getRecipe)
+
 app.post("/recipe/create", restrictAccessMiddleware, createRecipe)
+app.post("/recipe/delete", restrictAccessMiddleware, deleteRecipe)
 
 app.listen(config.port, () => console.log(`Listening on port ${config.port}`))
