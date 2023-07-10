@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RecipeInterface from "./interfaces/RecipeInterface";
 import MarkdownPreview from "@uiw/react-markdown-preview";
+import { BsPen } from "react-icons/bs";
+import {
+	GiPowder,
+	GiThermometerScale,
+	GiHoneyJar,
+	GiChemicalDrop,
+} from "react-icons/gi";
+import { MdOutlineDescription, MdOutlineAdd } from "react-icons/md";
+import { IoWaterOutline } from "react-icons/io5";
+import "./styles/view.css";
 
 export default function View() {
 	// get recipe id from url
@@ -25,58 +35,75 @@ export default function View() {
 	return (
 		<div>
 			{recipe ? (
-				<div>
-					<div>Author: {recipe.author}</div>
-					<h1>{recipe.recipeName}</h1>
-					<div>Yeast Type: {recipe.yeastType}</div>
-					<div>
-						Recipe Size: {recipe.recipeSize} {recipe.recipeSizeUnit}
+				<div id="view-recipe">
+					<div className="view-recipe-subtitle">
+						Author: {recipe.author} <BsPen />
 					</div>
-					<div>
-						Recipe Description:{" "}
+					<div className="view-recipe-subtitle">
+						{recipe.recipeName}
+					</div>
+					<div className="view-recipe-subtitle">
+						Yeast <GiPowder />
+					</div>
+					<div className="view-recipe-item">
+						{recipe.yeastType} {recipe.yeastAmount}g
+					</div>
+					<div className="view-recipe-subtitle">
+						Recipe Size <GiThermometerScale />
+					</div>
+					<div className="view-recipe-item">
+						{recipe.recipeSize} {recipe.recipeSizeUnit}{" "}
+					</div>
+					<div className="view-recipe-subtitle">
+						Recipe Description <MdOutlineDescription />
+					</div>
+					<div className="view-recipe-item">
 						<MarkdownPreview source={recipe.recipeDescription} />
 					</div>
-
-					<div>Honey Types</div>
+					<div className="view-recipe-subtitle">
+						Honey Types <GiHoneyJar />
+					</div>
 					{recipe.honeyTypes.map((honeyType, index) => (
-						<div key={index}>
-							<div>
-								Amount: {honeyType.amount} {honeyType.unit}
-							</div>
-							<div>Honey: {honeyType.honey}</div>
+						<div className="view-recipe-item" key={index}>
+							{honeyType.honey} {honeyType.amount}{" "}
+							{honeyType.unit}
 						</div>
 					))}
-
-					<div>Liquids</div>
+					<div className="view-recipe-subtitle">
+						Liquids <IoWaterOutline />
+					</div>
 					{recipe.liquids.map((liquid, index) => (
-						<div key={index}>
-							<div>
-								Amount: {liquid.amount} {liquid.unit}
-							</div>
-							<div>Liquid: {liquid.liquid}</div>
+						<div className="view-recipe-item" key={index}>
+							{liquid.liquid} {liquid.amount} {liquid.unit}
 						</div>
 					))}
-
-					<div>Chemicals</div>
+					<div className="view-recipe-subtitle">
+						Chemicals <GiChemicalDrop />
+					</div>
 					{recipe.chemicals.length > 0 ? (
-						<ul>
-							{recipe.chemicals.map((chemical, index) => (
-								<li key={index}>{chemical.chemical}</li>
-							))}
-						</ul>
+						recipe.chemicals.map((chemical, index) => (
+							<div className="view-recipe-item" key={index}>
+								{chemical.chemical}
+							</div>
+						))
 					) : (
-						<div>No chemicals used</div>
+						<div className="view-recipe-item">
+							No chemicals used
+						</div>
 					)}
-
-					<div>Addons</div>
+					<div className="view-recipe-subtitle">
+						Addons <MdOutlineAdd />
+					</div>
 					{recipe.addons.length > 0 ? (
-						<ul>
-							{recipe.addons.map((addon, index) => (
-								<li key={index}>{addon.addon}</li>
-							))}
-						</ul>
+						recipe.addons.map((addon, index) => (
+							<div className="view-recipe-item" key={index}>
+								{addon.addon}
+							</div>
+						))
 					) : (
-						<div>No chemicals used</div>
+						<div className="view-recipe-item">
+							No chemicals used
+						</div>
 					)}
 				</div>
 			) : (

@@ -1,0 +1,20 @@
+.view-recipe-subtitle {
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+#view-recipe {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 1rem;
+    gap: 1rem;
+}
+
+.view-recipe-item, .view-recipe-subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
