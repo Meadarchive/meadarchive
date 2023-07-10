@@ -37,7 +37,7 @@ export default function View() {
 						<MarkdownPreview source={recipe.recipeDescription} />
 					</div>
 
-					<h2>Honey Types</h2>
+					<div>Honey Types</div>
 					{recipe.honeyTypes.map((honeyType, index) => (
 						<div key={index}>
 							<div>
@@ -47,7 +47,7 @@ export default function View() {
 						</div>
 					))}
 
-					<h2>Liquids</h2>
+					<div>Liquids</div>
 					{recipe.liquids.map((liquid, index) => (
 						<div key={index}>
 							<div>
@@ -57,7 +57,7 @@ export default function View() {
 						</div>
 					))}
 
-					<h2>Chemicals</h2>
+					<div>Chemicals</div>
 					{recipe.chemicals.length > 0 ? (
 						<ul>
 							{recipe.chemicals.map((chemical, index) => (
@@ -68,7 +68,7 @@ export default function View() {
 						<div>No chemicals used</div>
 					)}
 
-					<h2>Addons</h2>
+					<div>Addons</div>
 					{recipe.addons.length > 0 ? (
 						<ul>
 							{recipe.addons.map((addon, index) => (
