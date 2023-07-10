@@ -3,7 +3,7 @@ import { firebaseApp, db } from "./firebaseApp"
 
 
 
-export async function insertRecipe(recipe: Recipe, recipeID: string, collectionName: string, userID: string){
+export async function firebaseInsertRecipe(recipe: Recipe, recipeID: string, collectionName: string, userID: string){
 
     const collectionRef = db.collection(collectionName);
 
@@ -13,7 +13,7 @@ export async function insertRecipe(recipe: Recipe, recipeID: string, collectionN
     
 }
 
-export async function getRecipes(recipeID: string | null, userID: string | null, collectionName: string){
+export async function firebaseGetRecipes(recipeID: string | null, userID: string | null, collectionName: string){
     const collectionRef = db.collection(collectionName);
     let recipes: { [key: string]: any } = {};
     
@@ -44,5 +44,41 @@ export async function getRecipes(recipeID: string | null, userID: string | null,
     
 
     return recipes
+
+}
+
+export async function checkIfUserOwnsRecipe(recipeID: string, collectionName: string, userID: string){
+    const docRef = db.collection(collectionName).doc(recipeID)
+
+    const doc = await docRef.get()
+
+    const recipe = doc.data()
+
+    const owner = recipe ? recipe.author : null;
+
+    if (owner && owner == userID){
+        return true
+    }
+
+    return false
+}
+
+export async function checkIfRecipeExists(recipeID: string, collectionName: string){
+
+    const docRef = db.collection(collectionName).doc(recipeID)
+
+    const doc = await docRef.get()
+
+    return doc.exists
+
+}
+
+export async function firebaseDeleteRecipe(recipeID: string, collectionName: string){
+    const docRef = db.collection(collectionName).doc(recipeID)
+
+    const doc = await docRef.get()
+
+    await docRef.delete()
+
 
 }
