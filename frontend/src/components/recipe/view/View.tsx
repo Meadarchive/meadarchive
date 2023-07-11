@@ -9,7 +9,7 @@ import {
 	GiHoneyJar,
 	GiChemicalDrop,
 } from "react-icons/gi";
-import { MdOutlineDescription, MdOutlineAdd } from "react-icons/md";
+import { MdOutlineAdd } from "react-icons/md";
 import { IoWaterOutline } from "react-icons/io5";
 import "./styles/view.css";
 
@@ -36,11 +36,9 @@ export default function View() {
 		<div>
 			{recipe ? (
 				<div id="view-recipe">
-					<div className="view-recipe-subtitle">
-						Author: {recipe.author} <BsPen />
-					</div>
-					<div className="view-recipe-subtitle">
-						{recipe.recipeName}
+					<div className="view-recipe-title">{recipe.recipeName}</div>
+					<div>
+						<MarkdownPreview source={recipe.recipeDescription} />
 					</div>
 					<div className="view-recipe-subtitle">
 						Yeast <GiPowder />
@@ -49,23 +47,21 @@ export default function View() {
 						{recipe.yeastType} {recipe.yeastAmount}g
 					</div>
 					<div className="view-recipe-subtitle">
-						Recipe Size <GiThermometerScale />
+						Size <GiThermometerScale />
 					</div>
 					<div className="view-recipe-item">
-						{recipe.recipeSize} {recipe.recipeSizeUnit}{" "}
+						{recipe.recipeSize} {recipe.recipeSizeUnit}
 					</div>
-					<div className="view-recipe-subtitle">
-						Recipe Description <MdOutlineDescription />
-					</div>
-					<div className="view-recipe-item">
-						<MarkdownPreview source={recipe.recipeDescription} />
-					</div>
+
 					<div className="view-recipe-subtitle">
 						Honey Types <GiHoneyJar />
 					</div>
 					{recipe.honeyTypes.map((honeyType, index) => (
-						<div className="view-recipe-item" key={index}>
-							{honeyType.honey} {honeyType.amount}{" "}
+						<div
+							className="view-recipe-item view-recipe-list-item"
+							key={index}
+						>
+							{honeyType.honey} {honeyType.amount}
 							{honeyType.unit}
 						</div>
 					))}
@@ -73,7 +69,10 @@ export default function View() {
 						Liquids <IoWaterOutline />
 					</div>
 					{recipe.liquids.map((liquid, index) => (
-						<div className="view-recipe-item" key={index}>
+						<div
+							className="view-recipe-item view-recipe-list-item"
+							key={index}
+						>
 							{liquid.liquid} {liquid.amount} {liquid.unit}
 						</div>
 					))}
@@ -82,7 +81,10 @@ export default function View() {
 					</div>
 					{recipe.chemicals.length > 0 ? (
 						recipe.chemicals.map((chemical, index) => (
-							<div className="view-recipe-item" key={index}>
+							<div
+								className="view-recipe-item view-recipe-list-item"
+								key={index}
+							>
 								{chemical.chemical}
 							</div>
 						))
@@ -96,15 +98,19 @@ export default function View() {
 					</div>
 					{recipe.addons.length > 0 ? (
 						recipe.addons.map((addon, index) => (
-							<div className="view-recipe-item" key={index}>
+							<div
+								className="view-recipe-item view-recipe-list-item"
+								key={index}
+							>
 								{addon.addon}
 							</div>
 						))
 					) : (
-						<div className="view-recipe-item">
-							No chemicals used
-						</div>
+						<div className="view-recipe-item">No addons</div>
 					)}
+					<div className="view-recipe-subtitle">
+						Author: {recipe.author} <BsPen />
+					</div>
 				</div>
 			) : (
 				<div>loading</div>
