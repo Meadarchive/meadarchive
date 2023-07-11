@@ -22,8 +22,8 @@ export const useAuth = () => {
 	const signIn = (): void => {
 		auth.signInWithPopup(provider)
 			.then((res: firebase.auth.UserCredential): void => {
-				console.log(res);
 				handleUser(res.user);
+				console.log(user)
 			})
 			.finally(
 				() =>
@@ -38,12 +38,9 @@ export const useAuth = () => {
 	};
 
 	useEffect(() => {
-		console.log("unsubscribe");
 		const unsubscribe = auth.onIdTokenChanged((user) => handleUser(user));
 		return () => unsubscribe();
 	}, [auth, handleUser]);
-
-	console.log(user);
 
 	return { user, isLoading, authError, signIn, signOut };
 };
