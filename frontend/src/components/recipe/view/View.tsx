@@ -12,6 +12,7 @@ import {
 import { MdOutlineAdd } from "react-icons/md";
 import { IoWaterOutline } from "react-icons/io5";
 import "./styles/view.css";
+import QRCode from "react-qr-code";
 
 export default function View() {
 	// get recipe id from url
@@ -115,6 +116,9 @@ export default function View() {
 			) : (
 				<div>loading</div>
 			)}
+			<QRCode
+				value={`${import.meta.env.VITE_SERVER_URL}/recipe/${rid}`}
+			/>
 		</div>
 	);
 }
