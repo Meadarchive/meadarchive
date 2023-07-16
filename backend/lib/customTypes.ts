@@ -38,7 +38,23 @@ export const RecipeSchema = z.object({
     recipeSizeUnit: z.string().nonempty()
 });
 
+
+export const EquipmentSchema = z.object({
+    item: z.string(),
+    quantity: z.number().int(),
+  });
+  
+export const BatchSchema = z.object({
+    author: z.string(),
+    recipeID: z.string(),
+    dateStarted: z.string(),
+    equipment: z.array(EquipmentSchema),
+    water: z.string(),
+    phase: z.enum(["Not started", "In progress", "Completed"]),
+  });
+
 export type Recipe = z.infer<typeof RecipeSchema>
+export type Batch = z.infer<typeof BatchSchema>
 
 export interface DictionaryOfRecipes {
     [key: string] : Recipe

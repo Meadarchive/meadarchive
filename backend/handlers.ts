@@ -2,7 +2,7 @@ import express from "express";
 import { v4 as uuidv4 } from 'uuid';
 
 import { config } from "./config"
-import { Recipe, RecipeSchema } from "./lib/customTypes";
+import { Recipe, RecipeSchema, Batch, BatchSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
 
 
@@ -101,6 +101,17 @@ export async function deleteRecipe(req: express.Request, res: express.Response){
 
 export async function createBatch(req: express.Request, res: express.Response){
     try{
+        // Extract user uid and batch data
+        const userID: string = res.locals.user.uid
+        const batch: Batch = req.body
+
+        // Validate recipe schema
+        try{
+            BatchSchema.parse(batch)
+        } catch (error){
+            res.status(400).send({"error": error})
+            return
+        }
 
     } catch (err){
         console.log(err)

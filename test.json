@@ -1,0 +1,7 @@
+{
+    "Author": "ID HEER",
+    "RecipeID": "REcipeID here",
+    "DateStarted": "DateStarted here",
+    "Equipment": [{"item": "One Gallon Demijohn", "quantity": 1}, {"item": "Airlock", "quantity": 2}],
+
+}
