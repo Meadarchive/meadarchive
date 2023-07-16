@@ -16,6 +16,7 @@ import deleteRecipe from "./helpers/deleteRecipe";
 import "../../../global_styles/text.css";
 import "./styles/delete.css";
 import "./styles/view.css";
+import LoadingSpinner from "../../loading-spinner/LoadingSpinner";
 
 export default function View() {
 	// get recipe id from url
@@ -187,7 +188,7 @@ export default function View() {
 					)}
 				</div>
 			) : (
-				<div>loading</div>
+				<LoadingSpinner />
 			)}
 		</div>
 	);
