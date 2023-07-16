@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
-
+import { genUID } from "./lib/util"
 
 export async function healthStatus(req: express.Request, res: express.Response) {
     try{
@@ -32,7 +32,7 @@ export async function createRecipe(req: express.Request, res: express.Response){
         }
 
         // Generate uuid for the recipe
-        const recipeID = uuidv4()
+        const recipeID: string = await genUID()
 
         await firebaseInsertRecipe(recipe, recipeID, config.recipesCollectionName, userID)
 
@@ -112,6 +112,8 @@ export async function createBatch(req: express.Request, res: express.Response){
             res.status(400).send({"error": error})
             return
         }
+
+        const batchUID: string = await genUID()
 
     } catch (err){
         console.log(err)
