@@ -3,7 +3,7 @@ import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import "./styles/containers.css";
 import "./styles/form.css";
-import { getOptions } from "../../../helpers/options";
+import { getCreateRecipeOptions } from "../../../helpers/options";
 import { useAuth } from "../../../hooks/useAuth";
 import CreateFormState from "./interfaces/CreateFormState";
 import { useNavigate } from "react-router-dom";
@@ -189,7 +189,7 @@ const CreateForm: React.FC = () => {
 
 		// post to import.meta.env.VITE_SERVER_URL with options from ../../../helpers/options.tsx
 
-		const options = await getOptions(user, parsedFormState)
+		const options = await getCreateRecipeOptions(user, parsedFormState)
 
 		console.log(options)
 

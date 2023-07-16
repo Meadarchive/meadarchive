@@ -12,11 +12,16 @@ import {
 import { MdOutlineAdd } from "react-icons/md";
 import { IoWaterOutline } from "react-icons/io5";
 import "./styles/view.css";
+import { useAuth } from "../../../hooks/useAuth";
+import deleteRecipe from "./helpers/deleteRecipe";
 
 export default function View() {
 	// get recipe id from url
 	let params = useParams();
 	let rid: string = params.rid ? params.rid : "";
+
+	// get current user
+	const { user } = useAuth();
 
 	const [recipe, setRecipe] = useState<RecipeInterface>();
 
@@ -30,6 +35,43 @@ export default function View() {
 			setRecipe(data.recipes[rid]);
 		})();
 	}, []);
+
+	type DeleteConfirmationProps = {
+		onConfirm: () => void;
+	};
+
+	const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
+		onConfirm,
+	}) => {
+		const [confirming, setConfirming] = useState(false);
+
+		const handleDeleteClick = () => {
+			setConfirming(true);
+		};
+
+		const handleCancelClick = () => {
+			setConfirming(false);
+		};
+
+		const handleConfirmClick = () => {
+			setConfirming(false);
+			onConfirm();
+		};
+
+		return (
+			<div>
+				{confirming ? (
+					<div>
+						<p>Are you sure you want to delete this recipe?</p>
+						<button onClick={handleCancelClick}>Cancel</button>
+						<button onClick={handleConfirmClick}>Confirm</button>
+					</div>
+				) : (
+					<button onClick={handleDeleteClick}>Delete Recipe</button>
+				)}
+			</div>
+		);
+	};
 
 	// get recipe from backend
 	return (
@@ -111,6 +153,9 @@ export default function View() {
 					<div className="view-recipe-subtitle">
 						Author: {recipe.author} <BsPen />
 					</div>
+					{user && user.uid === recipe.author && (
+						<DeleteConfirmation onConfirm={async () => await deleteRecipe(rid, user)} />
+					)}
 				</div>
 			) : (
 				<div>loading</div>
