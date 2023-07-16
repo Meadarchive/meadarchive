@@ -47,3 +47,7 @@
 #header-rest-container > * {
 	text-decoration: none;
 }
+
+#header-sign-out {
+	cursor: pointer;
+}

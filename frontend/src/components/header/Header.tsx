@@ -29,7 +29,7 @@ export default function Header() {
 				<Link to="dashboard" id="header-see-batches">
 					My dashboard <LuLayoutDashboard />
 				</Link>
-				{user ? <div><SignOut /><PiSignOutLight /></div> : <Link to="/sign-in">Sign in <PiSignInLight /></Link>}
+				{user ? <div id="header-sign-out"><SignOut /><PiSignOutLight /></div> : <Link to="/sign-in">Sign in <PiSignInLight /></Link>}
 			</div>
 		</div>
 	);
