@@ -105,6 +105,8 @@ export async function createBatch(req: express.Request, res: express.Response){
         const userID: string = res.locals.user.uid
         const batch: Batch = req.body
 
+        console.log(batch)
+
         // Validate recipe schema
         try{
             BatchSchema.parse(batch)
@@ -117,7 +119,7 @@ export async function createBatch(req: express.Request, res: express.Response){
 
         await firebaseInsertBatch(batch, batchUID, config.batchesCollectionName, userID)
 
-
+        res.status(200).send({"msg": "Authorized", "batchID": batchUID})
 
     } catch (err){
         console.log(err)
