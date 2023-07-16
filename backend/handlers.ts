@@ -1,9 +1,9 @@
 import express from "express";
-import { v4 as uuidv4 } from 'uuid';
 
 import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
+import { firebaseInsertBatch } from "./lib/batchLib"
 import { genUID } from "./lib/util"
 
 export async function healthStatus(req: express.Request, res: express.Response) {
@@ -114,6 +114,10 @@ export async function createBatch(req: express.Request, res: express.Response){
         }
 
         const batchUID: string = await genUID()
+
+        await firebaseInsertBatch(batch, batchUID, config.batchesCollectionName, userID)
+
+
 
     } catch (err){
         console.log(err)
