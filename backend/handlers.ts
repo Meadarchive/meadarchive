@@ -97,5 +97,15 @@ export async function deleteRecipe(req: express.Request, res: express.Response){
         console.log(err)
         res.status(500).send({ "error": `Internal server error while deleting recipe '${req.query.recipeID}'`});
     }
-}  
+}
+
+export async function createBatch(req: express.Request, res: express.Response){
+    try{
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while creating batch`});
+
+    }
+}
 
