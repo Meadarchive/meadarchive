@@ -42,7 +42,7 @@ export const RecipeSchema = z.object({
 export const EquipmentSchema = z.object({
     item: z.string(),
     quantity: z.number().int(),
-  });
+});
   
 export const BatchSchema = z.object({
     author: z.string(),
@@ -50,8 +50,8 @@ export const BatchSchema = z.object({
     dateStarted: z.string(),
     equipment: z.array(EquipmentSchema),
     water: z.string(),
-    stage: z.enum(["Not started", "In progress", "Completed"]),
-  });
+    stage: z.enum(["Not Started", "Primary Fermentation", "Secondary Fermentation", "Bottled", "Aging", "Completed"]),
+});
 
 export type Recipe = z.infer<typeof RecipeSchema>
 export type Batch = z.infer<typeof BatchSchema>
