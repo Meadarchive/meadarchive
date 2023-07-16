@@ -1,0 +1,22 @@
+.delete-button {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background: var(--background)!important;
+}
+
+.delete-button:hover {
+    background: var(--danger)!important;
+    color: black;
+}
+
+#delete-are-you-sure {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+#delete-cancel:hover {
+    background: var(--success)!important;
+}

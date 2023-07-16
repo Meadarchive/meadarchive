@@ -4,6 +4,8 @@
 	--background-secondary: #1e1e1e;
 	--highlight: #db4105;
 	--highlight-secondary: #ff6d00;
+	--danger: #dc3545;
+	--success: #4caf50;
 }
 
 body {
