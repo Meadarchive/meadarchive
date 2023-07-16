@@ -105,13 +105,19 @@ export async function createBatch(req: express.Request, res: express.Response){
         const userID: string = res.locals.user.uid
         const batch: Batch = req.body
 
-        console.log(batch)
-
         // Validate recipe schema
         try{
             BatchSchema.parse(batch)
         } catch (error){
             res.status(400).send({"error": error})
+            return
+        }
+
+        // Check if recipe the batch is based on exists
+        const recipeExists = await checkIfRecipeExists(batch.recipeID, config.recipesCollectionName)
+
+        if(!recipeExists){
+            res.status(400).send({"error": `No recipe with id '${batch.recipeID}' exists`})
             return
         }
 
