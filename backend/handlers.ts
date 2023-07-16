@@ -67,12 +67,12 @@ export async function deleteRecipe(req: express.Request, res: express.Response){
     try{
         const userID: string = res.locals.user.uid
 
-        if (!req.query.recipeID){
-            res.status(400).send({"erorr": `Recipe ID is null or undefined`})
+        if (!req.body.recipeID){
+            res.status(400).send({"error": `Recipe ID is null or undefined`})
             return
         }
 
-        const RecipeID = req.query.recipeID as string
+        const RecipeID = req.body.recipeID as string
 
         const recipeExists = await checkIfRecipeExists(RecipeID, config.recipesCollectionName)
 
