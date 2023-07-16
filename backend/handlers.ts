@@ -68,7 +68,7 @@ export async function deleteRecipe(req: express.Request, res: express.Response){
         const userID: string = res.locals.user.uid
 
         if (!req.body.recipeID){
-            res.status(400).send({"erorr": `Recipe ID is null or undefined`})
+            res.status(400).send({"error": `Recipe ID is null or undefined`})
             return
         }
 
