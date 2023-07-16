@@ -50,7 +50,7 @@ export const BatchSchema = z.object({
     dateStarted: z.string(),
     equipment: z.array(EquipmentSchema),
     water: z.string(),
-    phase: z.enum(["Not started", "In progress", "Completed"]),
+    stage: z.enum(["Not started", "In progress", "Completed"]),
   });
 
 export type Recipe = z.infer<typeof RecipeSchema>
