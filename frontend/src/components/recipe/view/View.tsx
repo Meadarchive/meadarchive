@@ -11,9 +11,11 @@ import {
 } from "react-icons/gi";
 import { MdOutlineAdd } from "react-icons/md";
 import { IoWaterOutline } from "react-icons/io5";
-import "./styles/view.css";
 import { useAuth } from "../../../hooks/useAuth";
 import deleteRecipe from "./helpers/deleteRecipe";
+import "../../../global_styles/text.css";
+import "./styles/delete.css";
+import "./styles/view.css";
 
 export default function View() {
 	// get recipe id from url
@@ -59,15 +61,38 @@ export default function View() {
 		};
 
 		return (
-			<div>
+			<div id="delete-container">
 				{confirming ? (
-					<div>
-						<p>Are you sure you want to delete this recipe?</p>
-						<button onClick={handleCancelClick}>Cancel</button>
-						<button onClick={handleConfirmClick}>Confirm</button>
-					</div>
+					<>
+						<p className="text-danger">
+							Are you sure you want to delete this recipe? This
+							process is irreversible
+						</p>
+						<div id="delete-are-you-sure">
+							<button
+								className="delete-button"
+								id="delete-cancel"
+								onClick={handleCancelClick}
+							>
+								Cancel
+							</button>
+							<button
+								className="delete-button"
+								id="delete-confirm"
+								onClick={handleConfirmClick}
+							>
+								Confirm
+							</button>
+						</div>
+					</>
 				) : (
-					<button onClick={handleDeleteClick}>Delete Recipe</button>
+					<button
+						className="delete-button"
+						id="delete-recipe"
+						onClick={handleDeleteClick}
+					>
+						Delete Recipe
+					</button>
 				)}
 			</div>
 		);
@@ -154,7 +179,11 @@ export default function View() {
 						Author: {recipe.author} <BsPen />
 					</div>
 					{user && user.uid === recipe.author && (
-						<DeleteConfirmation onConfirm={async () => await deleteRecipe(rid, user)} />
+						<DeleteConfirmation
+							onConfirm={async () =>
+								await deleteRecipe(rid, user)
+							}
+						/>
 					)}
 				</div>
 			) : (
