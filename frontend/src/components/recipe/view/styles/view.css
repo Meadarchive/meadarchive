@@ -6,25 +6,24 @@
 	content: "• ";
 }
 
-#view-recipe {
-	width: fit-content;
+.recipe-view {
+	min-width: 30rem;
+	max-width: 30rem;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	justify-content: center;
 	margin: 2rem;
 	padding: 1rem;
 	gap: 1rem;
-	/* border: 1px solid var(--highlight); */
+	flex: 1 0 50%;
 	border-radius: 0.5rem;
 	background: var(--background-secondary);
-	/* box-shadow: 0 0px 4px rgb(255, 255, 255); */
 }
 
-#view-recipe > *,
-#view-recipe > * > *,
-#view-recipe > * > * > *,
-#view-recipe > * > * > * > * {
+.recipe-view > *,
+.recipe-view > * > *,
+.recipe-view > * > * > *,
+.recipe-view > * > * > * > * {
 	background: var(--background-secondary);
 }
 
