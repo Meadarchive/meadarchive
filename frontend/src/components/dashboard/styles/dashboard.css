@@ -1,0 +1,11 @@
+#dashboard-recipes-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#recipe-title {
+    margin: 1rem;
+    text-align: center;
+}
