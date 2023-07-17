@@ -1,10 +1,10 @@
 import express from "express";
-import { v4 as uuidv4 } from 'uuid';
 
 import { config } from "./config"
-import { Recipe, RecipeSchema } from "./lib/customTypes";
+import { Recipe, RecipeSchema, Batch, BatchSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
-
+import { firebaseInsertBatch } from "./lib/batchLib"
+import { genUID } from "./lib/util"
 
 export async function healthStatus(req: express.Request, res: express.Response) {
     try{
@@ -32,7 +32,7 @@ export async function createRecipe(req: express.Request, res: express.Response){
         }
 
         // Generate uuid for the recipe
-        const recipeID = uuidv4()
+        const recipeID: string = await genUID()
 
         await firebaseInsertRecipe(recipe, recipeID, config.recipesCollectionName, userID)
 
@@ -97,5 +97,40 @@ export async function deleteRecipe(req: express.Request, res: express.Response){
         console.log(err)
         res.status(500).send({ "error": `Internal server error while deleting recipe '${req.query.recipeID}'`});
     }
-}  
+}
+
+export async function createBatch(req: express.Request, res: express.Response){
+    try{
+        // Extract user uid and batch data
+        const userID: string = res.locals.user.uid
+        const batch: Batch = req.body
+
+        // Validate recipe schema
+        try{
+            BatchSchema.parse(batch)
+        } catch (error){
+            res.status(400).send({"error": error})
+            return
+        }
+
+        // Check if recipe the batch is based on exists
+        const recipeExists = await checkIfRecipeExists(batch.recipeID, config.recipesCollectionName)
+
+        if(!recipeExists){
+            res.status(400).send({"error": `No recipe with id '${batch.recipeID}' exists`})
+            return
+        }
+
+        const batchUID: string = await genUID()
+
+        await firebaseInsertBatch(batch, batchUID, config.batchesCollectionName, userID)
+
+        res.status(200).send({"msg": "Authorized", "batchID": batchUID})
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while creating batch`});
+
+    }
+}
 

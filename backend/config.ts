@@ -10,7 +10,8 @@ export interface Config {
     namespace: string,
     project_name: string,
     test_user_id: string,
-    recipesCollectionName: string
+    recipesCollectionName: string,
+    batchesCollectionName: string
 }
 
 export let config: Config = {
@@ -20,5 +21,6 @@ export let config: Config = {
     namespace: process.env.NAMESPACE as string, 
     project_name: process.env.PROJECT_NAME as string,
     test_user_id: process.env.TEST_USER_ID as string,
-    recipesCollectionName: `${process.env.NAMESPACE}-recipes`
+    recipesCollectionName: `${process.env.NAMESPACE}-recipes`,
+    batchesCollectionName: `${process.env.NAMESPACE}-batches`
 };
