@@ -12,7 +12,7 @@ export default function Dashboard() {
 	const [recipes, setRecipes] = useState<RecipeInterface[]>();
 
 	useEffect(() => {
-		// get recipe from backend
+		// get recipes from backend
 		user &&
 			(async () => {
 				let res = await fetch(
