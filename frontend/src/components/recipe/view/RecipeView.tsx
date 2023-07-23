@@ -14,6 +14,7 @@ import deleteRecipe from "./helpers/deleteRecipe";
 import RecipeInterface from "./interfaces/RecipeInterface";
 import firebase from "../../../service/firebase";
 import "./styles/view.css";
+import recipeSizeFormatter from "./helpers/recipeSizeFormatter";
 
 interface RecipeViewProps {
 	recipe: RecipeInterface;
@@ -22,7 +23,6 @@ interface RecipeViewProps {
 }
 
 const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
-
 	return (
 		<div className="recipe-view">
 			<div className="recipe-view-title">{recipe.recipeName}</div>
@@ -39,7 +39,7 @@ const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
 				Size <GiThermometerScale />
 			</div>
 			<div className="recipe-view-item">
-				{recipe.recipeSize} {recipe.recipeSizeUnit}
+				{recipeSizeFormatter(recipe.recipeSizeUnit, recipe.recipeSize)}
 			</div>
 
 			<div className="recipe-view-subtitle">

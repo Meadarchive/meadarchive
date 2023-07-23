@@ -1,11 +1,88 @@
 #dashboard-recipes-container {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	margin: 0 1rem;
+	gap: 1rem;
+	flex-direction: column;
+}
+
+@media (min-width: 1000px) {
+	#dashboard {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+	#dashboard-recipes-container,
+	#dashboard-recipes-container > * {
+		width: 1000px;
+	}
+}
+
+#dashboard-recipes-container > * {
+	width: 100%;
+	max-width: 1000px;
 }
 
 #recipe-title {
-    margin: 1rem;
-    text-align: center;
+	margin: 1rem;
+	text-align: center;
+}
+
+.dashboard-recipe-container * {
+	background: var(--background-secondary);
+}
+
+.dashboard-recipe {
+	padding: 2rem;
+	border-radius: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.dashboard-recipe-title {
+	font-size: 1.25rem;
+	font-weight: 500;
+}
+
+.dashboard-recipe-left {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.dashboard-recipe-yeast,
+.dashboard-recipe-size {
+	position: relative;
+	padding-left: 1rem;
+}
+
+.dashboard-recipe-yeast::before,
+.dashboard-recipe-size::before {
+	font-weight: bold;
+	content: "•"; /* Unicode for the bullet point (can be replaced with any other symbol or text) */
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.dashboard-delete-recipe {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+@media (max-width: 800px) {
+    .dashboard-recipe {
+        flex-direction: column;
+    }
+    .dashboard-delete-recipe {
+        margin-top: 1rem;
+    }
+    .dashboard-recipe-left {
+        align-items: center;
+    }
 }
