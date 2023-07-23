@@ -71,17 +71,17 @@ export const BaseBatchUpdateSchema = z.object({
 
 export const TextBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["text"]),
-    updateText: z.string().nonempty(),
+    text: z.string().nonempty(),
 });
 
 export const GravityBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["gravity"]),
-    updateGravity: z.number().nonnegative(),
+    newGravity: z.number().nonnegative(),
 });
 
 export const StageBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["stage"]),
-    updateStage: z.enum(validStages),
+    newStage: z.enum(validStages),
 });
 
 
