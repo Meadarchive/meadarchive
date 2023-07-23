@@ -1,8 +1,8 @@
-.view-recipe-subtitle {
+.recipe-view-subtitle {
 	font-size: 1.2rem;
 }
 
-.view-recipe-item:before {
+.recipe-view-item:before {
 	content: "• ";
 }
 
@@ -26,16 +26,20 @@
 	background: var(--background-secondary);
 }
 
-.view-recipe-item,
-.view-recipe-subtitle,
-.view-recipe-title {
+.recipe-view-item,
+.recipe-view-subtitle,
+.recipe-view-title {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	gap: 0.5rem;
 }
 
-.view-recipe-title {
+.recipe-view-title {
 	font-size: 1.5rem;
 	font-weight: bold;
+}
+
+.recipe-view-subtitle {
+	font-size: 1.2rem;
 }
