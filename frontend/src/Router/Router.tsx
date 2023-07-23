@@ -5,9 +5,9 @@ import Profile from "../components/profile/Profile";
 import RecipeEdit from "../components/recipe/edit/Edit";
 import RecipeView from "../components/recipe/view/View";
 import RecipeCreate from "../components/recipe/create/Create";
-import BatchCreate from "../components/batch/Create";
-import BatchEdit from "../components/batch/Create";
-import BatchView from "../components/batch/Create";
+import BatchCreate from "../components/batch/create/Create";
+import BatchEdit from "../components/batch/Edit";
+import BatchView from "../components/batch/View";
 import NoPath from "../components/nopath/NoPath";
 import Header from "../components/header/Header";
 import PrivateRoute from "./PrivateRoute";
@@ -57,7 +57,7 @@ export default function Router() {
 						}
 					/>
 					<Route
-						path="/batch/create"
+						path="/batch/create/:rid"
 						element={
 							<PrivateRoute>
 								<BatchCreate />
