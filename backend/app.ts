@@ -24,7 +24,6 @@ app.post("/recipe/create", restrictAccessMiddleware, createRecipe)
 app.post("/recipe/delete", restrictAccessMiddleware, deleteRecipe)
 
 app.post("/batch/create", restrictAccessMiddleware, createBatch)
-
-app.post("/batch-update/create", restrictAccessMiddleware, createBatchUpdate)
+app.post("/batch/update/create", restrictAccessMiddleware, createBatchUpdate)
 
 app.listen(config.port, () => console.log(`Listening on port ${config.port}`))
