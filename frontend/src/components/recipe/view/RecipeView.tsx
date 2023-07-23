@@ -13,7 +13,9 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import deleteRecipe from "../../../api/delete/deleteRecipe";
 import RecipeInterface from "./interfaces/RecipeInterface";
 import firebase from "../../../service/firebase";
+import { Link } from "react-router-dom";
 import "./styles/view.css";
+import { useNavigate } from "react-router-dom";
 import recipeSizeFormatter from "./helpers/recipeSizeFormatter";
 
 interface RecipeViewProps {
@@ -23,6 +25,7 @@ interface RecipeViewProps {
 }
 
 const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
+	const navigate = useNavigate();
 	return (
 		<div className="recipe-view">
 			<div className="recipe-view-title">{recipe.recipeName}</div>
@@ -96,14 +99,27 @@ const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
 				<div className="recipe-view-item">No addons</div>
 			)}
 			<div>
-				<span id="recipe-author">{recipe.author}</span>{" "}
-				<BsPen />
+				<span id="recipe-author">{recipe.author}</span> <BsPen />
 			</div>
-			{user && user.uid === recipe.author && (
-				<DeleteConfirmation
-					onConfirm={async () => await deleteRecipe(rid, user)}
-				/>
-			)}
+			<div id="buttons-container">
+				{user && user.uid === recipe.author && (
+					<DeleteConfirmation
+						onConfirm={async () => await deleteRecipe(rid, user)}
+					/>
+				)}
+				{user ? (
+					<button
+						id="create-batch-button"
+						onClick={() => navigate(`/batch/create/${rid}`)}
+					>
+						Create Batch
+					</button>
+				) : (
+					<div>
+						<Link className="bold-link" to="/sign-in">Log in</Link> to create a batch
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };

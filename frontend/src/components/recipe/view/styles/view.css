@@ -44,9 +44,26 @@
 	font-size: 1.2rem;
 }
 
-.recipe-view-subtitle, #recipe-author {
+.recipe-view-subtitle,
+#recipe-author {
 	overflow-wrap: anywhere;
 	word-wrap: anywhere;
 	hyphens: auto;
 	flex-wrap: wrap;
 }
+
+#create-batch-button {
+	background: var(--background);
+	border-radius: 0.5rem;
+	margin: 0;
+}
+
+#create-batch-button:hover {
+	background: var(--highlight);
+}
+
+#buttons-container {
+	display: flex;
+	gap: 1rem;
+}
+

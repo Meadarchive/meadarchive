@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import createBatch from "../../../api/create/createBatch";
 import {
 	Batch,
@@ -8,6 +8,8 @@ import {
 } from "../../../api/create/interfaces/createBatchInterface";
 import { useAuth } from "../../../hooks/useAuth";
 import "./styles/create.css";
+import RecipeInterface from "../../recipe/view/interfaces/RecipeInterface";
+import getRecipeByRID from "../../../api/get/getRecipeByRID";
 
 export default function Create() {
 	// get recipe id from url
@@ -16,6 +18,13 @@ export default function Create() {
 	const auth = useAuth();
 
 	const [userID, setUserID] = useState<string>("");
+	const [recipeInfo, setRecipeInfo] = useState<RecipeInterface | null>();
+
+	useEffect(() => {
+		(async () => {
+			setRecipeInfo(await getRecipeByRID(rid));
+		})();
+	}, []);
 
 	useEffect(() => {
 		console.log(auth.user?.uid);
@@ -129,7 +138,9 @@ export default function Create() {
 
 	return (
 		<div id="create-batch-form-container">
-			<h2>Create Batch</h2>
+			<h2>
+				Creating Batch of <Link to={`/recipe/${rid}`}>{recipeInfo?.recipeName}</Link>
+			</h2>
 			<form id="create-batch-form">
 				<div>
 					<label>Water:</label>
