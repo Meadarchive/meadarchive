@@ -96,7 +96,7 @@ const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
 				<div className="recipe-view-item">No addons</div>
 			)}
 			<div>
-				Author: <span id="recipe-author">{recipe.author}</span>{" "}
+				<span id="recipe-author">{recipe.author}</span>{" "}
 				<BsPen />
 			</div>
 			{user && user.uid === recipe.author && (
