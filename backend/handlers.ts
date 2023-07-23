@@ -3,7 +3,7 @@ import express from "express";
 import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
-import { firebaseInsertBatch } from "./lib/batchLib"
+import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists} from "./lib/batchLib"
 import { genUID } from "./lib/util"
 
 export async function healthStatus(req: express.Request, res: express.Response) {
@@ -140,6 +140,13 @@ export async function createBatchUpdate(req: express.Request, res: express.Respo
         let batchUpdate = req.body as BaseBatchUpdate
         let schema;
 
+        const batchExists = await checkIfBatchExists(batchUpdate.batchID, config.batchesCollectionName)
+
+        if (!batchExists){
+            res.status(400).send({"error": `No batch with id '${batchUpdate.batchID}' exists`})
+            return
+        }
+
         // Indentify the type of update
         if (batchUpdate.updateType == "text"){
             batchUpdate = req.body as TextBatchUpdate
@@ -167,11 +174,15 @@ export async function createBatchUpdate(req: express.Request, res: express.Respo
             return
         }
 
-        res.status(200).send({"msg": "Authorized", "batchUpdate": batchUpdate})
+        const updateUID: string = await genUID()
+
+        await firebaseInsertBatchUpdate(batchUpdate, updateUID, config.batchesCollectionName)
+
+        res.status(200).send({"msg": "Authorized", "UpdateUID": updateUID})
 
     } catch (err){
         console.log(err)
-        res.status(500).send({ "error": `Internal server error while creating the batch update`});
+        res.status(500).send({ "error": `Internal server error while creating a batch update`});
     }
 } 
 
