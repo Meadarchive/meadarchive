@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+const validStages = [
+    "Not Started", 
+    "Primary Fermentation", 
+    "Secondary Fermentation", 
+    "Bottled", 
+    "Aging", 
+    "Completed"
+] as const
+
 export const LiquidSchema = z.object({
     liquid: z.string().nonempty(),
     amount: z.number(),
@@ -51,7 +60,7 @@ export const BatchSchema = z.object({
     equipment: z.array(EquipmentSchema),
     inital_gravity: z.number().nonnegative(),
     water: z.string().nonempty(),
-    stage: z.enum(["Not Started", "Primary Fermentation", "Secondary Fermentation", "Bottled", "Aging", "Completed"]),
+    stage: z.enum(validStages),
 });
 
 export const BaseBatchUpdate = z.object({
@@ -72,7 +81,7 @@ export const GravityBatchUpdate = BaseBatchUpdate.extend({
 
 export const StageBatchUpdate = BaseBatchUpdate.extend({
     updateType: z.enum(["stage"]),
-    updateStage: z.enum(["Not Started", "Primary Fermentation", "Secondary Fermentation", "Bottled", "Aging", "Completed"]),
+    updateStage: z.enum(validStages),
 });
 
 
