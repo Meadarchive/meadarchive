@@ -49,6 +49,7 @@ export const BatchSchema = z.object({
     recipeID: z.string().nonempty(),
     dateStarted: z.string().nonempty(),
     equipment: z.array(EquipmentSchema),
+    inital_gravity: z.number().nonnegative(),
     water: z.string().nonempty(),
     stage: z.enum(["Not Started", "Primary Fermentation", "Secondary Fermentation", "Bottled", "Aging", "Completed"]),
 });
