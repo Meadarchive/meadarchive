@@ -54,6 +54,28 @@ export const BatchSchema = z.object({
     stage: z.enum(["Not Started", "Primary Fermentation", "Secondary Fermentation", "Bottled", "Aging", "Completed"]),
 });
 
+export const BaseBatchUpdate = z.object({
+    batchID: z.string().nonempty(),
+    updateDate: z.string().nonempty(),
+    updateType: z.enum(["text", "gravity", "stage"]),
+});
+
+export const TextBatchUpdate = BaseBatchUpdate.extend({
+    updateType: z.enum(["text"]),
+    updateText: z.string().nonempty(),
+});
+
+export const GravityBatchUpdate = BaseBatchUpdate.extend({
+    updateType: z.enum(["gravity"]),
+    updateGravity: z.number().nonnegative(),
+});
+
+export const StageBatchUpdate = BaseBatchUpdate.extend({
+    updateType: z.enum(["stage"]),
+    updateStage: z.enum(["Not Started", "Primary Fermentation", "Secondary Fermentation", "Bottled", "Aging", "Completed"]),
+});
+
+
 export type Recipe = z.infer<typeof RecipeSchema>
 export type Batch = z.infer<typeof BatchSchema>
 
