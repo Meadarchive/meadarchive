@@ -78,6 +78,10 @@ export const StageBatchUpdate = BaseBatchUpdate.extend({
 
 export type Recipe = z.infer<typeof RecipeSchema>
 export type Batch = z.infer<typeof BatchSchema>
+export type BaseBatchUpdate = z.infer<typeof BaseBatchUpdate>
+export type TextBatchUpdate = z.infer<typeof TextBatchUpdate>
+export type GravityBatchUpdate = z.infer<typeof GravityBatchUpdate>
+export type StageBatchUpdate = z.infer<typeof StageBatchUpdate>
 
 export interface DictionaryOfRecipes {
     [key: string] : Recipe
