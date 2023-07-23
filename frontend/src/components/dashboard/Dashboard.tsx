@@ -4,6 +4,7 @@ import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import LoadingSpinner from "../loading-spinner/LoadingSpinner";
 import "./styles/dashboard.css";
 import DashboardRecipe from "./DashboardRecipe";
+import getRecipesByUID from "../../api/get/getRecipesByUID";
 
 export default function Dashboard() {
 	// get current user
@@ -15,15 +16,7 @@ export default function Dashboard() {
 		// get recipes from backend
 		user &&
 			(async () => {
-				let res = await fetch(
-					`${import.meta.env.VITE_SERVER_URL}/recipe?userID=${
-						user?.uid
-					}`
-				);
-				let data = await res.json();
-				console.log(data);
-				setRecipes(data.recipes);
-				console.log(recipes);
+				setRecipes(await getRecipesByUID(user.uid));
 			})();
 	}, [user]);
 	return (

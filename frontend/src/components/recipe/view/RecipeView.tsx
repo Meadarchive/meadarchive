@@ -10,7 +10,7 @@ import { MdOutlineAdd } from "react-icons/md";
 import { BsPen } from "react-icons/bs";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import DeleteConfirmation from "./DeleteConfirmation";
-import deleteRecipe from "../../../api/deleteRecipe";
+import deleteRecipe from "../../../api/delete/deleteRecipe";
 import RecipeInterface from "./interfaces/RecipeInterface";
 import firebase from "../../../service/firebase";
 import "./styles/view.css";
