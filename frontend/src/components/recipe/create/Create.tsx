@@ -3,7 +3,7 @@ import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import "./styles/containers.css";
 import "./styles/form.css";
-import { getCreateRecipeOptions } from "../../../helpers/options";
+import { getCreateRecipeOptions } from "../../../api/options";
 import { useAuth } from "../../../hooks/useAuth";
 import CreateFormState from "./interfaces/CreateFormState";
 import { useNavigate } from "react-router-dom";
