@@ -3,10 +3,10 @@ import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import "./styles/containers.css";
 import "./styles/form.css";
-import { getCreateRecipeOptions } from "../../../api/options";
 import { useAuth } from "../../../hooks/useAuth";
 import CreateFormState from "./interfaces/CreateFormState";
 import { useNavigate } from "react-router-dom";
+import createRecipe from "../../../api/create/createRecipe";
 
 
 const CreateForm: React.FC = () => {
@@ -163,7 +163,7 @@ const CreateForm: React.FC = () => {
 
 	const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
+		if (!user) return;
 		// Convert numbers to integers
 		const parsedFormState = {
 			...formState,
@@ -187,13 +187,7 @@ const CreateForm: React.FC = () => {
 			recipeSize: Number(formState.recipeSize),
 		};
 
-		const options = await getCreateRecipeOptions(user, parsedFormState)
-
-		console.log(options)
-
-		let res = await fetch(`${import.meta.env.VITE_SERVER_URL}/recipe/create`, options)
-		let data = await res.json()
-		console.log(data)
+		const data = await createRecipe(user, parsedFormState)
 
 		// You can perform additional actions with the form data here
 		console.log("Form submitted:", parsedFormState);
