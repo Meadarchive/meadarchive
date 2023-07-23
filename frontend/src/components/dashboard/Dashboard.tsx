@@ -30,7 +30,7 @@ export default function Dashboard() {
 		<div>
 			{recipes ? (
 				<div id="dashboard">
-					<h2 id="recipe-title">My recipes</h2>
+					<h2 id="dashboard-title">My recipes</h2>
 					<div id="dashboard-recipes-container">
 						{Object.entries(recipes).map(([rid, recipe]) => (
 							<DashboardRecipe
