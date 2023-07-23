@@ -21,9 +21,12 @@ export default function Create() {
 	const [recipeInfo, setRecipeInfo] = useState<RecipeInterface | null>();
 
 	useEffect(() => {
-		(async () => {
-			setRecipeInfo(await getRecipeByRID(rid));
-		})();
+		const fetchRecipeInfo = async () => {
+			const recipeInfo = await getRecipeByRID(rid);
+			setRecipeInfo(recipeInfo);
+		};
+
+		fetchRecipeInfo();
 	}, []);
 
 	useEffect(() => {
@@ -139,7 +142,8 @@ export default function Create() {
 	return (
 		<div id="create-batch-form-container">
 			<h2>
-				Creating Batch of <Link to={`/recipe/${rid}`}>{recipeInfo?.recipeName}</Link>
+				Creating Batch of{" "}
+				<Link to={`/recipe/${rid}`}>{recipeInfo?.recipeName}</Link>
 			</h2>
 			<form id="create-batch-form">
 				<div>
