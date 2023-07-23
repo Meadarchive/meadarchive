@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import LoadingSpinner from "../components/loading-spinner/LoadingSpinner";
 import { useAuth } from "../hooks/useAuth";
 
 interface PrivateRouteProps {
@@ -27,7 +28,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children: Element }) => {
 
 	if (isLoading) {
 		// Render a loading indicator or skeleton screen while waiting for authentication
-		return <div>Loading...</div>;
+		return <LoadingSpinner />;
 	}
 
 	return isAuthenticated ? <>{Element}</> : <Navigate to="/sign-in" replace />;
