@@ -7,6 +7,7 @@ import "./styles/delete.css";
 import "./styles/view.css";
 import LoadingSpinner from "../../loading-spinner/LoadingSpinner";
 import RecipeView from "./RecipeView";
+import getRecipeByRID from "../../../api/get/getRecipeByRID";
 
 export default function View() {
 	// get recipe id from url
@@ -21,11 +22,7 @@ export default function View() {
 	useEffect(() => {
 		// get recipe from backend
 		(async () => {
-			let res = await fetch(
-				`${import.meta.env.VITE_SERVER_URL}/recipe?recipeID=${rid}`
-			);
-			let data = await res.json();
-			setRecipe(data.recipes[rid]);
+			setRecipe(await getRecipeByRID(rid));
 		})();
 	}, []);
 

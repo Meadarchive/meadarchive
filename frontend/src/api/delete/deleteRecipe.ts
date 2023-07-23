@@ -1,5 +1,5 @@
-import { getDeleteRecipeOptions } from "../helpers/options";
-import firebase from "../service/firebase";
+import { getDeleteRecipeOptions } from "../options";
+import firebase from "../../service/firebase";
 
 export default async function deleteRecipe(rid: string, user: firebase.User) {
 	// delete recipe from backend
