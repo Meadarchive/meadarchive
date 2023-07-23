@@ -73,16 +73,18 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+    max-width: 200px;
 }
 
 @media (max-width: 800px) {
-    .dashboard-recipe {
-        flex-direction: column;
-    }
-    .dashboard-delete-recipe {
-        margin-top: 1rem;
-    }
-    .dashboard-recipe-left {
-        align-items: center;
-    }
+	.dashboard-recipe {
+		flex-direction: column;
+	}
+	.dashboard-delete-recipe {
+        max-width: 100%;
+		margin-top: 1rem;
+	}
+	.dashboard-recipe-left {
+		align-items: center;
+	}
 }
