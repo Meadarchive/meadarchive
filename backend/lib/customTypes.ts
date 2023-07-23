@@ -63,23 +63,23 @@ export const BatchSchema = z.object({
     stage: z.enum(validStages),
 });
 
-export const BaseBatchUpdate = z.object({
+export const BaseBatchUpdateSchema = z.object({
     batchID: z.string().nonempty(),
     updateDate: z.string().nonempty(),
     updateType: z.enum(["text", "gravity", "stage"]),
 });
 
-export const TextBatchUpdate = BaseBatchUpdate.extend({
+export const TextBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["text"]),
     updateText: z.string().nonempty(),
 });
 
-export const GravityBatchUpdate = BaseBatchUpdate.extend({
+export const GravityBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["gravity"]),
     updateGravity: z.number().nonnegative(),
 });
 
-export const StageBatchUpdate = BaseBatchUpdate.extend({
+export const StageBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["stage"]),
     updateStage: z.enum(validStages),
 });
@@ -87,10 +87,10 @@ export const StageBatchUpdate = BaseBatchUpdate.extend({
 
 export type Recipe = z.infer<typeof RecipeSchema>
 export type Batch = z.infer<typeof BatchSchema>
-export type BaseBatchUpdate = z.infer<typeof BaseBatchUpdate>
-export type TextBatchUpdate = z.infer<typeof TextBatchUpdate>
-export type GravityBatchUpdate = z.infer<typeof GravityBatchUpdate>
-export type StageBatchUpdate = z.infer<typeof StageBatchUpdate>
+export type BaseBatchUpdate = z.infer<typeof BaseBatchUpdateSchema>
+export type TextBatchUpdate = z.infer<typeof TextBatchUpdateSchema>
+export type GravityBatchUpdate = z.infer<typeof GravityBatchUpdateSchema>
+export type StageBatchUpdate = z.infer<typeof StageBatchUpdateSchema>
 
 export interface DictionaryOfRecipes {
     [key: string] : Recipe
