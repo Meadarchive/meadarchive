@@ -1,0 +1,24 @@
+#create-batch-form-container {
+	max-width: 1000px;
+	margin: 1rem;
+}
+
+#create-batch-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+#equipment-container {
+	display: flex;
+	gap: 1rem;
+}
+
+#create-batch-stage-label {
+	font-weight: bold;
+}
+
+#create-batch-stage-container > * {
+	font-size: 1.2rem;
+}
