@@ -187,8 +187,6 @@ const CreateForm: React.FC = () => {
 			recipeSize: Number(formState.recipeSize),
 		};
 
-		// post to import.meta.env.VITE_SERVER_URL with options from ../../../helpers/options.tsx
-
 		const options = await getCreateRecipeOptions(user, parsedFormState)
 
 		console.log(options)

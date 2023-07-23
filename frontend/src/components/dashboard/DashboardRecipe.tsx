@@ -4,7 +4,7 @@ import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import "./styles/dashboard.css";
 import recipeSizeFormatter from "../recipe/view/helpers/recipeSizeFormatter";
 import DeleteConfirmation from "../recipe/view/DeleteConfirmation";
-import deleteRecipe from "../recipe/view/helpers/deleteRecipe";
+import deleteRecipe from "../../api/deleteRecipe";
 import firebase from "../../service/firebase";
 
 interface DashboardRecipeProps {
