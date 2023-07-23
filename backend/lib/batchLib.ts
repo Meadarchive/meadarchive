@@ -1,5 +1,6 @@
-import { Batch } from "./customTypes"
+import { Batch, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate } from "./customTypes"
 import { firebaseApp, db } from "./firebaseApp"
+import express from "express"
 
 export async function firebaseInsertBatch(batch: Batch, batchID: string, collectionName: string, userID: string){
 

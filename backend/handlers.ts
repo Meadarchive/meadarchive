@@ -1,7 +1,7 @@
 import express from "express";
 
 import { config } from "./config"
-import { Recipe, RecipeSchema, Batch, BatchSchema} from "./lib/customTypes";
+import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
 import { firebaseInsertBatch } from "./lib/batchLib"
 import { genUID } from "./lib/util"
@@ -133,4 +133,45 @@ export async function createBatch(req: express.Request, res: express.Response){
 
     }
 }
+
+export async function createBatchUpdate(req: express.Request, res: express.Response){
+    try{
+        const userID: string = res.locals.user.uid
+        let batchUpdate = req.body as BaseBatchUpdate
+        let schema;
+
+        // Indentify the type of update
+        if (batchUpdate.updateType == "text"){
+            batchUpdate = req.body as TextBatchUpdate
+            schema = TextBatchUpdateSchema
+
+        } else if (batchUpdate.updateType == "gravity"){
+            batchUpdate = req.body as GravityBatchUpdate
+            schema = GravityBatchUpdateSchema
+
+        } else if (batchUpdate.updateType == "stage"){
+            batchUpdate = req.body as StageBatchUpdate
+            schema = StageBatchUpdateSchema
+
+        } else {
+            res.status(400).send({"error": `Invalid update type '${batchUpdate.updateType}'`})
+            return
+        }
+
+        // Validate the schema
+        try{
+            schema.parse(batchUpdate)
+        }
+        catch (error){
+            res.status(400).send({"error": error})
+            return
+        }
+
+        res.status(200).send({"msg": "Authorized", "batchUpdate": batchUpdate})
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while creating the batch update`});
+    }
+} 
 
