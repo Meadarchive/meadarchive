@@ -43,3 +43,10 @@
 .recipe-view-subtitle {
 	font-size: 1.2rem;
 }
+
+.recipe-view-subtitle, #recipe-author {
+	overflow-wrap: anywhere;
+	word-wrap: anywhere;
+	hyphens: auto;
+	flex-wrap: wrap;
+}
