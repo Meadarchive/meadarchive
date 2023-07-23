@@ -20,7 +20,7 @@ const CreateForm: React.FC = () => {
 		addons: [],
 		chemicals: [],
 		recipeSize: 1,
-		recipeSizeUnit: "gallons",
+		recipeSizeUnit: "gallon",
 	});
 
 	const navigate = useNavigate();
