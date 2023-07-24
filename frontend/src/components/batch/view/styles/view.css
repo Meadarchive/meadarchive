@@ -49,10 +49,12 @@
 	font-size: 1.5rem;
 	font-weight: bold;
 }
+
 #updates-title,
 #batch-created-title {
 	text-align: center;
 }
+
 #view-batch-container {
 	display: flex;
 	align-items: center;
