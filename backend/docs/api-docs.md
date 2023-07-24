@@ -1,5 +1,5 @@
 # API Documentation for meadarchive backend
-### The backend api is a collection of endpoints that the frontend interacts with to manipulate and access the data it needs. Although the backend will attempt to identify the user and will restrict some data access if it cannot the authentication itself is handled by firebase.
+### The backend api is a collection of endpoints that the frontend interacts with to manipulate and access the data it needs. Although the backend will attempt to identify the user and will restrict some data access ff it cannot. The authentication itself is handled by firebase.
 
 ## Authorization
 Some routes are "public" routes and do not require for the server to identify the user in the quest. For example GET routes such as `/batch`. 
