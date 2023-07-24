@@ -4,7 +4,7 @@ import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
 import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches, checkIfUserOwnsBatch, firebaseDeleteBatch, checkIfUpdateExits, firebaseDeleteBatchUpdate, firebaseGetBatchUpdate} from "./lib/batchLib"
-import { genUID } from "./lib/util"
+import { genUID, getUserInfoByID } from "./lib/util"
 
 export async function healthStatus(req: express.Request, res: express.Response) {
     try{
@@ -300,4 +300,31 @@ export async function getBatchUpdate(req: express.Request, res: express.Response
         res.status(500).send({ "error": `Internal server error while getting batch update (BatchID: '${req.query.batchID}', UpdateID: '${req.query.updateID}')`});
     }
 }
+
+export async function whoami(req: express.Request, res: express.Response){
+    try{
+        const userID = req.query.userID as string | null
+
+        if (userID){
+            let userInfo  = await getUserInfoByID(userID)
+
+            return res.status(200).send({"userInfo": userInfo})
+           
+
+        } else {
+            let uid = res.locals.user?.uid as string | null;
+            let userInfo  = await getUserInfoByID(uid)
+
+            return res.status(200).send({"userInfo": userInfo})
+            
+        }
+
+
+
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while getting user info`});
+    }
+} 
 
