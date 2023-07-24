@@ -189,7 +189,7 @@ export async function createBatchUpdate(req: express.Request, res: express.Respo
 export async function getBatch(req: express.Request, res: express.Response){
     try{
         const searchUserID = req.query.userID as string | null
-        const searchBatchID = req.query.recipeID as string | null
+        const searchBatchID = req.query.batchID as string | null
 
         const recipes = await firebaseGetBatches(searchBatchID, searchUserID, config.batchesCollectionName)
 
