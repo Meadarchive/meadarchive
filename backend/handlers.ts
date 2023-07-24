@@ -277,6 +277,8 @@ export async function deleteBatchUpdate(req: express.Request, res: express.Respo
 
         await firebaseDeleteBatchUpdate(batchID, updateID, config.batchesCollectionName)
 
+        res.status(200).send({"msg": `Successfully deleted batch update with id: '${updateID}'`})
+
 
     } catch (err){
         console.log(err)
