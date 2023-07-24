@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+const validStages = [
+    "Not Started", 
+    "Primary Fermentation", 
+    "Secondary Fermentation", 
+    "Bottled", 
+    "Aging", 
+    "Completed"
+] as const
+
 export const LiquidSchema = z.object({
     liquid: z.string().nonempty(),
     amount: z.number(),
@@ -49,13 +58,39 @@ export const BatchSchema = z.object({
     recipeID: z.string().nonempty(),
     dateStarted: z.string().nonempty(),
     equipment: z.array(EquipmentSchema),
-    inital_gravity: z.number().nonnegative(),
+    initialGravity: z.number().nonnegative(),
     water: z.string().nonempty(),
-    stage: z.enum(["Not Started", "Primary Fermentation", "Secondary Fermentation", "Bottled", "Aging", "Completed"]),
+    stage: z.enum(validStages),
 });
+
+export const BaseBatchUpdateSchema = z.object({
+    batchID: z.string().nonempty(),
+    updateDate: z.string().nonempty(),
+    updateType: z.enum(["text", "gravity", "stage"]),
+});
+
+export const TextBatchUpdateSchema = BaseBatchUpdateSchema.extend({
+    updateType: z.enum(["text"]),
+    text: z.string().nonempty(),
+});
+
+export const GravityBatchUpdateSchema = BaseBatchUpdateSchema.extend({
+    updateType: z.enum(["gravity"]),
+    newGravity: z.number().nonnegative(),
+});
+
+export const StageBatchUpdateSchema = BaseBatchUpdateSchema.extend({
+    updateType: z.enum(["stage"]),
+    newStage: z.enum(validStages),
+});
+
 
 export type Recipe = z.infer<typeof RecipeSchema>
 export type Batch = z.infer<typeof BatchSchema>
+export type BaseBatchUpdate = z.infer<typeof BaseBatchUpdateSchema>
+export type TextBatchUpdate = z.infer<typeof TextBatchUpdateSchema>
+export type GravityBatchUpdate = z.infer<typeof GravityBatchUpdateSchema>
+export type StageBatchUpdate = z.infer<typeof StageBatchUpdateSchema>
 
 export interface DictionaryOfRecipes {
     [key: string] : Recipe
