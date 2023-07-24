@@ -5,7 +5,7 @@ import {
 	Batch,
 	validStages,
 	Equipment,
-} from "../../../api/create/interfaces/createBatchInterface";
+} from "../../../api/interfaces/batchInterface";
 import { useAuth } from "../../../hooks/useAuth";
 import "./styles/create.css";
 import RecipeInterface from "../../recipe/view/interfaces/RecipeInterface";
@@ -43,7 +43,7 @@ export default function Create() {
 		dateStarted: Date.now().toString(),
 		equipment: [{ item: "", quantity: 0 }],
 		water: "",
-		inital_gravity: 1,
+		initialGravity: 1,
 	});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,8 +159,8 @@ export default function Create() {
 					<label>Initial Gravity:</label>
 					<input
 						type="number"
-						name="inital_gravity"
-						value={batchState.inital_gravity}
+						name="initialGravity"
+						value={batchState.initialGravity}
 						onChange={handleChange}
 					/>
 				</div>
