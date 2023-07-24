@@ -62,3 +62,20 @@ async function firebaseInsertBatchStageUpdate(batchUpdate: StageBatchUpdate, upd
 
     await collectionRef.doc(batchID).update({stage: batchUpdate.newStage})
 }
+
+export async function firebaseGetBatches(batchID: string | null, userID: string | null, collectionName: string){
+    const collectionRef = db.collection(collectionName);
+    let batches: { [key: string]: any } = {};
+
+    // Select all unless userid or batch id are passed
+    if (batchID){
+        let queryRef = collectionRef.doc(batchID)
+        let batchDoc = await queryRef.get()
+
+        batches[batchDoc.id] = batchDoc.data()
+
+    }
+
+    return batches
+
+}

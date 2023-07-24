@@ -3,7 +3,7 @@ import express from "express";
 import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
-import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists} from "./lib/batchLib"
+import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches } from "./lib/batchLib"
 import { genUID } from "./lib/util"
 
 export async function healthStatus(req: express.Request, res: express.Response) {
@@ -184,5 +184,21 @@ export async function createBatchUpdate(req: express.Request, res: express.Respo
         console.log(err)
         res.status(500).send({ "error": `Internal server error while creating a batch update`});
     }
-} 
+}
+
+export async function getBatch(req: express.Request, res: express.Response){
+    try{
+        const searchUserID = req.query.userID as string | null
+        const searchBatchID = req.query.recipeID as string | null
+
+        const recipes = await firebaseGetBatches(searchBatchID, searchUserID, config.batchesCollectionName)
+
+
+        res.status(200).send({"msg": "Authorized", "batches": recipes})
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while getting batch. (BatchID: '${req.query.batchID}', UserID: '${req.query.userID}')`});
+    }
+}
 
