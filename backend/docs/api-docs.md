@@ -72,7 +72,9 @@ Requires authentication: `No`
 | --- | --- | --- | --- |
 | `UserID`  | `string` | The id of the user to return data for | Optional
 
-Example responses:
+<br>
+ 
+Example response:
 ```json
 {
     "userInfo": {
@@ -100,6 +102,77 @@ Example responses:
     }
 }
 ```
+Status: `200`
+
+<br>
+
+### GET `/recipe`
+This endpoint returns a recipe object either based on the `recipeID` or `userID` passed in the query string. If using `userID` all recipes created by that user will be returned. If no parameters are passed then all recipes will be returned. If both are passed then the `recipeID` will be used.
+
+Requires authentication: `No`
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `recipeID`  | `string` | The id of the recipe to be returned | Optional
+| `userID`  | `string` | The id of the user whos recipe to return | Optional
+
+<br>
+
+Example response:
+```json
+{
+    "msg": "Authorized",
+    "recipes": {
+        "7009363b-396b-4f65-89b7-f064e8c54ae9": {
+            "recipeName": "My amazing recipe 4",
+            "yeastType": "EC1118",
+            "recipeSize": 15,
+            "recipeDescription": "description\n\"\n\"\n\n_test_",
+            "honeyTypes": [
+                {
+                    "amount": 2250,
+                    "unit": "g",
+                    "honey": "Cheap ass honey"
+                },
+                {
+                    "amount": 750,
+                    "unit": "g",
+                    "honey": "Expensive ass honey"
+                }
+            ],
+            "addons": [
+                {
+                    "amount": 5,
+                    "unit": "g",
+                    "addon": "Dried lavender"
+                }
+            ],
+            "yeastAmount": 5,
+            "liquids": [
+                {
+                    "amount": 10000,
+                    "unit": "ml",
+                    "liquid": "water"
+                }
+            ],
+            "chemicals": [
+                {
+                    "amount": 5,
+                    "unit": "g",
+                    "chemical": "Bentonite"
+                }
+            ],
+            "author": "MdI4Du5imwcExc7XiZvxDPwL8923",
+            "recipeSizeUnit": "litre"
+        }
+    }
+}
+
+```
+Status: `200`
+
+
+
 
 
 
