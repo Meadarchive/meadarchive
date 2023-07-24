@@ -63,7 +63,43 @@ Status: `200`
 <br>
 
 ### GET `/whoami`
-End that returns
+This endpoint returns user data based on user id. If user id is passed in the query string it will return data for that user. If no user id is passed but a valid authorization header is set then it will return data for the user that is identified by the token. Otherwise `null` is returned.
+
+Requires authentication: `No`
+
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `UserID`  | `string` | The id of the user to return data for | Optional
+
+Example responses:
+```json
+{
+    "userInfo": {
+        "uid": "EGKwKPUpR3emxd6wsaW03WYXmJs1",
+        "email": "test@gmail.com",
+        "emailVerified": true,
+        "displayName": "Eugene Levinson",
+        "photoURL": "https://lh3.googleusercontent.com/a/AAcHTte4clHITbCIuXAC3FoCJgswgbs4cuh3UcqAldhPEd8Rzw=s96-c",
+        "disabled": false,
+        "metadata": {
+            "lastSignInTime": "Mon, 24 Jul 2023 13:22:42 GMT",
+            "creationTime": "Sun, 09 Jul 2023 19:06:55 GMT",
+            "lastRefreshTime": "Mon, 24 Jul 2023 17:15:32 GMT"
+        },
+        "tokensValidAfterTime": "Sun, 09 Jul 2023 19:06:55 GMT",
+        "providerData": [
+            {
+                "uid": "105004967643575426189",
+                "displayName": "Eugene Levinson",
+                "email": "test@gmail.com",
+                "photoURL": "https://lh3.googleusercontent.com/a/AAcHTte4clHITbCIuXAC3FoCJgswgbs4cuh3UcqAldhPEd8Rzw=s96-c",
+                "providerId": "google.com"
+            }
+        ]
+    }
+}
+```
 
 
 
