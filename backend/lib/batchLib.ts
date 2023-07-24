@@ -152,3 +152,14 @@ export async function firebaseDeleteBatchUpdate(batchID: string, updateID: strin
 
     await docRef.delete()
 }
+
+export async function firebaseGetBatchUpdate(batchID: string | null, updateID:string | null, collectionName: string){
+    if (!batchID || !updateID){
+        return {}
+    }
+
+    const docRef = db.collection(collectionName).doc(batchID).collection("updates").doc(updateID)
+    const doc = await docRef.get()
+    return doc.data()
+
+}

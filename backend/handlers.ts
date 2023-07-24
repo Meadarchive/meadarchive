@@ -3,7 +3,7 @@ import express from "express";
 import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
-import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches, checkIfUserOwnsBatch, firebaseDeleteBatch, checkIfUpdateExits, firebaseDeleteBatchUpdate } from "./lib/batchLib"
+import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches, checkIfUserOwnsBatch, firebaseDeleteBatch, checkIfUpdateExits, firebaseDeleteBatchUpdate, firebaseGetBatchUpdate} from "./lib/batchLib"
 import { genUID } from "./lib/util"
 
 export async function healthStatus(req: express.Request, res: express.Response) {
@@ -285,5 +285,19 @@ export async function deleteBatchUpdate(req: express.Request, res: express.Respo
         res.status(500).send({ "error": `Internal server error while deleting batch update (BatchID: '${req.query.batchID}', UpdateID: '${req.query.updateID}')`});
     }
 
+}
+
+export async function getBatchUpdate(req: express.Request, res: express.Response){
+    try{
+        const searchBatchID = req.query.batchID as string | null
+        const searchUpdateID = req.query.updateID as string | null
+
+        const batchUpdate = await firebaseGetBatchUpdate(searchBatchID, searchUpdateID, config.batchesCollectionName)
+        
+        res.status(200).send({"msg": "Authorized", "batchUpdate": batchUpdate})
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while getting batch update (BatchID: '${req.query.batchID}', UpdateID: '${req.query.updateID}')`});
+    }
 }
 
