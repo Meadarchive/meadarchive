@@ -138,3 +138,17 @@ export async function firebaseDeleteBatch(batchID: string, collectionName: strin
 
     await docRef.delete()
 }
+
+export async function checkIfUpdateExits(batchID: string, updateID: string, collectionName: string){
+    const docRef = db.collection(collectionName).doc(batchID).collection("updates").doc(updateID)
+
+    const doc = await docRef.get()
+
+    return doc.exists
+}
+
+export async function firebaseDeleteBatchUpdate(batchID: string, updateID: string, collectionName: string){
+    const docRef = db.collection(collectionName).doc(batchID).collection("updates").doc(updateID)
+
+    await docRef.delete()
+}
