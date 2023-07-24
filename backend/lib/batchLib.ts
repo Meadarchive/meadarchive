@@ -117,7 +117,7 @@ export async function firebaseGetBatches(batchID: string | null, userID: string 
 
 }
 
-export async function checkIfUserOwnsBatch(batchID: string, userID: string, collectionName: string){
+export async function checkIfUserOwnsBatch(batchID: string, collectionName: string, userID: string, ){
     const docRef = db.collection(collectionName).doc(batchID)
 
     const doc = await docRef.get()

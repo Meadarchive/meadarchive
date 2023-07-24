@@ -229,6 +229,8 @@ export async function deleteBatch(req: express.Request, res: express.Response){
 
         await firebaseDeleteBatch(batchID, config.batchesCollectionName)
 
+        res.status(200).send({"msg": `Successfully deleted batch with id: '${batchID}'`})
+
     } catch (err){
         console.log(err)
         res.status(500).send({ "error": `Internal server error while deleting batch '${req.query.batchID}'`});
