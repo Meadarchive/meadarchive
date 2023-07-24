@@ -11,23 +11,27 @@ For a request to be authorzied it needs to contain an `Authorization` header in 
 
 In the case that access was blocked all private end point will have the following responce:
 
+
 ```json
-Status: 401
-Response object: { "error": "Not Authorized" }
+{ "error": "Not Authorized" }
 ```
+Status: `401` 
+
 <br>
 
-If an error occurs while attempting to identify the user in `authMiddleware`:
+If an error occurs while attempting to identify the user in `authMiddleware`: 
+
 ```json
-Status: 500
-Responce object: { "error": "Internal Server Error During Auth"}
+{ "error": "Internal Server Error During Auth"}
 ```
+Status: `500`
+
 <br>
 
 If an error occurs  in `restrictAccessMiddleware`:
 ```json
-Status: 500
-Responce object: { "error": "Internal Server Error During Acess Verification" }
+{ "error": "Internal Server Error During Acess Verification" }
 ```
+Status: `500`
 
 
