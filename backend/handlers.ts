@@ -191,10 +191,10 @@ export async function getBatch(req: express.Request, res: express.Response){
         const searchUserID = req.query.userID as string | null
         const searchBatchID = req.query.batchID as string | null
 
-        const recipes = await firebaseGetBatches(searchBatchID, searchUserID, config.batchesCollectionName)
+        const batches = await firebaseGetBatches(searchBatchID, searchUserID, config.batchesCollectionName)
 
 
-        res.status(200).send({"msg": "Authorized", "batches": recipes})
+        res.status(200).send({"msg": "Authorized", "batches": batches})
 
     } catch (err){
         console.log(err)

@@ -99,6 +99,18 @@ export async function firebaseGetBatches(batchID: string | null, userID: string 
         queryResult.forEach((doc: { id: string; data: () => any; }) => {
             batches[doc.id] = doc.data()
         });
+
+        // Get list of updates from collection updates
+        for (const batchID in batches){
+            let updatesRef = collectionRef.doc(batchID).collection("updates").orderBy("updateDate", "asc")
+            let updates = await updatesRef.get()
+
+            batches[batchID].updates = {}
+
+            updates.forEach((doc: { id: string; data: () => any; }) => {
+                batches[batchID].updates[doc.id] = doc.data()
+            });
+        }
     }
 
     return batches
