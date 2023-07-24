@@ -116,3 +116,25 @@ export async function firebaseGetBatches(batchID: string | null, userID: string 
     return batches
 
 }
+
+export async function checkIfUserOwnsBatch(batchID: string, userID: string, collectionName: string){
+    const docRef = db.collection(collectionName).doc(batchID)
+
+    const doc = await docRef.get()
+
+    const batch = doc.data()
+
+    const owner = batch ? batch.author : null;
+
+    if (owner && owner == userID){
+        return true
+    }
+
+    return false
+}
+
+export async function firebaseDeleteBatch(batchID: string, collectionName: string){
+    const docRef = db.collection(collectionName).doc(batchID)
+
+    await docRef.delete()
+}

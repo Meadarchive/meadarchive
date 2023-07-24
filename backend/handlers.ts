@@ -3,7 +3,7 @@ import express from "express";
 import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
-import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches } from "./lib/batchLib"
+import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches, checkIfUserOwnsBatch, firebaseDeleteBatch} from "./lib/batchLib"
 import { genUID } from "./lib/util"
 
 export async function healthStatus(req: express.Request, res: express.Response) {
@@ -199,6 +199,39 @@ export async function getBatch(req: express.Request, res: express.Response){
     } catch (err){
         console.log(err)
         res.status(500).send({ "error": `Internal server error while getting batch. (BatchID: '${req.query.batchID}', UserID: '${req.query.userID}')`});
+    }
+}
+
+export async function deleteBatch(req: express.Request, res: express.Response){
+    try{
+        const userID: string = res.locals.user.uid
+
+        if (!req.body.batchID){
+            res.status(400).send({"error": `Batch ID is null or undefined`})
+            return
+        }
+
+        const batchID = req.body.batchID as string
+
+        const batchExists = await checkIfBatchExists(batchID, config.batchesCollectionName)
+
+        if(!batchExists){
+            res.status(400).send({"error": `No batch with id '${batchID}' exists`})
+            return
+        }
+
+        const userOwnsBatch =  await checkIfUserOwnsBatch(batchID, config.batchesCollectionName, userID)
+
+        if (!userOwnsBatch){
+            res.status(400).send({"error": `User does not own this batch`})
+            return
+        }
+
+        await firebaseDeleteBatch(batchID, config.batchesCollectionName)
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while deleting batch '${req.query.batchID}'`});
     }
 }
 
