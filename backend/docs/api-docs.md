@@ -1,5 +1,5 @@
 # API Documentation for meadarchive backend
-### The backend api is a collection of endpoints that the frontend interacts with to manipulate and access the data it needs. Although the backend will attempt to identify the user and will restrict some data access ff it cannot. The authentication itself is handled by firebase.
+ The backend api is a collection of endpoints that the frontend interacts with to manipulate and access the data it needs. Although the backend will attempt to identify the user and will restrict some data access ff it cannot. The authentication itself is handled by firebase.
 
 ## Authorization
 Some routes are "public" routes and do not require for the server to identify the user in the quest. For example GET routes such as `/batch`. 
@@ -33,5 +33,38 @@ If an error occurs  in `restrictAccessMiddleware`:
 { "error": "Internal Server Error During Acess Verification" }
 ```
 Status: `500`
+
+<br>
+<br>
+
+## Endpoints
+For all endpoints, if the server encounters an unexpected error it will set `status 500` and return a json object with parameter `error`. 
+
+For example:
+
+```json
+{ "error": "Internal server error during creation of a recipe" }
+```
+
+<br>
+
+### GET `/health`
+This is a simple debug endpoint that is used to check that the server is running. More data might be added later. 
+
+Requires authentication: `No`
+
+
+Example responses:
+```json
+{ "status": "ok" }
+```
+Status: `200`
+
+<br>
+
+### GET `/whoami`
+End that returns
+
+
 
 
