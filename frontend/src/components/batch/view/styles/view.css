@@ -61,3 +61,8 @@
 	justify-content: center;
 	flex-direction: column;
 }
+
+#starting-container > div > div:nth-child(4) {
+    word-break: anywhere;
+    overflow-wrap: anywhere;
+}
