@@ -172,8 +172,56 @@ Example response:
 Status: `200`
 
 
+<br>
 
+### GET `/batch`
+This endpoint returns the batch object including all the batch updates. Either `batchID` or `userID` can be used in the query. If both are passed in, then `batchID` is prioritised. If neither is used all batches will be returned.
 
+Requires authentication: `No`
 
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `batchID`  | `string` | The id of the batch to be returned | Optional
+| `userID`  | `string` | The id of the user whos batches to return | Optional
+
+```json
+{
+    "msg": "Authorized",
+    "batches": {
+        "06df3c1e-276c-42f4-942f-20aff58759dd": {
+            "stage": "Bottled",
+            "dateStarted": "2023-07-15T12:34:56.000Z",
+            "initialGravity": 1.09,
+            "author": "EGKwKPUpR3emxd6wsaW03WYXmJs1",
+            "equipment": [
+                {
+                    "item": "One Gallon Demijohn",
+                    "quantity": 1
+                },
+                {
+                    "item": "Airlock",
+                    "quantity": 2
+                }
+            ],
+            "water": "Rain water",
+            "recipeID": "ffa48a50-4e9c-4b54-b9c4-810b90798af6",
+            "updates": {
+                "c92b098f-8bc5-41d6-ba63-6232e2e0529a": {
+                    "updateDate": "2023-07-25T12:34:56.000Z",
+                    "newGravity": 1.06,
+                    "batchID": "06df3c1e-276c-42f4-942f-20aff58759dd",
+                    "updateType": "gravity"
+                },
+                "38916889-ab62-4cc0-9700-2105cd2fa572": {
+                    "updateDate": "2023-07-26T12:34:56.000Z",
+                    "text": "TEST 1.",
+                    "batchID": "06df3c1e-276c-42f4-942f-20aff58759dd",
+                    "updateType": "text"
+                }
+            }
+        }
+    }
+}
+```
 
 
