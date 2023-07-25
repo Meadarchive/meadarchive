@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import getBatchByBID from "../../../api/get/getBatchByBID";
 import { BatchWithUpdates } from "../../../api/interfaces/batchInterface";
 import UpdatesContainer from "./UpdatesContainer";
@@ -10,6 +10,7 @@ import "./styles/view.css";
 export default function View() {
 	const params = useParams<{ bid?: string }>();
 	const bid = params.bid || "";
+	const navigate = useNavigate();
 
 	const [batchInfo, setBatchInfo] = useState<BatchWithUpdates | null>(null);
 
@@ -36,6 +37,7 @@ export default function View() {
 			)}
 
 			<UpdatesContainer batchInfo={batchInfo} />
+			<button onClick={() => navigate(`/batch/${batchInfo?.recipeID}/update/${bid}`)} id="add-update-button">Add Update</button>
 		</div>
 	);
 }

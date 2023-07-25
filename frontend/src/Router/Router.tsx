@@ -12,6 +12,7 @@ import NoPath from "../components/nopath/NoPath";
 import Header from "../components/header/Header";
 import PrivateRoute from "./PrivateRoute";
 import SignInPage from "../components/sign-in/SignInPage";
+import BatchUpdate from "../components/batch/view/BatchUpdate";
 
 export default function Router() {
 	return (
@@ -64,6 +65,7 @@ export default function Router() {
 							</PrivateRoute>
 						}
 					/>
+					<Route path="batch/:rid/update/:bid" element={<BatchUpdate />} />
 					<Route path="*" element={<NoPath />} />
 				</Routes>
 			</BrowserRouter>
