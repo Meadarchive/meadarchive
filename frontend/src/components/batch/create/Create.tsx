@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import createBatch from "../../../api/create/createBatch";
 import {
 	Batch,
@@ -16,6 +16,8 @@ export default function Create() {
 	let params = useParams();
 	let rid: string = params.rid || "";
 	const auth = useAuth();
+
+	const navigate = useNavigate();
 
 	const [userID, setUserID] = useState<string>("");
 	const [recipeInfo, setRecipeInfo] = useState<RecipeInterface | null>();
@@ -138,6 +140,7 @@ export default function Create() {
 		let res = await createBatch(auth.user, parsedBatchState);
 		console.log(res);
 		console.log("Form submitted with state:", parsedBatchState);
+		navigate(`/batch/${res.batchID}`);
 	};
 
 	return (
