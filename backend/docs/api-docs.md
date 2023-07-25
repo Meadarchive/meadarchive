@@ -364,7 +364,7 @@ Example body:
 
 <br>
 
-#### Ok responses:
+#### Ok response:
 ```json
 {"msg": "Authorized", "recipeID": "7009363b-396b-4f65-89b7-f064e8c54ae9"}
 ```
@@ -372,7 +372,7 @@ Status: `200`
 
 
 
-#### Schema validation fail:
+#### Schema validation fail response:
 
 ```json
 {
