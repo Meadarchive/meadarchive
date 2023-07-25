@@ -184,6 +184,8 @@ Requires authentication: `No`
 | `batchID`  | `string` | The id of the batch to be returned | Optional
 | `userID`  | `string` | The id of the user whos batches to return | Optional
 
+<br>
+
 ```json
 {
     "msg": "Authorized",
@@ -228,9 +230,33 @@ Status: `200`
 <br>
 
 ### GET `/batch/update`
-This endpoint returns **one** batch update object. The `updateID` must be passed in the query string. As the the `/batch` endpoint returns all updates for a batch, this endpoint exists only to simplify the process of retriving one specific update.
+This endpoint returns **one** batch update object. The bot `updateID` and `batchID` must be passed in the query string. As the the `/batch` endpoint returns all updates for a batch, this endpoint exists only to simplify the process of retriving one specific update.
 
 Requires authentication: `No`
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `updateID`  | `string` | The id of the update to be returned | Required
+| `batchID`  | `string` | The id of the batch that the update belongs to | Required
+
+
+<br>
+
+Example response:
+```json
+{
+    "msg": "Authorized",
+    "batchUpdate": {
+        "updateDate": "2023-07-26T12:34:56.000Z",
+        "newGravity": 1.06,
+        "batchID": "06df3c1e-276c-42f4-942f-20aff58759dd",
+        "updateType": "gravity"
+    }
+}
+```
+Status: `200`
+
+<br>
 
 
 
