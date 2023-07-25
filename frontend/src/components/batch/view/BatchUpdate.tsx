@@ -33,6 +33,16 @@ export default function Update() {
 		}));
 	};
 
+    const handleStageChange = (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		const { value } = e.target;
+		setBatchUpdate((prevBatchUpdate: BatchUpdate) => ({
+			...prevBatchUpdate,
+			newStage: value as StageBatchUpdate["newStage"],
+		}));
+	};
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setBatchUpdate((prevBatchUpdate: BatchUpdate) => ({
@@ -45,11 +55,21 @@ export default function Update() {
 		console.log("Updating batch...");
 		if (!auth.user || !batchUpdate.batchID) return;
 
+        let parsedBatchUpdate = batchUpdate;
+
+        // if batch updatea is gravity update, convert newGravity to number
+        if (batchUpdate.updateType === "gravity") {
+            parsedBatchUpdate = {
+                ...batchUpdate,
+                newGravity: Number(batchUpdate.newGravity || 0),
+            };
+        }
+
 		// Use your API function to update the batch
 		let res = await createBatchUpdate(
 			auth.user,
 			batchUpdate.batchID,
-			batchUpdate
+			parsedBatchUpdate
 		);
 		console.log(res);
 		console.log("Batch updated with state:", batchUpdate);
@@ -90,7 +110,7 @@ export default function Update() {
 						<select
 							name="newStage"
 							value={batchUpdate.newStage || ""}
-							onChange={handleUpdateTypeChange}
+							onChange={handleStageChange}
 						>
 							{validStages.map((stage) => (
 								<option key={stage} value={stage}>
