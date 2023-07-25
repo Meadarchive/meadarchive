@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import getBatchByBID from "../../../api/get/getBatchByBID";
 import { BatchWithUpdates } from "../../../api/interfaces/batchInterface";
-import "./styles/view.css"; // Import your CSS file (you can name it View.css)
+import UpdatesContainer from "./UpdatesContainer";
+import "./styles/view.css";
 
 export default function View() {
-	let params = useParams();
-	let bid: string = params.bid ? params.bid : "";
+	const params = useParams<{ bid?: string }>();
+	const bid = params.bid || "";
 
-	const [batchInfo, setBatchInfo] = useState<BatchWithUpdates | null>();
+	const [batchInfo, setBatchInfo] = useState<BatchWithUpdates | null>(null);
 
 	useEffect(() => {
 		const fetchBatchInfo = async () => {
@@ -57,26 +58,7 @@ export default function View() {
 				</>
 			)}
 
-			{batchInfo && batchInfo.updates && (
-				<div id="updates-container">
-					<div id="updates-title">Updates</div>
-					<div className="updates-list">
-						{Object.values(batchInfo.updates).map(
-							(update, index) => (
-								<div className="update" key={index}>
-									{Object.entries(update).map(
-										([key, value]) => (
-											<div key={key}>
-												{key}: {value}
-											</div>
-										)
-									)}
-								</div>
-							)
-						)}
-					</div>
-				</div>
-			)}
+			<UpdatesContainer batchInfo={batchInfo} />
 		</div>
 	);
 }
