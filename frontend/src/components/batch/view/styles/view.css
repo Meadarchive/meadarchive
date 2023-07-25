@@ -1,0 +1,68 @@
+.updates-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.update,
+#starting-container {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	border-radius: 0.5rem;
+	background: var(--background-secondary);
+	padding: 1rem;
+	width: fit-content;
+}
+
+.batch-info,
+.equipment-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.equipment-item::before {
+	font-weight: bold;
+	content: "•"; /* Unicode for the bullet point (can be replaced with any other symbol or text) */
+	margin-right: 0.5rem;
+}
+
+.update > *,
+#starting-container > *,
+#starting-container > * > *,
+#starting-container > * > * > *,
+#starting-container > * > * > * > * {
+	padding: 0.2rem;
+	background: var(--background-secondary);
+}
+
+#view-batch-container {
+	margin: 1rem;
+}
+
+#updates-title,
+#equipment-title,
+#batch-created-title {
+	margin: 1rem 0;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+#updates-title,
+#batch-created-title {
+	text-align: center;
+}
+
+#view-batch-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#starting-container > div > div:nth-child(4) {
+    word-break: anywhere;
+    overflow-wrap: anywhere;
+}

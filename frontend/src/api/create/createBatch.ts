@@ -1,6 +1,6 @@
 import firebase from "../../service/firebase";
 import { getCreateBatchOptions } from "../options";
-import { Batch } from "./interfaces/createBatchInterface";
+import { Batch } from "../interfaces/batchInterface";
 
 export default async function createBatch(user: firebase.User, body: Batch) {
 	const res = await fetch(
