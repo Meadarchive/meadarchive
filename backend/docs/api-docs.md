@@ -186,6 +186,8 @@ Requires authentication: `No`
 
 <br>
 
+Example response:
+
 ```json
 {
     "msg": "Authorized",
@@ -257,6 +259,144 @@ Example response:
 Status: `200`
 
 <br>
+
+### POST `/recipe/create`
+This endpoint creates a new recipe. The recipe object is passed in the request body.
+
+Requires authentication: `Yes`
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `recipeName`  | `string` | Non unique human readable name for a recipe | Required
+| `recipeDescription`  | `string` | Markdown supported description of the recipe | Required
+| `liquids`  | `liquid` | Array of `liquid` used in the recipe | Required
+| `yeastType`  | `string` | Name of the yeast used in the recipe | Required
+| `yeastAmount`  | `number` | Amount of yeast used in the recipe | Required
+| `honeyTypes`  | `honey` | Array of `honeys` used in the recipe | Required
+| `addons`  | `addon` | Array of `addons` used in the recipe  | Optional
+| `chemicals`  | `chemical` | Array of `chemicals` used in the recipe | Optional
+| `recipeSize`  | `number` | Volume of the recipe | Required
+| `recipeSizeUnit`  | `string` | Unit of the recipe size | Required
+
+<br>
+
+### `liquid` 
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `liquid`  | `string` | Name of the liquid | Required
+| `amount`  | `number` | Amount of the liquid | Required
+| `unit`  | `string` | Unit of the liquid | Required
+
+### `honey` 
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `honey`  | `string` | Type of the honey | Required
+| `amount`  | `number` | Amount of the honey | Required
+| `unit`  | `string` | Unit of the honey | Required
+
+### `addon` 
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `addon`  | `string` | Name of the addon (e.g. Lavander) | Required
+| `amount`  | `number` | Amount of the addon | Required
+| `unit`  | `string` | Unit of the addon | Required
+
+### `chemical`
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `chemical`  | `string` | Name of the chemical (e.g. Bentonite) | Required
+| `amount`  | `number` | Amount of the chemical | Required
+| `unit`  | `string` | Unit of the chemical | Required
+
+
+
+<br>
+
+
+Example body:
+```json
+{
+    "recipeName": "My amazing recipe 6",
+    "recipeDescription": "description\n\"\n\"\n\n_test_",
+    "liquids": [
+        {
+            "liquid": "water",
+            "amount": 10000,
+            "unit": "ml"
+        }
+    ],
+    "yeastType": "EC1118",
+    "yeastAmount": 5,
+    "honeyTypes": [
+        {
+            "honey": "Cheap ass honey",
+            "amount": 2250,
+            "unit": "g"
+        },
+        {
+            "honey": "Expensive ass honey",
+            "amount": 750,
+            "unit": "g"
+        }
+    ],
+    "addons": [
+        {
+            "addon": "Dried lavender",
+            "amount": 5,
+            "unit": "g"
+        }
+    ],
+    "chemicals": [
+        {
+            "chemical": "Bentonite",
+            "amount": 5,
+            "unit": "g"
+        }
+    ],
+    "recipeSize": 15,
+    "recipeSizeUnit": "litre"
+}
+```
+
+<br>
+
+#### Ok responses:
+```json
+{"msg": "Authorized", "recipeID": "7009363b-396b-4f65-89b7-f064e8c54ae9"}
+```
+Status: `200`
+
+
+
+#### Schema validation fail:
+
+```json
+{
+    "error": {
+        "issues": [
+            {
+                "code": "too_small",
+                "minimum": 1,
+                "type": "array",
+                "inclusive": true,
+                "exact": false,
+                "message": "Array must contain at least 1 element(s)",
+                "path": [
+                    "liquids"
+                ]
+            }
+        ],
+        "name": "ZodError"
+    }
+}
+```
+
+
+
 
 
 
