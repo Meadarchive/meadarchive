@@ -223,5 +223,16 @@ Requires authentication: `No`
     }
 }
 ```
+Status: `200`
+
+<br>
+
+### GET `/batch/update`
+This endpoint returns **one** batch update object. The `updateID` must be passed in the query string. As the the `/batch` endpoint returns all updates for a batch, this endpoint exists only to simplify the process of retriving one specific update.
+
+Requires authentication: `No`
+
+
+
 
 
