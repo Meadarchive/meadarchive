@@ -57,7 +57,7 @@ export default function Router() {
 						}
 					/>
 					<Route
-						path="/batch/create/:bid"
+						path="/batch/create/:rid"
 						element={
 							<PrivateRoute>
 								<BatchCreate />

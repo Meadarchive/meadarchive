@@ -14,7 +14,7 @@ import getRecipeByRID from "../../../api/get/getRecipeByRID";
 export default function Create() {
 	// get recipe id from url
 	let params = useParams();
-	let rid: string = params.rid ? params.rid : "";
+	let rid: string = params.rid || "";
 	const auth = useAuth();
 
 	const [userID, setUserID] = useState<string>("");
@@ -22,12 +22,12 @@ export default function Create() {
 
 	useEffect(() => {
 		const fetchRecipeInfo = async () => {
-			const recipeInfo = await getRecipeByRID(rid);
-			setRecipeInfo(recipeInfo);
+			const recipeInfoRes = await getRecipeByRID(rid);
+			setRecipeInfo(recipeInfoRes);
 		};
 
-		fetchRecipeInfo();
-	}, []);
+		rid && fetchRecipeInfo();
+	}, [rid]);
 
 	useEffect(() => {
 		console.log(auth.user?.uid);
@@ -128,6 +128,7 @@ export default function Create() {
 		if (!auth.user) return;
 		const parsedBatchState = {
 			...batchState,
+			initialGravity: parseFloat(batchState.initialGravity.toString()),
 			equipment: batchState.equipment.map((item) => ({
 				...item,
 				quantity: parseInt(item.quantity.toString()),
