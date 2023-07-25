@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
 import createBatchUpdate from "../../../api/create/createBatchUpdate";
 import {
-	TextBatchUpdate,
-	GravityBatchUpdate,
 	StageBatchUpdate,
 	BatchUpdate,
 	validStages,
 } from "../../../api/interfaces/batchInterface";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Update() {
     const params = useParams<{ bid?: string }>();
 	const bid = params.bid || "";
 	const auth = useAuth();
+    const navigate = useNavigate();
 	const [batchUpdate, setBatchUpdate] = useState<BatchUpdate>({
 		batchID: bid, // Fill in the batchID here
 		updateDate: Date.now().toString(),
@@ -73,7 +72,7 @@ export default function Update() {
 		);
 		console.log(res);
 		console.log("Batch updated with state:", batchUpdate);
-		// navigate(`/batch/${batchUpdate.batchID}`); // Uncomment this if you have navigation to the batch page
+		navigate(`/batch/${batchUpdate.batchID}`); // Uncomment this if you have navigation to the batch page
 	};
 
 	// Function to render form fields based on updateType

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getBatchByBID from "../../../api/get/getBatchByBID";
 import { BatchWithUpdates } from "../../../api/interfaces/batchInterface";
 import UpdatesContainer from "./UpdatesContainer";
