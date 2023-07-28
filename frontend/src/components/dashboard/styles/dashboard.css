@@ -93,3 +93,8 @@
 	text-align: center;
 	margin-bottom: 1rem;
 }
+
+.create-batch-button {
+	background: var(--background);
+	border-radius: 0.5rem;
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import createBatch from "../../../api/create/createBatch";
 import {
 	Batch,
@@ -14,20 +14,22 @@ import getRecipeByRID from "../../../api/get/getRecipeByRID";
 export default function Create() {
 	// get recipe id from url
 	let params = useParams();
-	let rid: string = params.rid ? params.rid : "";
+	let rid: string = params.rid || "";
 	const auth = useAuth();
+
+	const navigate = useNavigate();
 
 	const [userID, setUserID] = useState<string>("");
 	const [recipeInfo, setRecipeInfo] = useState<RecipeInterface | null>();
 
 	useEffect(() => {
 		const fetchRecipeInfo = async () => {
-			const recipeInfo = await getRecipeByRID(rid);
-			setRecipeInfo(recipeInfo);
+			const recipeInfoRes = await getRecipeByRID(rid);
+			setRecipeInfo(recipeInfoRes);
 		};
 
-		fetchRecipeInfo();
-	}, []);
+		rid && fetchRecipeInfo();
+	}, [rid]);
 
 	useEffect(() => {
 		console.log(auth.user?.uid);
@@ -128,6 +130,7 @@ export default function Create() {
 		if (!auth.user) return;
 		const parsedBatchState = {
 			...batchState,
+			initialGravity: parseFloat(batchState.initialGravity.toString()),
 			equipment: batchState.equipment.map((item) => ({
 				...item,
 				quantity: parseInt(item.quantity.toString()),
@@ -137,6 +140,7 @@ export default function Create() {
 		let res = await createBatch(auth.user, parsedBatchState);
 		console.log(res);
 		console.log("Form submitted with state:", parsedBatchState);
+		navigate(`/batch/${res.batchID}`);
 	};
 
 	return (

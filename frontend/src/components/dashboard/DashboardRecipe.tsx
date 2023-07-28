@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import "./styles/dashboard.css";
 import recipeSizeFormatter from "../recipe/view/helpers/recipeSizeFormatter";
@@ -27,6 +27,8 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 		// For example, fetch the updated list of recipes from the backend and update the state accordingly
 	};
 
+	const navigate = useNavigate()
+
 	return (
 		<div className="dashboard-recipe-container">
 			<div className="dashboard-recipe">
@@ -46,9 +48,17 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 				</div>
 				<div className="dashboard-delete-recipe">
 					{user && (
-						<DeleteConfirmation
-							onConfirm={() => handleDeleteRecipe(rid, user)}
-						/>
+						<>
+							<DeleteConfirmation
+								onConfirm={() => handleDeleteRecipe(rid, user)}
+							/>
+							<button
+								className="create-batch-button"
+								onClick={() => navigate(`/batch/create/${rid}`)}
+							>
+								Create Batch
+							</button>
+						</>
 					)}
 				</div>
 			</div>

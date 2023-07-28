@@ -22,25 +22,34 @@ export interface BatchWithUpdates extends Batch {
 	};
 }
 
-interface BaseBatchUpdate {
+export interface BaseBatchUpdate {
 	batchID: string;
 	updateDate: string;
 	updateType: "text" | "gravity" | "stage";
 }
 
-interface TextBatchUpdate extends BaseBatchUpdate {
+export interface TextBatchUpdate extends BaseBatchUpdate {
 	updateType: "text";
 	text: string;
 }
 
-interface GravityBatchUpdate extends BaseBatchUpdate {
+export interface GravityBatchUpdate extends BaseBatchUpdate {
 	updateType: "gravity";
 	newGravity: number;
 }
 
-interface StageBatchUpdate extends BaseBatchUpdate {
+export interface StageBatchUpdate extends BaseBatchUpdate {
 	updateType: "stage";
 	newStage: string;
+}
+
+export interface BatchUpdate {
+	batchID: string;
+	updateDate: string;
+	updateType: "text" | "gravity" | "stage";
+	text?: string;
+	newGravity?: number;
+	newStage?: string;
 }
 
 export const validStages = [
