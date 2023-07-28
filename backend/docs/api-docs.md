@@ -265,6 +265,8 @@ This endpoint creates a new recipe. The recipe object is passed in the request b
 
 Requires authentication: `Yes`
 
+Body schema:
+
 | Parameter | Type | Description | Optional/Required |
 | --- | --- | --- | --- |
 | `recipeName`  | `string` | Non unique human readable name for a recipe | Required
@@ -394,6 +396,71 @@ Status: `200`
     }
 }
 ```
+
+Status: `400`
+
+<br>
+
+
+### POST `/recipe/delete`
+
+This endpoint deletes a recipe. The `recipeID` must be passed in the query string. User must be the author of the recipe to delete it.
+
+Requires authentication: `Yes`
+
+Body schema:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `recipeID`  | `string` | The id of the recipe to be deleted | Required
+
+<br>
+
+Example body:
+```json
+{
+    "recipeID": "7009363b-396b-4f65-89b7-f064e8c54ae9"
+}
+```
+
+<br>
+
+#### Ok response:
+```json
+{"msg": "Successfully deleted recipe with id: 7009363b-396b-4f65-89b7-f064e8c54ae9"}
+```
+Status: `200`
+
+<br>
+
+If no recipeID was passed:
+```json
+{"error": "Recipe ID is null or undefined"}
+```
+
+Status: `400`
+
+<br>
+
+If recipe doesn't exist:
+```json
+{"error": "No recipe with id '${RecipeID}' exists"}
+```
+
+Status: `400`
+
+<br>
+
+
+
+If user does not own the recipe:
+```json
+{"error": "User does not own this recipe"}
+```
+
+Status: `400`
+
+<br>
 
 
 
