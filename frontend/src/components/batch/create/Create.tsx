@@ -156,8 +156,8 @@ export default function Create() {
 					<input
 						type="text"
 						name="batchName"
-						value={batchState.batchName} // Step 2: Bind input value to batchName state
-						onChange={handleChange} // Step 3: Update batchName state on change
+						value={batchState.batchName}
+						onChange={handleChange}
 					/>
 				</div>
 				<div>
