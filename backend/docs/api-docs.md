@@ -194,6 +194,7 @@ Example response:
     "batches": {
         "06df3c1e-276c-42f4-942f-20aff58759dd": {
             "stage": "Bottled",
+            "batchName": "My amazing batch 1",
             "dateStarted": "2023-07-15T12:34:56.000Z",
             "initialGravity": 1.09,
             "author": "EGKwKPUpR3emxd6wsaW03WYXmJs1",
