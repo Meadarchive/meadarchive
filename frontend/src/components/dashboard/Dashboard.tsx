@@ -7,7 +7,7 @@ import DashboardRecipe from "./DashboardRecipe";
 import getRecipesByUID from "../../api/get/getRecipesByUID";
 import getBatchesByUID from "../../api/get/getBatchesByUID";
 import { BatchWithUpdates } from "../../api/interfaces/batchInterface";
-import BatchInfo from "../batch/view/BatchInfo";
+import DashboardBatchInfo from "./DashboardBatchInfo";
 import "../batch/view/styles/view.css";
 import { Link } from "react-router-dom";
 import DeleteConfirmation from "../recipe/view/DeleteConfirmation";
@@ -66,7 +66,7 @@ export default function Dashboard() {
 									<Link to={`/batch/${key}`}>
 										{batch.batchName || "test"}
 									</Link>
-									<BatchInfo batchInfo={batch} />
+									<DashboardBatchInfo batchInfo={batch} />
 								</div>
 								<div className="dashboard-delete-batch">
 									<DeleteConfirmation
