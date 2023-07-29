@@ -29,7 +29,7 @@ export default function View() {
 			{batchInfo && (
 				<>
 					<div id="batch-created-title">Batch Created</div>
-					<div id="starting-container">
+					<div className="starting-container">
 						<BatchInfo batchInfo={batchInfo} />
 						<EquipmentList equipment={batchInfo.equipment} />
 					</div>
@@ -37,7 +37,7 @@ export default function View() {
 			)}
 
 			<UpdatesContainer batchInfo={batchInfo} />
-			<button onClick={() => navigate(`/batch/${batchInfo?.recipeID}/update/${bid}`)} id="add-update-button">Add Update</button>
+			<button onClick={() => navigate(`/batch/update/${bid}`)} id="add-update-button">Add Update</button>
 		</div>
 	);
 }

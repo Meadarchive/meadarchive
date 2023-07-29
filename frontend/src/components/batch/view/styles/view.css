@@ -5,7 +5,7 @@
 }
 
 .update,
-#starting-container {
+.starting-container {
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
@@ -30,10 +30,10 @@
 }
 
 .update > *,
-#starting-container > *,
-#starting-container > * > *,
-#starting-container > * > * > *,
-#starting-container > * > * > * > * {
+.starting-container > *,
+.starting-container > * > *,
+.starting-container > * > * > *,
+.starting-container > * > * > * > * {
 	padding: 0.2rem;
 	background: var(--background-secondary);
 }
@@ -62,7 +62,7 @@
 	flex-direction: column;
 }
 
-#starting-container > div > div:nth-child(4) {
+.starting-container > div > div:nth-child(4) {
     word-break: anywhere;
     overflow-wrap: anywhere;
 }
