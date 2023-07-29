@@ -13,25 +13,25 @@ export const LiquidSchema = z.object({
     liquid: z.string().nonempty(),
     amount: z.number(),
     unit: z.string().nonempty()
-});
+}).strict();
   
 export const HoneyTypeSchema = z.object({
     honey: z.string().nonempty(),
     amount: z.number(),
     unit: z.string().nonempty()
-});
+}).strict();
 
 export const AddonSchema = z.object({
     addon: z.string().nonempty(),
     amount: z.number(),
     unit: z.string().nonempty()
-});
+}).strict();
 
 export const ChemicalSchema = z.object({
     chemical: z.string().nonempty(),
     amount: z.number(),
     unit: z.string().nonempty()
-});
+}).strict();
 
 export const RecipeSchema = z.object({
     recipeName: z.string().nonempty(),
@@ -45,13 +45,13 @@ export const RecipeSchema = z.object({
     chemicals: z.array(ChemicalSchema),
     recipeSize: z.number(),
     recipeSizeUnit: z.string().nonempty()
-});
+}).strict();
 
 
 export const EquipmentSchema = z.object({
     item: z.string().nonempty(),
     quantity: z.number().int().nonnegative(),
-});
+}).strict();
   
 export const BatchSchema = z.object({
     author: z.string().nonempty(),
@@ -61,28 +61,28 @@ export const BatchSchema = z.object({
     initialGravity: z.number().nonnegative(),
     water: z.string().nonempty(),
     stage: z.enum(validStages),
-});
+}).strict();
 
 export const BaseBatchUpdateSchema = z.object({
     batchID: z.string().nonempty(),
     updateDate: z.string().nonempty(),
     updateType: z.enum(["text", "gravity", "stage"]),
-});
+}).strict();
 
 export const TextBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["text"]),
     text: z.string().nonempty(),
-});
+}).strict();
 
 export const GravityBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["gravity"]),
     newGravity: z.number().nonnegative(),
-});
+}).strict();
 
 export const StageBatchUpdateSchema = BaseBatchUpdateSchema.extend({
     updateType: z.enum(["stage"]),
     newStage: z.enum(validStages),
-});
+}).strict();
 
 
 export type Recipe = z.infer<typeof RecipeSchema>
