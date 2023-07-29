@@ -65,7 +65,7 @@ export default function Router() {
 							</PrivateRoute>
 						}
 					/>
-					<Route path="batch/:rid/update/:bid" element={<BatchUpdate />} />
+					<Route path="batch/update/:bid" element={<BatchUpdate />} />
 					<Route path="*" element={<NoPath />} />
 				</Routes>
 			</BrowserRouter>
