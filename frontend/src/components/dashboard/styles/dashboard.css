@@ -89,12 +89,21 @@
 	}
 }
 
-#dashboard-title {
+#recipes-title,
+#batches-title {
 	text-align: center;
-	margin-bottom: 1rem;
+	margin: 1rem 0;
 }
 
 .create-batch-button {
 	background: var(--background);
 	border-radius: 0.5rem;
+}
+
+#dashboard-bathes-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 1rem;
 }
