@@ -38,6 +38,20 @@ export async function getDeleteRecipeOptions(user: firebase.User | null, rid: st
 	return options;
 }
 
+export async function getDeleteBatchOptions(user: firebase.User | null, bid: string) {
+	console.log(bid)
+	let options: Options = {
+		method: "POST",
+		headers: {
+			accept: "application/json",
+			authorization: `${await user?.getIdToken()}`,
+   		 	'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ batchID: bid }),
+	};
+	return options;
+}
+
 export async function getCreateBatchOptions(user: firebase.User | null, body: any) {
 	let options: Options = {
 		method: "POST",

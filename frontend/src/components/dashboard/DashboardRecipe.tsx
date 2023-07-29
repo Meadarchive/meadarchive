@@ -49,6 +49,7 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 						<>
 							<DeleteConfirmation
 								onConfirm={() => handleDeleteRecipe(rid, user)}
+								whatIsBeingDeleted="Recipe"
 							/>
 							<button
 								className="create-batch-button"

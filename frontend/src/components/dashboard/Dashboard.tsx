@@ -10,10 +10,20 @@ import { BatchWithUpdates } from "../../api/interfaces/batchInterface";
 import BatchInfo from "../batch/view/BatchInfo";
 import "../batch/view/styles/view.css";
 import { Link } from "react-router-dom";
+import DeleteConfirmation from "../recipe/view/DeleteConfirmation";
+import firebase from "../../service/firebase";
+import deleteBatch from "../../api/delete/deleteBatch";
 
 export default function Dashboard() {
 	// get current user
 	const { user } = useAuth();
+
+	const handleDeleteBatch = async (
+		bid: string,
+		user: firebase.User | null
+	) => {
+		user && (await deleteBatch(bid, user));
+	};
 
 	const [recipes, setRecipes] = useState<RecipeInterface[]>();
 	const [batches, setBatches] = useState<BatchWithUpdates[]>();
@@ -53,9 +63,17 @@ export default function Dashboard() {
 						{Object.entries(batches).map(([key, batch]) => (
 							<div key={key} className="dashboard-batch">
 								<div className="starting-container">
-									<Link to={`/batch/${key}`}>{batch.batchName || "test"}</Link>
-									<BatchInfo  batchInfo={batch} />
+									<Link to={`/batch/${key}`}>
+										{batch.batchName || "test"}
+									</Link>
+									<BatchInfo batchInfo={batch} />
 								</div>
+								<DeleteConfirmation
+									whatIsBeingDeleted="Batch"
+									onConfirm={() => {
+										handleDeleteBatch(key, user);
+									}}
+								/>
 							</div>
 						))}
 					</div>

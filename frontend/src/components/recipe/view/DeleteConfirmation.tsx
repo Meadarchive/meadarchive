@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 interface DeleteConfirmationProps {
   onConfirm: () => void;
+  whatIsBeingDeleted: string;
 }
 
-const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ onConfirm }) => {
+const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ onConfirm, whatIsBeingDeleted }) => {
   const [confirming, setConfirming] = useState(false);
 
   const handleDeleteClick = () => {
@@ -38,7 +39,7 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ onConfirm }) =>
         </>
       ) : (
         <button className="delete-button" id="delete-recipe" onClick={handleDeleteClick}>
-          Delete Recipe
+          Delete {whatIsBeingDeleted}
         </button>
       )}
     </div>
