@@ -4,6 +4,7 @@ export interface Equipment {
 }
 
 export interface Batch {
+	batchName: string;
 	author: string;
 	recipeID: string;
 	dateStarted: string;

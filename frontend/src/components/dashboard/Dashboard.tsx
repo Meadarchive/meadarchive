@@ -9,6 +9,7 @@ import getBatchesByUID from "../../api/get/getBatchesByUID";
 import { BatchWithUpdates } from "../../api/interfaces/batchInterface";
 import BatchInfo from "../batch/view/BatchInfo";
 import "../batch/view/styles/view.css";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
 	// get current user
@@ -50,8 +51,11 @@ export default function Dashboard() {
 				{batches ? (
 					<div id="dashboard-bathes-container">
 						{Object.entries(batches).map(([key, batch]) => (
-							<div className="starting-container">
-								<BatchInfo key={key} batchInfo={batch} />
+							<div className="dashboard-batch">
+								<div className="starting-container">
+									<Link to={`/batch/${key}`}>View</Link>
+									<BatchInfo key={key} batchInfo={batch} />
+								</div>
 							</div>
 						))}
 					</div>
