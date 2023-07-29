@@ -51,7 +51,7 @@ export async function getCreateBatchOptions(user: firebase.User | null, body: an
 	return options;
 }
 
-export async function getCreateBatchUpdateaOptions(user: firebase.User | null, bid: string, update: any) {
+export async function getCreateBatchUpdateOptions(user: firebase.User | null, bid: string, update: any) {
 	let options: Options = {
 		method: "POST",
 		headers: {
