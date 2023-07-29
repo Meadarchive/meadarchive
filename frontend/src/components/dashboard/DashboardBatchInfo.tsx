@@ -12,7 +12,7 @@ const DashboardBatchInfo: React.FC<BatchInfoProps> = ({ batchInfo }) => {
 			<div className="dashboard-batch-stage">Stage: {batchInfo.stage}</div>
 			<div className="dashboard-batch-gravity">Initial Gravity: {batchInfo.initialGravity}</div>
 			<div className="dashboard-batch-recipeid">
-				Recipe:
+				Recipe:&nbsp;
 				<Link to={`/recipe/${batchInfo.recipeID}`}>
 					{batchInfo.recipeID}
 				</Link>
