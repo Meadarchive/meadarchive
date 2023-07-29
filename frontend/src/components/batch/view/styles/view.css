@@ -34,7 +34,6 @@
 .starting-container > * > *,
 .starting-container > * > * > *,
 .starting-container > * > * > * > * {
-	padding: 0.2rem;
 	background: var(--background-secondary);
 }
 

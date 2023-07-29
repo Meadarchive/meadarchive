@@ -63,7 +63,7 @@ export default function Dashboard() {
 						{Object.entries(batches).map(([key, batch]) => (
 							<div key={key} className="dashboard-batch">
 								<div className="starting-container">
-									<Link to={`/batch/${key}`}>
+									<Link className="bold-link bigger" to={`/batch/${key}`}>
 										{batch.batchName || "test"}
 									</Link>
 									<DashboardBatchInfo batchInfo={batch} />

@@ -64,18 +64,41 @@
 }
 
 .dashboard-recipe-yeast,
-.dashboard-recipe-size {
+.dashboard-recipe-size,
+.dashboard-batch-stage,
+.dashboard-batch-gravity,
+.dashboard-batch-recipeid {
 	position: relative;
-	padding-left: 1rem;
+	padding-left: 1rem!important;
 }
 
 .dashboard-recipe-yeast::before,
-.dashboard-recipe-size::before {
+.dashboard-recipe-size::before,
+.dashboard-batch-stage::before,
+.dashboard-batch-gravity::before,
+.dashboard-batch-recipeid::before {
 	font-weight: bold;
 	content: "•"; /* Unicode for the bullet point (can be replaced with any other symbol or text) */
 	position: absolute;
 	left: 0;
 	top: 0;
+}
+
+.starting-container {
+	padding: 0rem!important;
+}
+
+.batch-info > * {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.batch-info {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem!important;
+	margin-top: 1rem;
 }
 
 .dashboard-delete-recipe,
@@ -131,6 +154,10 @@
 
 .batch-info {
 	padding: 0rem!important;
+}
+
+.bigger {
+	font-size: 1.25rem;
 }
 
 #dashboard-batches-container {
