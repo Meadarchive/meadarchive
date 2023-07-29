@@ -12,7 +12,8 @@
 	width: 160px;
 }
 
-#dashboard #delete-cancel, #dashboard #delete-confirm {
+#dashboard #delete-cancel,
+#dashboard #delete-confirm {
 	width: 100px;
 }
 

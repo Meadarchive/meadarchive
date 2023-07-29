@@ -24,6 +24,10 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
 		onConfirm();
 	};
 
+	const capitalizeFirstLetter = (string: string) => {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	};
+
 	return (
 		<div id="delete-container">
 			{confirming ? (
@@ -55,9 +59,7 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
 					id="delete-recipe"
 					onClick={handleDeleteClick}
 				>
-					Delete{" "}
-					{whatIsBeingDeleted.charAt(0).toUpperCase() +
-						whatIsBeingDeleted.slice(1)}
+					Delete {capitalizeFirstLetter(whatIsBeingDeleted)}
 				</button>
 			)}
 		</div>
