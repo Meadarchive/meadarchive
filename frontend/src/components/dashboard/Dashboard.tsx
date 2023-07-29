@@ -49,12 +49,12 @@ export default function Dashboard() {
 				)}
 				<h2 id="batches-title">My batches</h2>
 				{batches ? (
-					<div id="dashboard-bathes-container">
+					<div id="dashboard-batches-container">
 						{Object.entries(batches).map(([key, batch]) => (
-							<div className="dashboard-batch">
+							<div key={key} className="dashboard-batch">
 								<div className="starting-container">
-									<Link to={`/batch/${key}`}>View</Link>
-									<BatchInfo key={key} batchInfo={batch} />
+									<Link to={`/batch/${key}`}>{batch.batchName || "test"}</Link>
+									<BatchInfo  batchInfo={batch} />
 								</div>
 							</div>
 						))}
