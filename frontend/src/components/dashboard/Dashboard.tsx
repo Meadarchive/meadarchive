@@ -69,7 +69,7 @@ export default function Dashboard() {
 									<BatchInfo batchInfo={batch} />
 								</div>
 								<DeleteConfirmation
-									whatIsBeingDeleted="Batch"
+									whatIsBeingDeleted="batch"
 									onConfirm={() => {
 										handleDeleteBatch(key, user);
 									}}
