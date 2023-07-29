@@ -34,7 +34,9 @@ export default function Dashboard() {
 			(async () => {
 				setRecipes(await getRecipesByUID(user.uid));
 				setBatches(await getBatchesByUID(user.uid));
+				setBatches(await getBatchesByUID(user.uid));
 			})();
+		console.log(batches);
 		console.log(batches);
 	}, [user]);
 	return (
@@ -83,6 +85,7 @@ export default function Dashboard() {
 					<LoadingSpinner />
 				)}
 			</div>
+				
 		</div>
 	);
 }
