@@ -13,6 +13,11 @@ body {
 	margin: 0;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+
 #welcome-container {
 	display: flex;
 	height: 85vh;
@@ -47,6 +52,7 @@ body {
 
 #welcome > div:nth-child(2) {
     margin-bottom: 2.5rem;
+    font-size: 1.5rem;
 }
 
 ul > *

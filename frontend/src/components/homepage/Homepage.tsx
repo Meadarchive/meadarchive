@@ -9,9 +9,11 @@ export default function Homepage() {
 		<div id="welcome-container">
 			<div id="welcome">
 				{user ? (
-					<div>Welcome to meadarchive {user.displayName}!</div>
+					<div className="bold">
+						Welcome to meadarchive {user.displayName}!
+					</div>
 				) : (
-					<div>Welcome to meadarchive!</div>
+					<div className="bold">Welcome to meadarchive!</div>
 				)}
 				<div>
 					Meadarchive is project to create a way to preserve and share
@@ -19,7 +21,7 @@ export default function Homepage() {
 					version as a proof of concept so many features do not exist
 					and some may be broken
 				</div>
-				<div>Take your first steps:</div>
+				<div className="bold">Take your first steps:</div>
 				<ul>
 					{!user && (
 						<>
