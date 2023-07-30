@@ -52,6 +52,20 @@ export async function getDeleteBatchOptions(user: firebase.User | null, bid: str
 	return options;
 }
 
+export async function getDeleteUpdateOptions(user: firebase.User | null, bid: string, uid: string) {
+	console.log(bid)
+	let options: Options = {
+		method: "POST",
+		headers: {
+			accept: "application/json",
+			authorization: `${await user?.getIdToken()}`,
+   		 	'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ batchID: bid, updateID: uid }),
+	};
+	return options;
+}
+
 export async function getCreateBatchOptions(user: firebase.User | null, body: any) {
 	let options: Options = {
 		method: "POST",
