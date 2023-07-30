@@ -2,7 +2,8 @@ import "./styles/browse.css";
 import RecipeInterface from "./../recipe/view/interfaces/RecipeInterface";
 import { useEffect, useState } from "react";
 import getAllRecipes from "../../api/get/getAllRecipes";
-import RecipeView from "../recipe/view/RecipeView";
+import { useAuth } from "../../hooks/useAuth";
+import DashboardRecipe from "../dashboard/DashboardRecipe";
 
 function Browse() {
 	const [recipes, setRecipes] = useState<RecipeInterface[]>();
@@ -12,12 +13,14 @@ function Browse() {
 			setRecipes(await getAllRecipes());
 		})();
 	}, []);
+	const { user } = useAuth();
 	return (
-		<div>
+        
+		<div id="browse">
 			{recipes &&
 				Object.entries(recipes).map(([rid, recipe]) => (
 					<div key={rid}>
-						<RecipeView recipe={recipe} user={null} rid={rid} />
+						<DashboardRecipe recipe={recipe} user={user ? user : null} rid={rid} />
 					</div>
 				))}
 		</div>
