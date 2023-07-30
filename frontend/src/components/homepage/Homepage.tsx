@@ -21,18 +21,18 @@ export default function Homepage() {
 					version as a proof of concept so many features do not exist
 					and some may be broken
 				</div>
-				<div className="bold">Take your first steps:</div>
+				<div>Take your first steps:</div>
 				<ul>
 					{!user && (
 						<>
-							<li>Sign in below</li>
+							<div>Sign in below</div>
 						</>
 					)}
 					{!user && <Auth>Sign in </Auth>}
-					<li>
+					<div>
 						<Link to="/recipe/create">Create a recipe</Link>
-					</li>
-					<li>Take notes of a batch</li>
+					</div>
+					<div>Take notes of a batch</div>
 				</ul>
 			</div>
 		</div>
