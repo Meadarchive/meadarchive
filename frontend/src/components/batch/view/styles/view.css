@@ -79,3 +79,7 @@
 .delete-update-container > * {
 	background-color: var(--background-secondary);
 }
+
+#update-batch-form-container {
+	padding: 1rem;
+}

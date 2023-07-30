@@ -59,10 +59,30 @@ export default function Update() {
         // if batch updatea is gravity update, convert newGravity to number
         if (batchUpdate.updateType === "gravity") {
             parsedBatchUpdate = {
-                ...batchUpdate,
+                updateType: batchUpdate.updateType,
                 newGravity: Number(batchUpdate.newGravity || 0),
+				batchID: batchUpdate.batchID,
+				updateDate: batchUpdate.updateDate,
             };
         }
+
+		if (batchUpdate.updateType === "stage") {
+			parsedBatchUpdate = {
+				updateType: batchUpdate.updateType,
+				updateDate: batchUpdate.updateDate,
+				batchID: batchUpdate.batchID,
+				newStage: batchUpdate.newStage,
+			};
+		}
+
+		if (batchUpdate.updateType === "text") {
+			parsedBatchUpdate = {
+				updateType: batchUpdate.updateType,
+				updateDate: batchUpdate.updateDate,
+				text: batchUpdate.text,
+				batchID: batchUpdate.batchID,
+			};
+		}
 
 		// Use your API function to update the batch
 		let res = await createBatchUpdate(
@@ -104,7 +124,8 @@ export default function Update() {
 			case "stage":
 				return (
 					<div>
-						<label>New Stage:</label>
+						<br />
+						<label>New Stage:&nbsp;</label>
 						<select
 							name="newStage"
 							value={batchUpdate.newStage || ""}
@@ -128,7 +149,7 @@ export default function Update() {
 			<h2>Update Batch</h2>
 			<form id="update-batch-form">
 				<div>
-					<label>Update Type:</label>
+					<label>Update Type:&nbsp;</label>
 					<select
 						name="updateType"
 						value={batchUpdate.updateType}
