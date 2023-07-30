@@ -23,4 +23,5 @@ body {
 	padding: 0;
 	background: var(--background);
 	color: white;
+	font-family:sans-serif;
 }
