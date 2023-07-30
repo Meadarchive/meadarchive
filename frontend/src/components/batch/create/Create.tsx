@@ -246,7 +246,9 @@ export default function Create() {
 			</h2>
 			<form id="create-batch-form">
 				<div>
-					<label className="bold-and-bigger-and-bigger">Batch Name:</label>
+					<label className="bold-and-bigger-and-bigger">
+						Batch Name:
+					</label>
 					<input
 						type="text"
 						name="batchName"
@@ -287,24 +289,30 @@ export default function Create() {
 					</span>
 				)}
 				<div>
-					<label className="bold-and-bigger">Date Started:&nbsp;</label>
-					<input
-						type="datetime-local"
-						name="dateStarted"
-						value={
-							batchState.dateStarted
-								? new Date(
-										parseInt(batchState.dateStarted) * 1000
-								  )
-										.toISOString()
-										.slice(0, -1)
-								: ""
-						}
-						onChange={(event) =>
-							handleDateStartedChange(event.target.value)
-						}
-						required
-					/>
+					<label className="bold-and-bigger">
+						Date Started:&nbsp;
+					</label>
+					<div className="datetime-wrapper">
+						<input
+							type="datetime-local"
+							name="dateStarted"
+							value={
+								batchState.dateStarted
+									? new Date(
+											parseInt(batchState.dateStarted) *
+												1000
+									  )
+											.toISOString()
+											.slice(0, -1)
+									: ""
+							}
+							onChange={(event) =>
+								handleDateStartedChange(event.target.value)
+							}
+							required
+						></input>
+						<span className="custom-icon">📅</span>
+					</div>
 				</div>
 				{errors.dateStarted && (
 					<span className="error-message">{errors.dateStarted}</span>
