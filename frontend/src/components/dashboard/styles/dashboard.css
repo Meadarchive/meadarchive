@@ -185,3 +185,7 @@
 	width: 100%;
 	background: var(--background-secondary);
 }
+
+.sign-in-to-create-batch-link {
+	font-size: 0.95rem;
+}

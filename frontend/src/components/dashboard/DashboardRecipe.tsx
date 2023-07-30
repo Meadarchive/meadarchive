@@ -25,7 +25,7 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 		user && (await deleteRecipe(rid, user));
 	};
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	return (
 		<div className="dashboard-recipe-container">
@@ -45,12 +45,16 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 					</div>
 				</div>
 				<div className="dashboard-delete-recipe">
-					{user && (
+					{user ? (
 						<>
-							<DeleteConfirmation
-								onConfirm={() => handleDeleteRecipe(rid, user)}
-								whatIsBeingDeleted="recipe"
-							/>
+							{user.uid == recipe.author && (
+								<DeleteConfirmation
+									onConfirm={() =>
+										handleDeleteRecipe(rid, user)
+									}
+									whatIsBeingDeleted="recipe"
+								/>
+							)}
 							<button
 								className="create-batch-button"
 								onClick={() => navigate(`/batch/create/${rid}`)}
@@ -58,6 +62,8 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 								Create Batch
 							</button>
 						</>
+					) : (
+						<Link className="sign-in-to-create-batch-link" to="/sign-in">Sign in to create batch!</Link>
 					)}
 				</div>
 			</div>

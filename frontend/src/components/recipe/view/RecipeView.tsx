@@ -105,6 +105,7 @@ const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
 				{user && user.uid === recipe.author && (
 					<DeleteConfirmation
 						onConfirm={async () => await deleteRecipe(rid, user)}
+						whatIsBeingDeleted="recipe"
 					/>
 				)}
 				{user ? (

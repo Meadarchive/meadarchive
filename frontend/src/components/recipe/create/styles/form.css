@@ -14,3 +14,8 @@
 	width: 10px; /* Adjust this value based on your preference */
 	height: auto;
 }
+
+.recipe-error {
+	margin-left: 1rem;
+	margin-top: 0.5rem;
+}
