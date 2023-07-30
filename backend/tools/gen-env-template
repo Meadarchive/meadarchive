@@ -14,7 +14,7 @@ if [ "$1" == "prod" ]; then
     RUN_MODE="production"
     PORT=5443
     NAMESPACE="prod"
-    FIREBASE_CREDS_PATH="$HOME/.etc/meadarchive/firebase-creds.json"
+    FIREBASE_CREDS_PATH="/etc/meadarchive/firebase-creds.json"
     TEST_USER_ID="E7N5xAZYApd9LZyuDP4HQTOAoih1"
 
 
@@ -23,7 +23,7 @@ elif [ "$1" == "dev" ]; then
     RUN_MODE="development"
     PORT=5080
     NAMESPACE="dev"
-    FIREBASE_CREDS_PATH="$HOME/.etc/meadarchive/dev-firebase-creds.json"
+    FIREBASE_CREDS_PATH="/etc/meadarchive/firebase-creds.json"
     TEST_USER_ID="E7N5xAZYApd9LZyuDP4HQTOAoih1"
 
 else
