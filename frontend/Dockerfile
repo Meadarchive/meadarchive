@@ -21,6 +21,6 @@ RUN npm run build
 
 
 # Run the app
-CMD ["npx", "serve", "-s", "build", "-l", "4443"]
+CMD ["bash", "-c", "source .env && npx serve -s dist -l $FRONTEND_PORT"]
 
 

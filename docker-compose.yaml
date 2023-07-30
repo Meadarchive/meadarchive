@@ -29,7 +29,7 @@ services:
         condition: on-failure
 
     ports:
-      - "${FRONTEND_PORT}:4443"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
 
     container_name: meadarchive-frontend
     tty: true

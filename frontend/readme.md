@@ -21,5 +21,5 @@ npm run dev
 ```
 npm i
 npm run build
-npx serve -s build -l 4000
+npx serve -s dist -l 4000
 ```
