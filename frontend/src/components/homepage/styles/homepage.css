@@ -1,0 +1,68 @@
+#welcome-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 2rem;
+	gap: 1rem;
+    text-align: center;
+}
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+
+#welcome-container {
+	display: flex;
+	height: 85vh;
+	justify-content: center;
+	align-items: center;
+	background-color: var(
+		--background-primary
+	); /* Assuming you have defined this CSS variable for the primary background color */
+}
+
+#welcome {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	max-width: 900px;
+	font-size: 1.75rem;
+	padding: 1rem;
+	gap: 1rem;
+	border-radius: 0.5rem;
+}
+
+#welcome > ul > div > div > span {
+	background: none;
+}
+
+@media (max-width: 800px) {
+	#welcome {
+		font-size: 1rem;
+	}
+}
+
+#welcome > div:nth-child(2) {
+    margin-bottom: 2.5rem;
+    font-size: 1.5rem;
+}
+
+ul > *
+ {
+	margin-bottom: 1.5rem;
+}
+
+#welcome > ul > div:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
