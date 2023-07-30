@@ -728,6 +728,74 @@ Status: `400`
 
 <br>
 
+### POST `/batch/update/delete`
+
+This endpoint deletes a batch update. The `updateID` and `batchID` must be passed in body. User must be the author of the update to delete it.
+
+Requires authentication: `Yes`
+
+Body schema:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `batchID`  | `string` | The id of the batch to be updated | Required
+| `updateID`  | `string` | The id of the update to be deleted | Required
+
+<br>
+
+Example body:
+```json
+{
+    "batchID": "7009363b-396b-4f65-89b7-f064e8c54ae9",
+    "updateID": "7009363b-396b-4f65-89b7-f064e8c54ae9"
+}
+```
+
+<br>
+
+#### Ok response:
+```json
+{"msg": "Successfully deleted update with id: '7009363b-396b-4f65-89b7-f064e8c54ae9'"}
+```
+Status: `200`
+
+<br>
+
+If no updateID was passed:
+```json
+{"error": "Update ID is null or undefined"}
+```
+Status: `400`
+
+<br>
+
+if no batchID was passed:
+```json
+{"error": "Batch ID is null or undefined"}
+```
+
+<br>
+
+If batch doesn't exist:
+```json
+{"error": "No batch with id '7009363b-396b-4f65-89b7-f064e8c54ae9' exists"}
+```
+
+<br>
+
+If user does not own the batch:
+```json
+{"error": "User does not own this batch"}
+```
+
+<br>
+
+If update doesn't exist:
+```json
+{"error": "No update with id '7009363b-396b-4f65-89b7-f064e8c54ae9' exists"}
+```
+
+
 
 
 
