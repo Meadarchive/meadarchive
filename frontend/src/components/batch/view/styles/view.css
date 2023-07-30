@@ -70,3 +70,12 @@
 	word-break: anywhere;
 	overflow-wrap: anywhere;
 }
+
+.delete-update-container {
+	margin-top: 1rem;
+	max-width: 300px;
+}
+
+.delete-update-container > * {
+	background-color: var(--background-secondary);
+}
