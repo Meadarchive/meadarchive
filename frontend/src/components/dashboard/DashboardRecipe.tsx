@@ -23,8 +23,6 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 		user: firebase.User | null
 	) => {
 		user && (await deleteRecipe(rid, user));
-		// You might want to refresh the list of recipes after deleting
-		// For example, fetch the updated list of recipes from the backend and update the state accordingly
 	};
 
 	const navigate = useNavigate()
@@ -51,6 +49,7 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 						<>
 							<DeleteConfirmation
 								onConfirm={() => handleDeleteRecipe(rid, user)}
+								whatIsBeingDeleted="recipe"
 							/>
 							<button
 								className="create-batch-button"

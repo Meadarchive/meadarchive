@@ -46,6 +46,7 @@ export default function Create() {
 		equipment: [{ item: "", quantity: 0 }],
 		water: "",
 		initialGravity: 1,
+		batchName: "",
 	});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,6 +151,15 @@ export default function Create() {
 				<Link to={`/recipe/${rid}`}>{recipeInfo?.recipeName}</Link>
 			</h2>
 			<form id="create-batch-form">
+				<div>
+					<label>Batch Name:</label>
+					<input
+						type="text"
+						name="batchName"
+						value={batchState.batchName}
+						onChange={handleChange}
+					/>
+				</div>
 				<div>
 					<label>Water:</label>
 					<input

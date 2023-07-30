@@ -29,7 +29,7 @@ export default function View() {
 			{batchInfo && (
 				<>
 					<div id="batch-created-title">Batch Created</div>
-					<div id="starting-container">
+					<div className="starting-container">
 						<BatchInfo batchInfo={batchInfo} />
 						<EquipmentList equipment={batchInfo.equipment} />
 					</div>

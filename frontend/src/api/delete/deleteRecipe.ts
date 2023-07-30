@@ -10,6 +10,6 @@ export default async function deleteRecipe(rid: string, user: firebase.User) {
 
 	// if recipe was deleted, redirect to home page
 	if (res.status === 200) {
-		window.location.href = "/";
+		window.location.href = "/dashboard";
 	}
 }
