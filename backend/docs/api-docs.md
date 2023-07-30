@@ -773,6 +773,8 @@ if no batchID was passed:
 ```json
 {"error": "Batch ID is null or undefined"}
 ```
+Status: `400`
+
 
 <br>
 
@@ -780,6 +782,7 @@ If batch doesn't exist:
 ```json
 {"error": "No batch with id '7009363b-396b-4f65-89b7-f064e8c54ae9' exists"}
 ```
+Status: `400`
 
 <br>
 
@@ -787,6 +790,7 @@ If user does not own the batch:
 ```json
 {"error": "User does not own this batch"}
 ```
+Status: `400`
 
 <br>
 
@@ -794,6 +798,7 @@ If update doesn't exist:
 ```json
 {"error": "No update with id '7009363b-396b-4f65-89b7-f064e8c54ae9' exists"}
 ```
+Status: `400`
 
 
 
