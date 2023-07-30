@@ -8,7 +8,6 @@ import CreateFormState from "./interfaces/CreateFormState";
 import { useNavigate } from "react-router-dom";
 import createRecipe from "../../../api/create/createRecipe";
 
-
 const CreateForm: React.FC = () => {
 	const [formState, setFormState] = useState<CreateFormState>({
 		recipeName: "",
@@ -161,9 +160,53 @@ const CreateForm: React.FC = () => {
 		});
 	};
 
-	const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+	const [formErrors, setFormErrors] = useState({
+		recipeName: "",
+		recipeDescription: "",
+		liquids: "",
+		yeastType: "",
+		yeastAmount: "",
+		honeyTypes: "",
+		recipeSize: "",
+	});
+
+	const handleFormSubmit = async (
+		event: React.FormEvent<HTMLFormElement>
+	) => {
 		event.preventDefault();
 		if (!user) return;
+		// Validate required fields
+		const errors: any = {};
+		if (!formState.recipeName.trim()) {
+			errors.recipeName = "Recipe Name is required";
+		}
+		if (!formState.recipeDescription.trim()) {
+			errors.recipeDescription = "Recipe Description is required";
+		}
+		if (formState.liquids.length === 0) {
+			errors.liquids = "At least one liquid is required";
+		}
+		if (!formState.yeastType.trim()) {
+			errors.yeastType = "Yeast Type is required";
+		}
+		if (formState.yeastAmount === 0) {
+			errors.yeastAmount = "Yeast Amount is required";
+		}
+		if (formState.honeyTypes.length === 0) {
+			errors.honeyTypes = "At least one honey type is required";
+		}
+		if (!formState.recipeSize) {
+			errors.recipeSize = "Recipe Size is required";
+		}
+		if (!formState.recipeSizeUnit) {
+			errors.recipeSizeUnit = "Recipe Size Unit is required";
+		}
+
+		// Check if any errors exist
+		if (Object.keys(errors).length > 0) {
+			setFormErrors(errors);
+			return;
+		}
 		// Convert numbers to integers
 		const parsedFormState = {
 			...formState,
@@ -187,13 +230,13 @@ const CreateForm: React.FC = () => {
 			recipeSize: Number(formState.recipeSize),
 		};
 
-		const data = await createRecipe(user, parsedFormState)
+		const data = await createRecipe(user, parsedFormState);
 
 		// You can perform additional actions with the form data here
 		console.log("Form submitted:", parsedFormState);
 
 		// redirect to recipe page
-		navigate(`/recipe/${data.recipeID}`)
+		navigate(`/recipe/${data.recipeID}`);
 	};
 
 	const renderLiquidInputs = () => {
@@ -350,6 +393,7 @@ const CreateForm: React.FC = () => {
 	return (
 		<form id="create-form" onSubmit={handleFormSubmit}>
 			<h3>Recipe Name</h3>
+			<div className="error-message recipe-error">{formErrors.recipeName}</div>
 			<div id="recipe-name-container">
 				<input
 					type="text"
@@ -363,6 +407,7 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Liquids and Amounts</h3>
+				<div className="error-message recipe-error">{formErrors.liquids}</div>
 				{renderLiquidInputs()}
 				<button
 					type="button"
@@ -382,6 +427,8 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Yeast</h3>
+			<div className="error-message recipe-error">{formErrors.yeastType}</div>
+			<div className="error-message recipe-error">{formErrors.yeastAmount}</div>
 				<div id="yeast-container">
 					<div>
 						<input
@@ -415,6 +462,7 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Honey Types and Amounts</h3>
+			<div className="error-message recipe-error">{formErrors.honeyTypes}</div>
 				{renderHoneyInputs()}
 				<button
 					type="button"
@@ -472,6 +520,7 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Recipe Size</h3>
+			<div className="error-message recipe-error">{formErrors.recipeSize}</div>
 				<div id="recipe-size-container">
 					<input
 						type="number"
@@ -501,6 +550,9 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Recipe Description</h3>
+				<div className="error-message recipe-error">
+					{formErrors.recipeDescription}
+				</div>
 				<div id="recipe-description-container">
 					<MDEditor
 						value={formState.recipeDescription}
@@ -515,7 +567,6 @@ const CreateForm: React.FC = () => {
 					/>
 				</div>
 			</div>
-
 			<button type="submit">Submit</button>
 		</form>
 	);
