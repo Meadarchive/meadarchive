@@ -463,6 +463,108 @@ Status: `400`
 
 <br>
 
+### POST `/batch/create`
+
+This endpoint creates a new batch. The batch object is passed in the request body.
+
+Requires authentication: `Yes`
+
+Body schema:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `dateStarted`  | `string` | The date the batch was started | Required
+| `batchName`  | `string` | The name of the batch | Required
+| `author`  | `string` | The id of the user who created the batch | Required
+| `equipment`  | `equipment` | An array of objects containing the equipment used in the batch | Required
+| `water`  | `string` | The type of water used in the batch | Required
+| `recipeID`  | `string` | The id of the recipe used in the batch | Required
+| `stage`  | `string` | The stage of the batch | Required
+| `initialGravity`  | `number` | The initial gravity of the batch | Required
+
+<br>
+
+### `equipment` 
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `item`  | `string` | The name of the equipment item | Required
+| `quantity`  | `number` | The quantity of the equipment item | Required
+
+
+<br>
+
+
+Example Body:
+
+```json
+{
+    "dateStarted": "2023-07-25T12:34:56.000Z",
+    "batchName": "My amazing batch",
+    "author": "E7N5xAZYApd9LZyuDP4HQTOAoih1",
+    "equipment": [
+        {
+            "item": "One Gallon Demijohn",
+            "quantity": 1
+        },
+        {
+            "item": "Airlock",
+            "quantity": 2
+        }
+    ],
+    "water": "Evains water",
+    "recipeID": "ffa48a50-4e9c-4b54-b9c4-810b90798af6",
+    "stage": "Primary Fermentation",
+    "initialGravity": 1.09
+    
+}
+```
+
+<br>
+
+#### Ok response:
+```json
+{"msg": "Authorized", "batchID": "7009363b-396b-4f65-89b7-f064e8c54ae9"}
+```
+Status: `200`
+
+<br>
+
+#### Schema validation fail response:
+
+```json
+{
+    "error": {
+        "issues": [
+            {
+                "code": "too_small",
+                "minimum": 1,
+                "type": "array",
+                "inclusive": true,
+                "exact": false,
+                "message": "Array must contain at least 1 element(s)",
+                "path": [
+                    "equipment"
+                ]
+            }
+        ],
+        "name": "ZodError"
+    }
+}
+```
+
+Status: `400`
+
+<br>
+
+#### Recipe not found response:
+
+```json
+{"error": "No recipe with id 'ffa48a50-4e9c-4b54-b9c4-810b90798af6' exists"}
+```
+
+Status: `400`
+
 
 
 
