@@ -565,6 +565,64 @@ Status: `400`
 
 Status: `400`
 
+<br>
+
+### POST `/batch/delete`
+
+This endpoint deletes a batch. The `batchID` must be passed in the query string. User must be the author of the batch to delete it.
+
+Requires authentication: `Yes`
+
+Body schema:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `batchID`  | `string` | The id of the batch to be deleted | Required
+
+<br>
+
+Example body:
+```json
+{
+    "batchID": "7009363b-396b-4f65-89b7-f064e8c54ae9"
+}
+```
+
+<br>
+
+
+#### Ok response:
+```json
+{"msg": "Successfully deleted batch with id: '7009363b-396b-4f65-89b7-f064e8c54ae9'"}
+```
+Status: `200`
+
+<br>
+
+If no batchID was passed:
+```json
+{"error": "Batch ID is null or undefined"}
+```
+Status: `400`
+
+<br>
+
+If batch doesn't exist:
+```json
+{"error": "No batch with id '7009363b-396b-4f65-89b7-f064e8c54ae9' exists"}
+```
+Status: `400`
+
+<br>
+
+If user does not own the batch:
+```json
+{"error": "User does not own this batch"}
+```
+Status: `400`
+
+
+
 
 
 
