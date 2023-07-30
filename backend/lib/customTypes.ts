@@ -54,7 +54,7 @@ export const EquipmentSchema = z.object({
 }).strict();
   
 export const BatchSchema = z.object({
-    bathcName: z.string().nonempty(),
+    batchName: z.string().nonempty(),
     author: z.string().nonempty(),
     recipeID: z.string().nonempty(),
     dateStarted: z.string().nonempty(),
