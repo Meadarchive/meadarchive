@@ -19,3 +19,18 @@ services:
       - ./backend:/meadarchive
       - ${FIREBASE_CREDS_PATH}:${FIREBASE_CREDS_PATH}
 
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+    ports:
+      - "${FRONTEND_PORT}:4443"
+
+    container_name: meadarchive-frontend
+    tty: true
+

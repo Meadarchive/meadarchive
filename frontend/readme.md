@@ -8,6 +8,7 @@ VITE_FIREBASE_STORAGE_BUCKET="<storage_bucket>"
 VITE_FIREBASE_MESSAGING_SENDER_ID="<messaging_sender_id>"
 VITE_FIREBASE_APP_ID="<app_id>"
 VITE_SERVER_URL="<server_url>"
+FRONTEND_PORT="<frontend_port>"
 ```
 
 # quickstart for dev server
