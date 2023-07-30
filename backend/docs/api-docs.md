@@ -621,6 +621,118 @@ If user does not own the batch:
 ```
 Status: `400`
 
+<br>
+
+### POST `/batch/update/create`
+
+This endpoint creates a new update for a batch. The update object is passed in the request body. There are 3 types of batch updates: `text`, `gravity` and `stage`.  Text updates are used to add notes to a batch. Gravity updates are used to record the gravity of a batch at a certain time. Stage updates are used to record a new stage of a batch at a certain time.
+
+A stage update will also update the `stage` field of the batch object.
+
+Requires authentication: `Yes`
+
+Body schema (Common for all updates):
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `batchID`  | `string` | The id of the batch to be updated | Required
+| `updateDate`  | `string` | The date the update was created | Required
+| `updateType`  | `string` | The type of update. Allowed: (`text` \| `gravity` \| `stage`)  | Required
+
+<br>
+
+#### Text update extra fields:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `text`  | `string` | The text of the update | Required
+
+<br>
+
+#### Gravity update extra fields:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `gravity`  | `number` | The gravity of the batch | Required
+
+<br>
+
+#### Stage update extra fields:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `stage`  | `string` | New stage of the batch.  Allowed: <br>  (`Not Started` \| `Primary Fermentation` \| `Secondary Fermentation` \| `Bottled` \| `Aging` \| `Completed`) | Required
+
+<br>
+
+Example body:
+```json
+{
+    "batchID": "7009363b-396b-4f65-89b7-f064e8c54ae9",
+    "updateDate": "2023-07-25T12:34:56.000Z",
+    "updateType": "text",
+    "text": "This is a text update"
+}
+```
+
+<br>
+
+#### Ok response:
+```json
+{"msg": "Authorized", "UpdateID": "7009363b-396b-4f65-89b7-f064e8c54ae9"}
+```
+Status: `200`
+
+<br>
+
+#### Batch doesn't exist response:
+```json
+{"error": "No batch with id '7009363b-396b-4f65-89b7-f064e8c54ae9' exists"}
+```
+Status: `400`
+
+<br>
+
+#### Invalid update type response:
+```json
+{"error": "Invalid update type 'UpdateType'"}
+```
+Status: `400`
+
+<br>
+
+#### Schema validation fail response:
+
+```json
+{
+    "error": {
+        "issues": [
+            {
+                "code": "too_small",
+                "minimum": 1,
+                "type": "string",
+                "inclusive": true,
+                "exact": false,
+                "message": "String must be at least 1 characters long",
+                "path": [
+                    "updateType"
+                ]
+            }
+        ],
+        "name": "ZodError"
+    }
+}
+```
+
+Status: `400`
+
+<br>
+
+
+
+
+
+
 
 
 

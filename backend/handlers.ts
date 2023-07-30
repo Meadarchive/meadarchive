@@ -178,7 +178,7 @@ export async function createBatchUpdate(req: express.Request, res: express.Respo
 
         await firebaseInsertBatchUpdate(batchUpdate, updateUID, config.batchesCollectionName)
 
-        res.status(200).send({"msg": "Authorized", "UpdateUID": updateUID})
+        res.status(200).send({"msg": "Authorized", "UpdateID": updateUID})
 
     } catch (err){
         console.log(err)
