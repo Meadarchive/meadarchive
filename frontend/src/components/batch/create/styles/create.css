@@ -15,10 +15,58 @@
 	gap: 1rem;
 }
 
+@media (max-width: 800px) {
+	#equipment-container {
+		flex-direction: column;
+	}
+
+	.error-message {
+		text-align: center;
+	}
+}
+
+.error-message {
+	color: var(--danger);
+	font-weight: bold;
+}
+
 #create-batch-stage-label {
 	font-weight: bold;
 }
 
-#create-batch-stage-container > * {
+.bold-and-bigger {
+	font-weight: bold;
 	font-size: 1.2rem;
 }
+
+input[type="datetime-local"],
+select {
+	border: 1px solid var(--highlight);
+	padding: 1rem;
+	color: white !important;
+}
+
+/* Hide the default arrow icon */
+input[type="datetime-local"]::-webkit-calendar-picsker-indicator,
+input[type="datetime-local"]::-webkit-inner-spin-button {
+	width: 100px;
+	height: 100px;
+}
+
+/* Style the wrapper element */
+.datetime-wrapper {
+	position: relative;
+}
+
+/* Position the custom icon */
+.datetime-wrapper .custom-icon {
+	position: absolute;
+	left: 235px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+	font-size: 18px;
+	pointer-events: none;
+
+}
+

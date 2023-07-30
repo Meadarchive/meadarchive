@@ -5,7 +5,8 @@
 }
 
 .update,
-.starting-container {
+.starting-container,
+.batch-container {
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
@@ -33,7 +34,11 @@
 .starting-container > *,
 .starting-container > * > *,
 .starting-container > * > * > *,
-.starting-container > * > * > * > * {
+.starting-container > * > * > * > *,
+.batch-container > *,
+.batch-container > * > *,
+.batch-container > * > * > *,
+.batch-container > * > * > * > * {
 	background: var(--background-secondary);
 }
 
@@ -62,6 +67,6 @@
 }
 
 .starting-container > div > div:nth-child(4) {
-    word-break: anywhere;
-    overflow-wrap: anywhere;
+	word-break: anywhere;
+	overflow-wrap: anywhere;
 }
