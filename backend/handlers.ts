@@ -9,7 +9,7 @@ import { genUID, getUserInfoByID } from "./lib/util"
 export async function healthStatus(req: express.Request, res: express.Response) {
     try{
 
-        res.send({ status: "OK" });
+        res.send({ status: "OK", runmode: config.run_mode, namespace: config.namespace });
 
     } catch (err){
         res.status(500).send({ "error": "Internal server error"});
