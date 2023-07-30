@@ -36,7 +36,7 @@ export const ChemicalSchema = z.object({
 export const RecipeSchema = z.object({
     recipeName: z.string().nonempty(),
     recipeDescription: z.string().nonempty(),
-    author: z.string().optional(),
+    author: z.string().nonempty(),
     liquids: z.array(LiquidSchema).nonempty(),
     yeastType: z.string().nonempty(),
     yeastAmount: z.number(),
