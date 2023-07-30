@@ -67,7 +67,6 @@ export default function Update() {
 		// Use your API function to update the batch
 		let res = await createBatchUpdate(
 			auth.user,
-			batchUpdate.batchID,
 			parsedBatchUpdate
 		);
 		console.log(res);

@@ -10,7 +10,6 @@ import { useAuth } from "../../../hooks/useAuth";
 import "./styles/create.css";
 import RecipeInterface from "../../recipe/view/interfaces/RecipeInterface";
 import getRecipeByRID from "../../../api/get/getRecipeByRID";
-import "react-datepicker/dist/react-datepicker.css";
 
 export default function Create() {
 	// get recipe id from url
