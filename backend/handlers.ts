@@ -147,6 +147,13 @@ export async function createBatchUpdate(req: express.Request, res: express.Respo
             return
         }
 
+        const userOwnsBatch =  await checkIfUserOwnsBatch(batchUpdate.batchID, config.batchesCollectionName, userID)
+
+        if (!userOwnsBatch){
+            res.status(400).send({"error": `User does not own this batch`})
+            return
+        }
+
         // Indentify the type of update
         if (batchUpdate.updateType == "text"){
             batchUpdate = req.body as TextBatchUpdate
