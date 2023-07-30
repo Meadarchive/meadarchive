@@ -4,8 +4,6 @@ SHELL ["/bin/bash", "-c"]
 
 WORKDIR /meadarchive
 
-RUN echo $HOME
-
 COPY . .
 
 # Install node
