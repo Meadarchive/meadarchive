@@ -2,6 +2,7 @@
 import React from "react";
 import UpdateItem from "./UpdateItem";
 
+
 interface BatchInfo {
 	updates: { [key: string]: { [key: string]: any } };
 }
@@ -16,8 +17,9 @@ const UpdatesContainer: React.FC<UpdatesContainerProps> = ({ batchInfo }) => {
 			<div id="updates-title">Updates</div>
 			<div className="updates-list">
 				{Object.entries(batchInfo.updates).map(([key, update]) => (
-					<UpdateItem key={key} update={update} />
+					<UpdateItem uid={key} key={key} update={update} />
 				))}
+
 			</div>
 		</div>
 	) : (
