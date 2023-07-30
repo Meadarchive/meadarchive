@@ -15,7 +15,7 @@ body {
 
 #welcome-container {
 	display: flex;
-	height: 90vh;
+	height: 85vh;
 	justify-content: center;
 	align-items: center;
 	background-color: var(
@@ -29,7 +29,7 @@ body {
 	justify-content: center;
 	flex-direction: column;
 	max-width: 900px;
-	font-size: 1.5rem;
+	font-size: 1.75rem;
 	padding: 1rem;
 	gap: 1rem;
 	border-radius: 0.5rem;
@@ -45,6 +45,11 @@ body {
 	}
 }
 
-ul > * {
-	margin-bottom: 1rem;
+#welcome > div:nth-child(2) {
+    margin-bottom: 2.5rem;
+}
+
+ul > *
+ {
+	margin-bottom: 1.5rem;
 }
