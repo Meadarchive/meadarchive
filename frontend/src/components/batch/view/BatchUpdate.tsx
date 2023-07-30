@@ -128,7 +128,7 @@ export default function Update() {
 			<h2>Update Batch</h2>
 			<form id="update-batch-form">
 				<div>
-					<label>Update Type:</label>
+					<label>Update Type:&nbsp;</label>
 					<select
 						name="updateType"
 						value={batchUpdate.updateType}
