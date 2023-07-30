@@ -1,0 +1,14 @@
+#!/bin/bash
+# This is a docker compose wraper that will source the backend and front end env files
+
+# Make all vars defined to be exported
+set -a
+
+# Source env files
+source ./backend/.env
+source ./frontend/.env
+
+set +a
+
+# Run docker compose and pass all args
+docker compose $@

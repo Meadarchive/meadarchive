@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: ./Dockerfile
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+    ports:
+      - "${PORT}:${PORT}"
+
+    container_name: meadarchive-backend
+    tty: true
+    
+    volumes:
+      - ./backend:/meadarchive
+      - ${FIREBASE_CREDS_PATH}:${FIREBASE_CREDS_PATH}
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+
+    container_name: meadarchive-frontend
+    tty: true
+
