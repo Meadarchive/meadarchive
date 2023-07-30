@@ -1,6 +1,13 @@
 #browse {
 	display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 1rem;
+	flex-direction: column;
+	gap: 1rem;
+	margin: 1rem;
+}
+
+#search-bar {
+	margin: 1rem;
+    width: calc(100% - 2rem);
+    color: white;
+    border-radius: 0.5rem;
 }
