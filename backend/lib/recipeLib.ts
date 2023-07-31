@@ -3,11 +3,9 @@ import { firebaseApp, db } from "./firebaseApp"
 
 
 
-export async function firebaseInsertRecipe(recipe: Recipe, recipeID: string, collectionName: string, userID: string){
+export async function firebaseInsertRecipe(recipe: Recipe, recipeID: string, collectionName: string){
 
     const collectionRef = db.collection(collectionName);
-
-    recipe.author = userID
     
     await collectionRef.doc(recipeID).set(recipe)
     

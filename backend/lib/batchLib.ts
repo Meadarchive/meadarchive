@@ -1,9 +1,7 @@
 import { Batch, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate } from "./customTypes"
 import { firebaseApp, db } from "./firebaseApp"
 
-export async function firebaseInsertBatch(batch: Batch, batchID: string, collectionName: string, userID: string){
-
-    batch.author = userID
+export async function firebaseInsertBatch(batch: Batch, batchID: string, collectionName: string){
     
     const collectionRef = db.collection(collectionName);
 

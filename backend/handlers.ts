@@ -23,6 +23,8 @@ export async function createRecipe(req: express.Request, res: express.Response){
         const userID: string = res.locals.user.uid
         const recipe: Recipe = req.body
 
+        recipe.author = userID
+
         // Validate recipe schema
         try{
             RecipeSchema.parse(recipe);
@@ -34,7 +36,7 @@ export async function createRecipe(req: express.Request, res: express.Response){
         // Generate uuid for the recipe
         const recipeID: string = await genUID()
 
-        await firebaseInsertRecipe(recipe, recipeID, config.recipesCollectionName, userID)
+        await firebaseInsertRecipe(recipe, recipeID, config.recipesCollectionName)
 
         res.status(200).send({"msg": "Authorized", "recipeID": recipeID})
 
@@ -105,6 +107,8 @@ export async function createBatch(req: express.Request, res: express.Response){
         const userID: string = res.locals.user.uid
         const batch: Batch = req.body
 
+        batch.author = userID
+
         // Validate recipe schema
         try{
             BatchSchema.parse(batch)
@@ -123,7 +127,7 @@ export async function createBatch(req: express.Request, res: express.Response){
 
         const batchUID: string = await genUID()
 
-        await firebaseInsertBatch(batch, batchUID, config.batchesCollectionName, userID)
+        await firebaseInsertBatch(batch, batchUID, config.batchesCollectionName)
 
         res.status(200).send({"msg": "Authorized", "batchID": batchUID})
 
