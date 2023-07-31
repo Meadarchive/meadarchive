@@ -12,7 +12,7 @@ services:
     ports:
       - "${PORT}:${PORT}"
 
-    container_name: meadarchive-backend
+    container_name: meadarchive-backend-${NAMESPACE}
     tty: true
     
     volumes:
@@ -31,6 +31,6 @@ services:
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
 
-    container_name: meadarchive-frontend
+    container_name: meadarchive-frontend-${NAMESPACE}
     tty: true
 
