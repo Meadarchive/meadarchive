@@ -16,7 +16,7 @@ export default function Homepage() {
 					<div className="bold">Welcome to meadarchive!</div>
 				)}
 				<div>
-					Meadarchive is project to create a way to preserve and share
+					Meadarchive is a passion project to create a way to preserve and share
 					mead recipes and brews. It is currently in very early alpha
 					version as a proof of concept so many features do not exist
 					and some may be broken
