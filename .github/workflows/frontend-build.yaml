@@ -5,13 +5,21 @@ on:
       - 'frontend/**'
   pull_request:
     paths:
-job:
+      - 'frontend/**'
+
+jobs:
   build-frontend:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-      - name: go to frontend directory
-        run: cd frontend
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18' # Set the desired Node.js version here
+      - name: Install frontend dependencies
         run: npm install
+        working-directory: frontend
       - name: Build frontend
         run: npm run build
+        working-directory: frontend
