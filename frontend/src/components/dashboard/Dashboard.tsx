@@ -62,30 +62,48 @@ export default function Dashboard() {
 				<h2 id="batches-title">My batches</h2>
 				{batches ? (
 					<div id="dashboard-batches-container">
-						{Object.entries(batches).map(([key, batch]) => (
-							<div key={key} className="dashboard-batch">
-								<div className="batch-container">
-									<Link className="bold-link bigger" to={`/batch/${key}`}>
-										{batch.batchName || "test"}
-									</Link>
-									<DashboardBatchInfo batchInfo={batch} />
-								</div>
-								<div className="dashboard-delete-batch">
-									<DeleteConfirmation
-										whatIsBeingDeleted="batch"
-										onConfirm={() => {
-											handleDeleteBatch(key, user);
-										}}
-									/>
-								</div>
+						{batches.length === 0 ? (
+							<>
+								{Object.entries(batches).map(([key, batch]) => (
+									<div key={key} className="dashboard-batch">
+										<div className="batch-container">
+											<Link
+												className="bold-link bigger"
+												to={`/batch/${key}`}
+											>
+												{batch.batchName || "test"}
+											</Link>
+											<DashboardBatchInfo
+												batchInfo={batch}
+											/>
+										</div>
+										<div className="dashboard-delete-batch">
+											<DeleteConfirmation
+												whatIsBeingDeleted="batch"
+												onConfirm={() => {
+													handleDeleteBatch(
+														key,
+														user
+													);
+												}}
+											/>
+										</div>
+									</div>
+								))}
+							</>
+						) : (
+							<div>
+								No batches, create one from our collection of{" "}
+								<Link className="bold" to="/browse">
+									community made recipes
+								</Link>
 							</div>
-						))}
+						)}
 					</div>
 				) : (
 					<LoadingSpinner />
 				)}
 			</div>
-				
 		</div>
 	);
 }
