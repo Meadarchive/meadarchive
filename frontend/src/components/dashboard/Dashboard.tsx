@@ -69,7 +69,7 @@ export default function Dashboard() {
 									create your own
 								</Link>
 							</div>
-						)}{" "}
+						)}{" "
 					</>
 				) : (
 					<LoadingSpinner />
