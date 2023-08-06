@@ -34,18 +34,23 @@ export default function Dashboard() {
 			(async () => {
 				setRecipes(await getRecipesByUID(user.uid));
 				setBatches(await getBatchesByUID(user.uid));
-				setBatches(await getBatchesByUID(user.uid));
 			})();
-		console.log(batches);
-		console.log(batches);
 	}, [user]);
+
+	const scrollToRecipes = () => {
+		const recipesTitleElement = document.getElementById("recipes-title");
+		if (recipesTitleElement) {
+			recipesTitleElement.scrollIntoView({ behavior: "smooth" });
+		}
+	};
+
 	return (
 		<div>
 			<div id="dashboard">
 				<h2 id="recipes-title">My recipes</h2>
 				{recipes ? (
 					<>
-						{recipes.length === 0 ? (
+						{Object.keys(recipes).length !== 0 ? (
 							<div id="dashboard-recipes-container">
 								{Object.entries(recipes).map(
 									([rid, recipe]) => (
@@ -77,7 +82,7 @@ export default function Dashboard() {
 				<h2 id="batches-title">My batches</h2>
 				{batches ? (
 					<div id="dashboard-batches-container">
-						{batches.length === 0 ? (
+						{Object.keys(batches).length === 0 ? (
 							<>
 								{Object.entries(batches).map(([key, batch]) => (
 									<div key={key} className="dashboard-batch">
@@ -107,8 +112,24 @@ export default function Dashboard() {
 								))}
 							</>
 						) : (
-							<div>
-								No batches, create one from our collection of{" "}
+							<div className="no-batches">
+								No batches,{" "}
+								{
+									// if a user has recipes but no batches, prompt them to create a batch of one of their recipes
+									recipes &&
+										Object.keys(recipes).length > 0 && (
+											<>
+												<span
+													className="bold link"
+													onClick={scrollToRecipes}
+												>
+													create a batch
+												</span>{" "}
+												of one of your recipes or
+											</>
+										)
+								}{" "}
+								create one from our collection of{" "}
 								<Link className="bold" to="/browse">
 									community made recipes
 								</Link>

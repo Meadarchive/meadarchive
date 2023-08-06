@@ -193,3 +193,14 @@
 .no-recipes {
 	text-align: center;
 }
+
+.no-batches {
+	text-align: center;
+	padding: 1rem;
+	margin-bottom: 10rem;
+}
+
+.link {
+	text-decoration: underline;
+	cursor: pointer;
+}
