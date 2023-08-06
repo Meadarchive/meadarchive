@@ -21,7 +21,6 @@ body {
 
 #welcome-container {
 	display: flex;
-	height: 85vh;
 	justify-content: center;
 	align-items: center;
 	background-color: var(
