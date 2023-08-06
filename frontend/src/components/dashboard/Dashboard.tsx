@@ -37,6 +37,10 @@ export default function Dashboard() {
 			})();
 	}, [user]);
 
+	useEffect(() => {
+		batches && console.log(Object.keys(batches).length);
+	}, [batches]);
+
 	const scrollToRecipes = () => {
 		const recipesTitleElement = document.getElementById("recipes-title");
 		if (recipesTitleElement) {
@@ -82,7 +86,7 @@ export default function Dashboard() {
 				<h2 id="batches-title">My batches</h2>
 				{batches ? (
 					<div id="dashboard-batches-container">
-						{Object.keys(batches).length === 0 ? (
+						{Object.keys(batches).length !== 0 ? (
 							<>
 								{Object.entries(batches).map(([key, batch]) => (
 									<div key={key} className="dashboard-batch">
