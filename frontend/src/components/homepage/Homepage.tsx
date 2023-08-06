@@ -2,6 +2,7 @@ import Auth from "../../auth/Auth";
 import { useAuth } from "../../hooks/useAuth";
 import "./styles/homepage.css";
 import { Link } from "react-router-dom";
+import Calculator from "../calculator/Calculator";
 
 export default function Homepage() {
 	const { user } = useAuth();
@@ -35,6 +36,7 @@ export default function Homepage() {
 					<div>Take notes of a batch</div>
 				</ul>
 			</div>
+			<Calculator />
 		</div>
 	);
 }
