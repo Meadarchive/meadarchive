@@ -45,16 +45,31 @@ export default function Dashboard() {
 				<h2 id="recipes-title">My recipes</h2>
 				{recipes ? (
 					<>
-						<div id="dashboard-recipes-container">
-							{Object.entries(recipes).map(([rid, recipe]) => (
-								<DashboardRecipe
-									key={rid}
-									rid={rid}
-									recipe={recipe}
-									user={user}
-								/>
-							))}
-						</div>
+						{recipes.length === 0 ? (
+							<div id="dashboard-recipes-container">
+								{Object.entries(recipes).map(
+									([rid, recipe]) => (
+										<DashboardRecipe
+											key={rid}
+											rid={rid}
+											recipe={recipe}
+											user={user}
+										/>
+									)
+								)}
+							</div>
+						) : (
+							<div className="no-recipes">
+								No recipes, browse our collection of{" "}
+								<Link className="bold" to="/browse">
+									community made recipes
+								</Link>{" "}
+								or{" "}
+								<Link className="bold" to="/recipe/create">
+									create your own
+								</Link>
+							</div>
+						)}{" "}
 					</>
 				) : (
 					<LoadingSpinner />
