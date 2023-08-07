@@ -404,19 +404,21 @@ const CreateForm: React.FC = () => {
 
 	return (
 		<form id="create-form" onSubmit={handleFormSubmit}>
-			<h3>Recipe Name</h3>
-			<div className="error-message recipe-error">
-				{formErrors.recipeName}
-			</div>
-			<div id="recipe-name-container">
-				<input
-					type="text"
-					value={formState.recipeName}
-					onChange={(event) =>
-						handleInputChange("recipeName", event.target.value)
-					}
-					placeholder="Recipe Name"
-				/>
+			<div>
+				<h3>Recipe Name</h3>
+				<div className="error-message recipe-error">
+					{formErrors.recipeName}
+				</div>
+				<div id="recipe-name-container">
+					<input
+						type="text"
+						value={formState.recipeName}
+						onChange={(event) =>
+							handleInputChange("recipeName", event.target.value)
+						}
+						placeholder="Recipe Name"
+					/>
+				</div>
 			</div>
 
 			<div>

@@ -19,11 +19,19 @@
 }
 
 #create-form button {
-	margin: 0 1rem;
+	margin: 0rem;
+}
+
+#create-form {
+	display: flex;
+	gap: 1rem;
+	align-items: flex-start;
+	justify-content: left;
+	flex-direction: column;
 }
 
 .add-button {
-	margin: 1rem!important;
+	margin: 0 1rem!important;
 }
 
 .w-md-editor-toolbar,
