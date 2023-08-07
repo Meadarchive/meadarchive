@@ -35,14 +35,22 @@ const Calculator: React.FC = () => {
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const value = e.target.value;
-		setOriginalGravity(value);
+
+		// Validate the input value to ensure it's a valid float
+		if (/^\d+(\.\d*)?$/.test(value) || value === "") {
+			setOriginalGravity(value);
+		}
 	};
 
 	const handleFinalGravityChange = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const value = e.target.value;
-		setFinalGravity(value);
+
+		// Validate the input value to ensure it's a valid float
+		if (/^\d+(\.\d*)?$/.test(value) || value === "") {
+			setFinalGravity(value);
+		}
 	};
 
 	return (
