@@ -5,7 +5,7 @@
 #recipe-name-container,
 #chemicals-container,
 #recipe-size-container {
-	padding: 1rem;
+	padding: 0 1rem;
 	display: flex;
 	gap: 1rem;
 	align-items: center;
@@ -18,8 +18,18 @@
 	padding: 1rem;
 }
 
-.w-md-editor-toolbar, .wmde-markdown, .wmde-markdown-color {
-    background: var(--background);
+#create-form button {
+	margin: 0 1rem;
+}
+
+.add-button {
+	margin: 1rem!important;
+}
+
+.w-md-editor-toolbar,
+.wmde-markdown,
+.wmde-markdown-color {
+	background: var(--background);
 }
 
 #yeast-container > div {

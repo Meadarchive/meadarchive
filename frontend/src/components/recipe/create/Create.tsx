@@ -17,7 +17,7 @@ const CreateForm: React.FC = () => {
 				liquid: "",
 				amount: 0,
 				unit: "ml",
-			}
+			},
 		],
 		yeastType: "",
 		yeastAmount: 0,
@@ -26,7 +26,7 @@ const CreateForm: React.FC = () => {
 				honey: "",
 				amount: 0,
 				unit: "g",
-			}
+			},
 		],
 		addons: [],
 		chemicals: [],
@@ -426,6 +426,7 @@ const CreateForm: React.FC = () => {
 				</div>
 				{renderLiquidInputs()}
 				<button
+					className="add-button"
 					type="button"
 					onClick={() =>
 						setFormState({
@@ -485,6 +486,7 @@ const CreateForm: React.FC = () => {
 				</div>
 				{renderHoneyInputs()}
 				<button
+					className="add-button"
 					type="button"
 					onClick={() =>
 						setFormState({
@@ -504,6 +506,7 @@ const CreateForm: React.FC = () => {
 				<h3>Chemicals</h3>
 				{renderChemicalInputs()}
 				<button
+					className="add-button"
 					type="button"
 					onClick={() =>
 						setFormState({
@@ -523,6 +526,7 @@ const CreateForm: React.FC = () => {
 				<h3>Addons</h3>
 				{renderAddonInputs()}
 				<button
+					className="add-button"
 					type="button"
 					onClick={() =>
 						setFormState({
