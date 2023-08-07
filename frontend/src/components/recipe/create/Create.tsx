@@ -12,10 +12,22 @@ const CreateForm: React.FC = () => {
 	const [formState, setFormState] = useState<CreateFormState>({
 		recipeName: "",
 		recipeDescription: "",
-		liquids: [],
+		liquids: [
+			{
+				liquid: "",
+				amount: 0,
+				unit: "ml",
+			}
+		],
 		yeastType: "",
 		yeastAmount: 0,
-		honeyTypes: [],
+		honeyTypes: [
+			{
+				honey: "",
+				amount: 0,
+				unit: "g",
+			}
+		],
 		addons: [],
 		chemicals: [],
 		recipeSize: 1,
