@@ -393,7 +393,9 @@ const CreateForm: React.FC = () => {
 	return (
 		<form id="create-form" onSubmit={handleFormSubmit}>
 			<h3>Recipe Name</h3>
-			<div className="error-message recipe-error">{formErrors.recipeName}</div>
+			<div className="error-message recipe-error">
+				{formErrors.recipeName}
+			</div>
 			<div id="recipe-name-container">
 				<input
 					type="text"
@@ -407,7 +409,9 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Liquids and Amounts</h3>
-				<div className="error-message recipe-error">{formErrors.liquids}</div>
+				<div className="error-message recipe-error">
+					{formErrors.liquids}
+				</div>
 				{renderLiquidInputs()}
 				<button
 					type="button"
@@ -427,8 +431,10 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Yeast</h3>
-			<div className="error-message recipe-error">{formErrors.yeastType}</div>
-			<div className="error-message recipe-error">{formErrors.yeastAmount}</div>
+				<div className="error-message recipe-error">
+					<div>{formErrors.yeastType}</div>
+					<div>{formErrors.yeastAmount}</div>
+				</div>
 				<div id="yeast-container">
 					<div>
 						<input
@@ -462,7 +468,9 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Honey Types and Amounts</h3>
-			<div className="error-message recipe-error">{formErrors.honeyTypes}</div>
+				<div className="error-message recipe-error">
+					{formErrors.honeyTypes}
+				</div>
 				{renderHoneyInputs()}
 				<button
 					type="button"
@@ -520,7 +528,9 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Recipe Size</h3>
-			<div className="error-message recipe-error">{formErrors.recipeSize}</div>
+				<div className="error-message recipe-error">
+					{formErrors.recipeSize}
+				</div>
 				<div id="recipe-size-container">
 					<input
 						type="number"
