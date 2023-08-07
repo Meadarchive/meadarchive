@@ -1,7 +1,7 @@
 input[type="text"], input[type="number"], textarea {
 	width: 100%;
 	padding: 12px 20px;
-	margin: 8px 0;
+	margin: 16px 0;
 	border-radius: 2px;
 	border: 1px solid var(--highlight);
 }

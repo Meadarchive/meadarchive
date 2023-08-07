@@ -12,10 +12,22 @@ const CreateForm: React.FC = () => {
 	const [formState, setFormState] = useState<CreateFormState>({
 		recipeName: "",
 		recipeDescription: "",
-		liquids: [],
+		liquids: [
+			{
+				liquid: "",
+				amount: 0,
+				unit: "ml",
+			},
+		],
 		yeastType: "",
 		yeastAmount: 0,
-		honeyTypes: [],
+		honeyTypes: [
+			{
+				honey: "",
+				amount: 0,
+				unit: "g",
+			},
+		],
 		addons: [],
 		chemicals: [],
 		recipeSize: 1,
@@ -392,24 +404,31 @@ const CreateForm: React.FC = () => {
 
 	return (
 		<form id="create-form" onSubmit={handleFormSubmit}>
-			<h3>Recipe Name</h3>
-			<div className="error-message recipe-error">{formErrors.recipeName}</div>
-			<div id="recipe-name-container">
-				<input
-					type="text"
-					value={formState.recipeName}
-					onChange={(event) =>
-						handleInputChange("recipeName", event.target.value)
-					}
-					placeholder="Recipe Name"
-				/>
+			<div>
+				<h3>Recipe Name</h3>
+				<div className="error-message recipe-error">
+					{formErrors.recipeName}
+				</div>
+				<div id="recipe-name-container">
+					<input
+						type="text"
+						value={formState.recipeName}
+						onChange={(event) =>
+							handleInputChange("recipeName", event.target.value)
+						}
+						placeholder="Recipe Name"
+					/>
+				</div>
 			</div>
 
 			<div>
 				<h3>Liquids and Amounts</h3>
-				<div className="error-message recipe-error">{formErrors.liquids}</div>
+				<div className="error-message recipe-error">
+					{formErrors.liquids}
+				</div>
 				{renderLiquidInputs()}
 				<button
+					className="add-button"
 					type="button"
 					onClick={() =>
 						setFormState({
@@ -427,8 +446,10 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Yeast</h3>
-			<div className="error-message recipe-error">{formErrors.yeastType}</div>
-			<div className="error-message recipe-error">{formErrors.yeastAmount}</div>
+				<div className="error-message recipe-error">
+					<div>{formErrors.yeastType}</div>
+					<div>{formErrors.yeastAmount}</div>
+				</div>
 				<div id="yeast-container">
 					<div>
 						<input
@@ -462,9 +483,12 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Honey Types and Amounts</h3>
-			<div className="error-message recipe-error">{formErrors.honeyTypes}</div>
+				<div className="error-message recipe-error">
+					{formErrors.honeyTypes}
+				</div>
 				{renderHoneyInputs()}
 				<button
+					className="add-button"
 					type="button"
 					onClick={() =>
 						setFormState({
@@ -484,6 +508,7 @@ const CreateForm: React.FC = () => {
 				<h3>Chemicals</h3>
 				{renderChemicalInputs()}
 				<button
+					className="add-button"
 					type="button"
 					onClick={() =>
 						setFormState({
@@ -503,6 +528,7 @@ const CreateForm: React.FC = () => {
 				<h3>Addons</h3>
 				{renderAddonInputs()}
 				<button
+					className="add-button"
 					type="button"
 					onClick={() =>
 						setFormState({
@@ -520,7 +546,9 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Recipe Size</h3>
-			<div className="error-message recipe-error">{formErrors.recipeSize}</div>
+				<div className="error-message recipe-error">
+					{formErrors.recipeSize}
+				</div>
 				<div id="recipe-size-container">
 					<input
 						type="number"

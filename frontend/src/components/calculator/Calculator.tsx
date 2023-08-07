@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./styles/calculator.css";
 
 const Calculator: React.FC = () => {
-	const [originalGravity, setOriginalGravity] = useState<number>(1.0);
-	const [finalGravity, setFinalGravity] = useState<number>(1.0);
+	const [originalGravity, setOriginalGravity] = useState<string>("1.0");
+	const [finalGravity, setFinalGravity] = useState<string>("1.0");
 	const [error, setError] = useState<string>("");
 	const [calculatedABV, setCalculatedABV] = useState<number | undefined>(
 		undefined
@@ -22,24 +22,27 @@ const Calculator: React.FC = () => {
 		}
 	};
 
-    useEffect(() => {
-        calculateABV(originalGravity, finalGravity);
-    },[])
+	useEffect(() => {
+		const ogValue = parseFloat(originalGravity);
+		const fgValue = parseFloat(finalGravity);
+
+		if (!isNaN(ogValue) && !isNaN(fgValue)) {
+			calculateABV(ogValue, fgValue);
+		}
+	}, [originalGravity, finalGravity]);
 
 	const handleOriginalGravityChange = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
-		const value = parseFloat(e.target.value);
+		const value = e.target.value;
 		setOriginalGravity(value);
-		calculateABV(value, finalGravity); // Call calculateABV when originalGravity changes
 	};
 
 	const handleFinalGravityChange = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
-		const value = parseFloat(e.target.value);
+		const value = e.target.value;
 		setFinalGravity(value);
-		calculateABV(originalGravity, value); // Call calculateABV when finalGravity changes
 	};
 
 	return (
@@ -53,8 +56,7 @@ const Calculator: React.FC = () => {
 						</label>
 						<input
 							className="gravity-input"
-							type="number"
-							step="0.01"
+							type="text"
 							value={originalGravity}
 							onChange={handleOriginalGravityChange}
 						/>
@@ -63,8 +65,7 @@ const Calculator: React.FC = () => {
 						<label className="gravity-label">Final Gravity:</label>
 						<input
 							className="gravity-input"
-							type="number"
-							step="0.01"
+							type="text"
 							value={finalGravity}
 							onChange={handleFinalGravityChange}
 						/>
