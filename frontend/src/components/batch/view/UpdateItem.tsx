@@ -1,4 +1,3 @@
-// UpdateItem.tsx
 import React from "react";
 import DeleteConfirmation from "../../recipe/view/DeleteConfirmation";
 import { useAuth } from "../../../hooks/useAuth";
