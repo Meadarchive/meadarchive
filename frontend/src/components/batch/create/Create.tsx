@@ -151,10 +151,6 @@ export default function Create() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!auth.user) {
-			return;
-		}
-
 		setErrors({
 			batchName: "",
 			water: "",
