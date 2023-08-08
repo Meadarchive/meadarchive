@@ -6,13 +6,15 @@ interface BatchInfoProps {
 }
 
 const BatchInfo: React.FC<BatchInfoProps> = ({ batchInfo }) => {
+	const { stage, dateStarted, initialGravity, author, water } = batchInfo;
+
 	return (
 		<div className="batch-info">
-			<div>Stage: {batchInfo.stage}</div>
-			<div>Date Started: {batchInfo.dateStarted}</div>
-			<div>Initial Gravity: {batchInfo.initialGravity}</div>
-			<div>Author: {batchInfo.author}</div>
-			<div>Water: {batchInfo.water}</div>
+			<div>Stage: {stage}</div>
+			<div>Date Started: {dateStarted}</div>
+			<div>Initial Gravity: {initialGravity}</div>
+			<div>Author: {author}</div>
+			<div>Water: {water}</div>
 		</div>
 	);
 };
