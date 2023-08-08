@@ -1,6 +1,15 @@
 import { useAuth } from "../hooks/useAuth";
 
-export default function SignOut() {
+export default function SignOutButton() {
 	const { signOut } = useAuth();
-	return <div onClick={() => signOut()}>Sign Out</div>;
+
+	const handleSignOutClick = () => {
+		signOut();
+	};
+
+	return (
+		<button onClick={handleSignOutClick} className="sign-out-button">
+			Sign Out
+		</button>
+	);
 }
