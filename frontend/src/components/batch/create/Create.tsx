@@ -16,6 +16,7 @@ export default function Create() {
 	const auth = useAuth();
 	const navigate = useNavigate();
 
+	const [loading, setLoading] = useState(false);
 	const [recipeInfo, setRecipeInfo] = useState<RecipeInterface | null>();
 
 	const [errors, setErrors] = useState({
@@ -248,6 +249,7 @@ export default function Create() {
 			if (!auth.user) {
 				return;
 			}
+			setLoading(true)
 			const res = await createBatch(auth.user, parsedBatchState);
 			navigate(`/batch/${res.batchID}`);
 		}
@@ -371,7 +373,7 @@ export default function Create() {
 					</select>
 				</div>
 			</form>
-			<button onClick={handleSubmit}>Save</button>
+			<button disabled={loading} onClick={handleSubmit}>Save</button>
 		</div>
 	);
 }
