@@ -1,10 +1,12 @@
-// UpdatesContainer.tsx
 import React from "react";
 import UpdateItem from "./UpdateItem";
 
+interface Update {
+	[key: string]: any;
+}
 
 interface BatchInfo {
-	updates: { [key: string]: { [key: string]: any } };
+	updates: { [key: string]: Update };
 	author: string;
 }
 
@@ -13,18 +15,26 @@ interface UpdatesContainerProps {
 }
 
 const UpdatesContainer: React.FC<UpdatesContainerProps> = ({ batchInfo }) => {
-	return batchInfo?.updates ? (
+	if (!batchInfo) {
+		return <div id="updates-container">no updates</div>;
+	}
+
+	const { author, updates } = batchInfo;
+
+	return (
 		<div id="updates-container">
 			<div id="updates-title">Updates</div>
 			<div className="updates-list">
-				{Object.entries(batchInfo.updates).map(([key, update]) => (
-					<UpdateItem author={batchInfo.author} uid={key} key={key} update={update} />
+				{Object.entries(updates).map(([uid, update]) => (
+					<UpdateItem
+						author={author}
+						uid={uid}
+						key={uid}
+						update={update}
+					/>
 				))}
-
 			</div>
 		</div>
-	) : (
-		<div id="updates-container">no updates</div>
 	);
 };
 
