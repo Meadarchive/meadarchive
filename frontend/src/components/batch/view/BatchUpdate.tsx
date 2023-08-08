@@ -9,34 +9,33 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function Update() {
-    const params = useParams<{ bid?: string }>();
+	const params = useParams<{ bid?: string }>();
 	const bid = params.bid || "";
 	const auth = useAuth();
-    const navigate = useNavigate();
+	const navigate = useNavigate();
+
 	const [batchUpdate, setBatchUpdate] = useState<BatchUpdate>({
-		batchID: bid, // Fill in the batchID here
+		batchID: bid,
 		updateDate: Date.now().toString(),
-		updateType: "text", // Default to text, can be changed based on user selection
+		updateType: "text",
 	});
 
 	const handleUpdateTypeChange = (
 		e: React.ChangeEvent<HTMLSelectElement>
 	) => {
 		const { value } = e.target;
-		setBatchUpdate((prevBatchUpdate: BatchUpdate) => ({
+		setBatchUpdate((prevBatchUpdate) => ({
 			...prevBatchUpdate,
 			updateType: value as BatchUpdate["updateType"],
-			text: "", // Reset text field when updateType changes
-			newGravity: undefined, // Reset newGravity field when updateType changes
-			newStage: undefined, // Reset newStage field when updateType changes
+			text: "",
+			newGravity: undefined,
+			newStage: undefined,
 		}));
 	};
 
-    const handleStageChange = (
-		e: React.ChangeEvent<HTMLSelectElement>
-	) => {
+	const handleStageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const { value } = e.target;
-		setBatchUpdate((prevBatchUpdate: BatchUpdate) => ({
+		setBatchUpdate((prevBatchUpdate) => ({
 			...prevBatchUpdate,
 			newStage: value as StageBatchUpdate["newStage"],
 		}));
@@ -44,7 +43,7 @@ export default function Update() {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setBatchUpdate((prevBatchUpdate: BatchUpdate) => ({
+		setBatchUpdate((prevBatchUpdate) => ({
 			...prevBatchUpdate,
 			[name]: value,
 		}));
@@ -52,30 +51,26 @@ export default function Update() {
 
 	const handleUpdate = async () => {
 		console.log("Updating batch...");
+
 		if (!auth.user || !batchUpdate.batchID) return;
 
-        let parsedBatchUpdate = batchUpdate;
+		let parsedBatchUpdate: BatchUpdate;
 
-        // if batch updatea is gravity update, convert newGravity to number
-        if (batchUpdate.updateType === "gravity") {
-            parsedBatchUpdate = {
-                updateType: batchUpdate.updateType,
-                newGravity: Number(batchUpdate.newGravity || 0),
+		if (batchUpdate.updateType === "gravity") {
+			parsedBatchUpdate = {
+				updateType: batchUpdate.updateType,
+				newGravity: Number(batchUpdate.newGravity || 0),
 				batchID: batchUpdate.batchID,
 				updateDate: batchUpdate.updateDate,
-            };
-        }
-
-		if (batchUpdate.updateType === "stage") {
+			};
+		} else if (batchUpdate.updateType === "stage") {
 			parsedBatchUpdate = {
 				updateType: batchUpdate.updateType,
 				updateDate: batchUpdate.updateDate,
 				batchID: batchUpdate.batchID,
 				newStage: batchUpdate.newStage,
 			};
-		}
-
-		if (batchUpdate.updateType === "text") {
+		} else {
 			parsedBatchUpdate = {
 				updateType: batchUpdate.updateType,
 				updateDate: batchUpdate.updateDate,
@@ -84,17 +79,12 @@ export default function Update() {
 			};
 		}
 
-		// Use your API function to update the batch
-		let res = await createBatchUpdate(
-			auth.user,
-			parsedBatchUpdate
-		);
+		const res = await createBatchUpdate(auth.user, parsedBatchUpdate);
 		console.log(res);
 		console.log("Batch updated with state:", batchUpdate);
-		navigate(`/batch/${batchUpdate.batchID}`); // Uncomment this if you have navigation to the batch page
+		navigate(`/batch/${batchUpdate.batchID}`);
 	};
 
-	// Function to render form fields based on updateType
 	const renderFormFields = () => {
 		switch (batchUpdate.updateType) {
 			case "text":
