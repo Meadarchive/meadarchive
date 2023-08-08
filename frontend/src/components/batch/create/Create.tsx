@@ -12,14 +12,10 @@ import RecipeInterface from "../../recipe/view/interfaces/RecipeInterface";
 import getRecipeByRID from "../../../api/get/getRecipeByRID";
 
 export default function Create() {
-	// get recipe id from url
-	let params = useParams();
-	let rid: string = params.rid || "";
+	const { rid } = useParams();
 	const auth = useAuth();
-
 	const navigate = useNavigate();
 
-	const [userID, setUserID] = useState<string>("");
 	const [recipeInfo, setRecipeInfo] = useState<RecipeInterface | null>();
 
 	const [errors, setErrors] = useState({
@@ -29,13 +25,26 @@ export default function Create() {
 		dateStarted: "",
 	});
 
-	useEffect(() => {
-		const fetchRecipeInfo = async () => {
-			const recipeInfoRes = await getRecipeByRID(rid);
-			setRecipeInfo(recipeInfoRes);
-		};
+	const [batchState, setBatchState] = useState<Batch>({
+		author: "",
+		recipeID: rid || "",
+		stage: validStages[0],
+		dateStarted: "",
+		equipment: [{ item: "", quantity: 0 }],
+		water: "",
+		initialGravity: 1,
+		batchName: "",
+	});
 
-		rid && fetchRecipeInfo();
+	useEffect(() => {
+		async function fetchRecipeInfo() {
+			const recipeInfoRes = await getRecipeByRID(rid || "");
+			setRecipeInfo(recipeInfoRes);
+		}
+
+		if (rid) {
+			fetchRecipeInfo();
+		}
 
 		const currentDate = new Date();
 		const timezoneOffset = currentDate.getTimezoneOffset() * 60; // Convert to seconds
@@ -47,24 +56,6 @@ export default function Create() {
 			dateStarted: unixTimestamp.toString(),
 		}));
 	}, [rid]);
-
-	useEffect(() => {
-		console.log(auth.user?.uid);
-		auth.isLoading === false &&
-			auth.user !== null &&
-			setUserID(auth.user.uid);
-	}, [auth]);
-
-	const [batchState, setBatchState] = useState<Batch>({
-		author: userID,
-		recipeID: rid,
-		stage: validStages[0],
-		dateStarted: Math.floor(Date.now() / 1000).toString(),
-		equipment: [{ item: "", quantity: 0 }],
-		water: "",
-		initialGravity: 1,
-		batchName: "",
-	});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -85,11 +76,8 @@ export default function Create() {
 	const handleDateStartedChange = (date: string) => {
 		const newDateStarted = date === "0" ? "" : date;
 		const selectedDate = new Date(newDateStarted);
-		const timezoneOffset = selectedDate.getTimezoneOffset() * 60; // Convert to seconds
+		const timezoneOffset = selectedDate.getTimezoneOffset() * 60;
 
-		console.log(timezoneOffset);
-
-		// Subtract the timezone offset from the Unix timestamp to get the correct time
 		const unixTimestamp =
 			Math.floor(selectedDate.getTime() / 1000) - timezoneOffset;
 
@@ -128,47 +116,44 @@ export default function Create() {
 
 	const renderEquipmentInputs = () => {
 		return batchState.equipment.map((item, index) => (
-			<>
-				<div id="equipment-container" key={index}>
-					<input
-						type="text"
-						value={item.item}
-						onChange={(event) =>
-							handleEquipmentChange(
-								index,
-								"item",
-								event.target.value
-							)
-						}
-						placeholder="Equipment Item"
-					/>
-					<input
-						type="number"
-						value={item.quantity}
-						onChange={(event) =>
-							handleEquipmentChange(
-								index,
-								"quantity",
-								event.target.value
-							)
-						}
-						placeholder="Quantity"
-					/>
-				</div>
+			<div id="equipment-container" key={index}>
+				<input
+					type="text"
+					value={item.item}
+					onChange={(event) =>
+						handleEquipmentChange(index, "item", event.target.value)
+					}
+					placeholder="Equipment Item"
+				/>
+				<input
+					type="number"
+					value={item.quantity}
+					onChange={(event) =>
+						handleEquipmentChange(
+							index,
+							"quantity",
+							event.target.value
+						)
+					}
+					placeholder="Quantity"
+				/>
 				<button
 					type="button"
 					onClick={() => handleRemoveEquipment(index)}
 				>
 					Remove
 				</button>
-			</>
+			</div>
 		));
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("Submitting form...");
-		// Clear existing validation errors
+
+		if (!auth.user) {
+			return;
+		}
+
 		setErrors({
 			batchName: "",
 			water: "",
@@ -176,64 +161,63 @@ export default function Create() {
 			dateStarted: "",
 		});
 
-		// Check if the required fields are empty
-		if (!batchState.batchName) {
+		const { batchName, water, initialGravity, dateStarted } = batchState;
+
+		const parsedBatchState: Batch = {
+			...batchState,
+			initialGravity: parseFloat(initialGravity.toString()),
+			equipment: batchState.equipment.map((item) => ({
+				...item,
+				quantity: parseInt(item.quantity.toString()),
+			})),
+			author: auth.user?.uid || "",
+		};
+
+		if (!batchName) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				batchName: "Batch Name is required.",
 			}));
 		}
-		if (!batchState.water) {
+		if (!water) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				water: "Water is required.",
 			}));
 		}
-		if (!batchState.initialGravity) {
+		if (!initialGravity) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				initialGravity: "Initial Gravity is required.",
 			}));
 		}
-		if (!batchState.dateStarted) {
+		if (!dateStarted) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				dateStarted: "Date Started is required.",
 			}));
+		} else {
+			const currentDate = new Date();
+			const selectedDate = new Date(dateStarted);
+			if (selectedDate > currentDate) {
+				setErrors((prevErrors) => ({
+					...prevErrors,
+					dateStarted: "Date Started cannot be in the future.",
+				}));
+			}
 		}
 
-		// Perform additional validation for specific fields (if needed)
-		if (batchState.initialGravity <= 0) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				initialGravity: "Initial Gravity must be a positive number.",
-			}));
-		}
-
-		// Check if any errors exist
 		if (
-			!batchState.batchName ||
-			!batchState.water ||
-			!batchState.initialGravity ||
-			!batchState.dateStarted ||
-			batchState.initialGravity <= 0
+			!batchName ||
+			!water ||
+			!initialGravity ||
+			!dateStarted ||
+			initialGravity <= 0
 		) {
 			return;
 		}
 
-		if (!auth.user) return;
-		const parsedBatchState = {
-			...batchState,
-			initialGravity: parseFloat(batchState.initialGravity.toString()),
-			equipment: batchState.equipment.map((item) => ({
-				...item,
-				quantity: parseInt(item.quantity.toString()),
-			})),
-			author: auth.user.uid,
-		};
-		let res = await createBatch(auth.user, parsedBatchState);
-		console.log(res);
-		console.log("Form submitted with state:", parsedBatchState);
+		const res = await createBatch(auth.user, parsedBatchState);
 		navigate(`/batch/${res.batchID}`);
 	};
 
