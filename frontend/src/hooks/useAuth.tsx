@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import firebase from "../service/firebase";
 
 export const useAuth = () => {
@@ -7,6 +8,8 @@ export const useAuth = () => {
 	const [authError, setAuthError] = useState<firebase.auth.Error | null>(
 		null
 	);
+
+	const navigate = useNavigate()
 
 	const auth: firebase.auth.Auth = firebase.auth();
 	const provider: firebase.auth.GoogleAuthProvider =
@@ -28,7 +31,7 @@ export const useAuth = () => {
 			.finally(
 				() =>
 					// redirect to homepage
-					(window.location.href = "/")
+					(navigate("/"))
 			)
 			.catch((error: firebase.auth.Error): void => setAuthError(error));
 	};
