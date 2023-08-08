@@ -10,32 +10,39 @@ import { useAuth } from "../../../hooks/useAuth";
 import "./styles/create.css";
 import RecipeInterface from "../../recipe/view/interfaces/RecipeInterface";
 import getRecipeByRID from "../../../api/get/getRecipeByRID";
+import LoadingSpinner from "../../loading-spinner/LoadingSpinner";
 
 export default function Create() {
-	// get recipe id from url
-	let params = useParams();
-	let rid: string = params.rid || "";
+	const { rid } = useParams();
 	const auth = useAuth();
-
 	const navigate = useNavigate();
 
-	const [userID, setUserID] = useState<string>("");
+	const [loading, setLoading] = useState(false);
+	const [errorMessages, setErrorMessages] = useState<
+		{ path: string[]; message: string }[]
+	>([]);
 	const [recipeInfo, setRecipeInfo] = useState<RecipeInterface | null>();
 
-	const [errors, setErrors] = useState({
-		batchName: "",
-		water: "",
-		initialGravity: "",
+	const [batchState, setBatchState] = useState<Batch>({
+		author: "",
+		recipeID: rid || "",
+		stage: validStages[0],
 		dateStarted: "",
+		equipment: [{ item: "", quantity: 0 }],
+		water: "",
+		initialGravity: 1,
+		batchName: "",
 	});
 
 	useEffect(() => {
-		const fetchRecipeInfo = async () => {
-			const recipeInfoRes = await getRecipeByRID(rid);
+		async function fetchRecipeInfo() {
+			const recipeInfoRes = await getRecipeByRID(rid || "");
 			setRecipeInfo(recipeInfoRes);
-		};
+		}
 
-		rid && fetchRecipeInfo();
+		if (rid) {
+			fetchRecipeInfo();
+		}
 
 		const currentDate = new Date();
 		const timezoneOffset = currentDate.getTimezoneOffset() * 60; // Convert to seconds
@@ -47,24 +54,6 @@ export default function Create() {
 			dateStarted: unixTimestamp.toString(),
 		}));
 	}, [rid]);
-
-	useEffect(() => {
-		console.log(auth.user?.uid);
-		auth.isLoading === false &&
-			auth.user !== null &&
-			setUserID(auth.user.uid);
-	}, [auth]);
-
-	const [batchState, setBatchState] = useState<Batch>({
-		author: userID,
-		recipeID: rid,
-		stage: validStages[0],
-		dateStarted: Math.floor(Date.now() / 1000).toString(),
-		equipment: [{ item: "", quantity: 0 }],
-		water: "",
-		initialGravity: 1,
-		batchName: "",
-	});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -85,11 +74,8 @@ export default function Create() {
 	const handleDateStartedChange = (date: string) => {
 		const newDateStarted = date === "0" ? "" : date;
 		const selectedDate = new Date(newDateStarted);
-		const timezoneOffset = selectedDate.getTimezoneOffset() * 60; // Convert to seconds
+		const timezoneOffset = selectedDate.getTimezoneOffset() * 60;
 
-		console.log(timezoneOffset);
-
-		// Subtract the timezone offset from the Unix timestamp to get the correct time
 		const unixTimestamp =
 			Math.floor(selectedDate.getTime() / 1000) - timezoneOffset;
 
@@ -128,113 +114,95 @@ export default function Create() {
 
 	const renderEquipmentInputs = () => {
 		return batchState.equipment.map((item, index) => (
-			<>
-				<div id="equipment-container" key={index}>
-					<input
-						type="text"
-						value={item.item}
-						onChange={(event) =>
-							handleEquipmentChange(
-								index,
-								"item",
-								event.target.value
-							)
-						}
-						placeholder="Equipment Item"
-					/>
-					<input
-						type="number"
-						value={item.quantity}
-						onChange={(event) =>
-							handleEquipmentChange(
-								index,
-								"quantity",
-								event.target.value
-							)
-						}
-						placeholder="Quantity"
-					/>
-				</div>
+			<div id="equipment-container" key={index}>
+				<input
+					type="text"
+					value={item.item}
+					onChange={(event) =>
+						handleEquipmentChange(index, "item", event.target.value)
+					}
+					placeholder="Equipment Item"
+				/>
+				<input
+					type="number"
+					value={item.quantity}
+					onChange={(event) =>
+						handleEquipmentChange(
+							index,
+							"quantity",
+							event.target.value
+						)
+					}
+					placeholder="Quantity"
+				/>
 				<button
 					type="button"
 					onClick={() => handleRemoveEquipment(index)}
 				>
 					Remove
 				</button>
-			</>
+			</div>
 		));
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("Submitting form...");
-		// Clear existing validation errors
-		setErrors({
-			batchName: "",
-			water: "",
-			initialGravity: "",
-			dateStarted: "",
-		});
 
-		// Check if the required fields are empty
-		if (!batchState.batchName) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				batchName: "Batch Name is required.",
-			}));
-		}
-		if (!batchState.water) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				water: "Water is required.",
-			}));
-		}
-		if (!batchState.initialGravity) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				initialGravity: "Initial Gravity is required.",
-			}));
-		}
-		if (!batchState.dateStarted) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				dateStarted: "Date Started is required.",
-			}));
-		}
-
-		// Perform additional validation for specific fields (if needed)
-		if (batchState.initialGravity <= 0) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				initialGravity: "Initial Gravity must be a positive number.",
-			}));
-		}
-
-		// Check if any errors exist
-		if (
-			!batchState.batchName ||
-			!batchState.water ||
-			!batchState.initialGravity ||
-			!batchState.dateStarted ||
-			batchState.initialGravity <= 0
-		) {
-			return;
-		}
-
-		if (!auth.user) return;
-		const parsedBatchState = {
+		const parsedBatchState: Batch = {
 			...batchState,
 			initialGravity: parseFloat(batchState.initialGravity.toString()),
 			equipment: batchState.equipment.map((item) => ({
 				...item,
 				quantity: parseInt(item.quantity.toString()),
 			})),
-			author: auth.user.uid,
+			author: auth.user?.uid || "",
 		};
-		let res = await createBatch(auth.user, parsedBatchState);
-		console.log(res);
-		console.log("Form submitted with state:", parsedBatchState);
-		navigate(`/batch/${res.batchID}`);
+		async function handleCreateBatch() {
+			if (!auth.user) {
+				return;
+			}
+			try {
+				const res = await createBatch(auth.user, parsedBatchState);
+				if (res.error) {
+					const messages = res.error.issues.map(
+						(issue: { path: string[]; message: string }) => ({
+							path: issue.path,
+							message: issue.message,
+						})
+					);
+					setErrorMessages(messages);
+				} else {
+					navigate(`/batch/${res.batchID}`);
+				}
+			} catch (error) {
+				console.error("Error creating batch:", error);
+			}
+		}
+
+		setLoading(true);
+		await handleCreateBatch();
+		setLoading(false);
+	};
+
+	const renderErrorMessages = () => {
+		if (errorMessages.length === 0) {
+			return null;
+		}
+
+		return (
+			<div className="error-messages">
+				{errorMessages.map((error, index) => (
+					<div key={index} className="error-message">
+						<span className="error-message error-field">
+							{error.path.join(".")}
+						</span>
+						<span className="error-message error-text">
+							{error.message}
+						</span>
+					</div>
+				))}
+			</div>
+		);
 	};
 
 	return (
@@ -244,6 +212,7 @@ export default function Create() {
 				<Link to={`/recipe/${rid}`}>{recipeInfo?.recipeName}</Link>
 			</h2>
 			<form id="create-batch-form">
+				{renderErrorMessages()}
 				<div>
 					<label className="bold-and-bigger-and-bigger">
 						Batch Name:
@@ -256,9 +225,6 @@ export default function Create() {
 						required
 					/>
 				</div>
-				{errors.batchName && (
-					<span className="error-message">{errors.batchName}</span>
-				)}
 				<div>
 					<label className="bold-and-bigger">Water:</label>
 					<input
@@ -269,9 +235,6 @@ export default function Create() {
 						required
 					/>
 				</div>
-				{errors.water && (
-					<span className="error-message">{errors.water}</span>
-				)}
 				<div>
 					<label className="bold-and-bigger">Initial Gravity:</label>
 					<input
@@ -282,11 +245,6 @@ export default function Create() {
 						required
 					/>
 				</div>
-				{errors.initialGravity && (
-					<span className="error-message">
-						{errors.initialGravity}
-					</span>
-				)}
 				<div>
 					<label className="bold-and-bigger">
 						Date Started:&nbsp;
@@ -313,9 +271,6 @@ export default function Create() {
 						<span className="custom-icon">📅</span>
 					</div>
 				</div>
-				{errors.dateStarted && (
-					<span className="error-message">{errors.dateStarted}</span>
-				)}
 				<div>
 					<div className="bold-and-bigger">Equipment</div>
 					{renderEquipmentInputs()}
@@ -350,7 +305,11 @@ export default function Create() {
 					</select>
 				</div>
 			</form>
-			<button onClick={handleSubmit}>Save</button>
+			{loading ? (
+				<LoadingSpinner />
+			) : (
+				<button onClick={handleSubmit}>Save</button>
+			)}
 		</div>
 	);
 }

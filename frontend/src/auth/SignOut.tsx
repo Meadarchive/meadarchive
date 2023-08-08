@@ -1,4 +1,5 @@
 import { useAuth } from "../hooks/useAuth";
+import "./styles/signout.css"
 
 export default function SignOutButton() {
 	const { signOut } = useAuth();
