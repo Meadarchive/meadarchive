@@ -227,13 +227,25 @@ export default function Create() {
 			}
 		}
 
+		console.log(errors);
+
 		// if there are any errors, return
 		if (Object.values(errors).some((error) => error !== "")) {
+			console.log(errors);
 			return;
 		}
 
-		const res = await createBatch(auth.user, parsedBatchState);
-		navigate(`/batch/${res.batchID}`);
+		async function handleCreateBatch() {
+			if (!auth.user) {
+				return;
+			}
+			const res = await createBatch(auth.user, parsedBatchState);
+			navigate(`/batch/${res.batchID}`);
+		}
+
+		useEffect(() => {
+			handleCreateBatch();
+		}, [errors]);
 	};
 
 	return (
