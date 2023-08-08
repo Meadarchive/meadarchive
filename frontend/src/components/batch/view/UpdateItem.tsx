@@ -12,12 +12,12 @@ interface UpdateItemProps {
 }
 
 const UpdateItem: React.FC<UpdateItemProps> = ({ update, uid, author }) => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const { user } = useAuth();
 	const handleDeleteUpdate = async () => {
 		user && (await deleteUpdate(user, update.batchID, uid));
-		navigate(`/batch/${update.batchID}`)
-	}
+		navigate(`/batch/${update.batchID}`);
+	};
 	return (
 		<div className="update">
 			{Object.entries(update).map(([propKey, propValue]) => (
@@ -25,7 +25,7 @@ const UpdateItem: React.FC<UpdateItemProps> = ({ update, uid, author }) => {
 					{propKey}: {propValue}
 				</div>
 			))}
-			{user && user.uid === author &&  (
+			{user && user.uid === author && (
 				<div className="delete-update-container">
 					<DeleteConfirmation
 						onConfirm={handleDeleteUpdate}
