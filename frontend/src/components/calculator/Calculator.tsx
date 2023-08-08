@@ -58,6 +58,16 @@ const Calculator: React.FC = () => {
 			<div id="calculator-subcontainer">
 				<div id="calculator-title">ABV from hydrometer</div>
 				<div id="calculator">
+					<div id="subtext">
+						{calculatedABV !== undefined ? (
+							<p>
+								The ABV of your brew is{" "}
+								{calculatedABV.toFixed(2)}%
+							</p>
+						) : (
+							<p>{error}</p>
+						)}
+					</div>
 					<div id="og" className="gravity-container">
 						<label className="gravity-label">
 							Original Gravity:
@@ -77,16 +87,6 @@ const Calculator: React.FC = () => {
 							value={finalGravity}
 							onChange={handleFinalGravityChange}
 						/>
-					</div>
-					<div id="subtext">
-						{calculatedABV !== undefined ? (
-							<p>
-								The ABV of your brew is{" "}
-								{calculatedABV.toFixed(2)}%
-							</p>
-						) : (
-							<p>{error}</p>
-						)}
 					</div>
 				</div>
 			</div>
