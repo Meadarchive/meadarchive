@@ -14,25 +14,40 @@ interface UpdateItemProps {
 const UpdateItem: React.FC<UpdateItemProps> = ({ update, uid, author }) => {
 	const navigate = useNavigate();
 	const { user } = useAuth();
+
 	const handleDeleteUpdate = async () => {
-		user && (await deleteUpdate(user, update.batchID, uid));
-		navigate(`/batch/${update.batchID}`);
+		if (user) {
+			await deleteUpdate(user, update.batchID, uid);
+			navigate(`/batch/${update.batchID}`);
+		}
 	};
-	return (
-		<div className="update">
-			{Object.entries(update).map(([propKey, propValue]) => (
-				<div key={propKey}>
-					{propKey}: {propValue}
-				</div>
-			))}
-			{user && user.uid === author && (
+
+	const renderUpdateProperties = () => {
+		return Object.entries(update).map(([propKey, propValue]) => (
+			<div key={propKey}>
+				{propKey}: {propValue}
+			</div>
+		));
+	};
+
+	const renderDeleteConfirmation = () => {
+		if (user && user.uid === author) {
+			return (
 				<div className="delete-update-container">
 					<DeleteConfirmation
 						onConfirm={handleDeleteUpdate}
 						whatIsBeingDeleted="update"
 					/>
 				</div>
-			)}
+			);
+		}
+		return null;
+	};
+
+	return (
+		<div className="update">
+			{renderUpdateProperties()}
+			{renderDeleteConfirmation()}
 		</div>
 	);
 };
