@@ -227,11 +227,9 @@ export default function Create() {
 			}
 		}
 
-		console.log(errors);
 
 		// if there are any errors, return
 		if (Object.values(errors).some((error) => error !== "")) {
-			console.log(errors);
 			return;
 		}
 
