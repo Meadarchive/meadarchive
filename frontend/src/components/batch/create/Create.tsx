@@ -229,6 +229,21 @@ export default function Create() {
 			return;
 		}
 
+		// if any inputs are empty, return
+		if (
+			!batchName ||
+			!water ||
+			!initialGravity ||
+			!dateStarted ||
+			equipment[0].item === "" ||
+			equipment[0].quantity === 0 ||
+			equipment[0].quantity === null ||
+			equipment[0].quantity === undefined ||
+			equipment[0].quantity.toString() === ""
+		) {
+			return;
+		}
+
 		async function handleCreateBatch() {
 			if (!auth.user) {
 				return;
@@ -237,9 +252,7 @@ export default function Create() {
 			navigate(`/batch/${res.batchID}`);
 		}
 
-		useEffect(() => {
-			handleCreateBatch();
-		}, [errors]);
+		handleCreateBatch();
 	};
 
 	return (
