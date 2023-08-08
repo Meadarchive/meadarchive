@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import "./styles/calculator.css";
 
 const Calculator: React.FC = () => {
@@ -9,8 +9,12 @@ const Calculator: React.FC = () => {
 		undefined
 	);
 
+	const isValidGravity = (gravity: number): boolean => {
+		return gravity >= 0.9 && gravity <= 2;
+	};
+
 	const calculateABV = (og: number, fg: number): void => {
-		if (og >= 0.9 && og <= 2 && fg >= 0.9 && fg <= 2) {
+		if (isValidGravity(og) && isValidGravity(fg)) {
 			setCalculatedABV((og - fg) * 131.25);
 			setError("");
 		} else if (og < fg) {
@@ -31,25 +35,15 @@ const Calculator: React.FC = () => {
 		}
 	}, [originalGravity, finalGravity]);
 
-	const handleOriginalGravityChange = (
-		e: React.ChangeEvent<HTMLInputElement>
+	const handleGravityChange = (
+		e: ChangeEvent<HTMLInputElement>,
+		setter: React.Dispatch<React.SetStateAction<string>>
 	) => {
 		const value = e.target.value;
 
 		// Validate the input value to ensure it's a valid float
 		if (/^\d+(\.\d*)?$/.test(value) || value === "") {
-			setOriginalGravity(value);
-		}
-	};
-
-	const handleFinalGravityChange = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const value = e.target.value;
-
-		// Validate the input value to ensure it's a valid float
-		if (/^\d+(\.\d*)?$/.test(value) || value === "") {
-			setFinalGravity(value);
+			setter(value);
 		}
 	};
 
@@ -68,7 +62,7 @@ const Calculator: React.FC = () => {
 							<p>{error}</p>
 						)}
 					</div>
-					<div id="og" className="gravity-container">
+					<div className="gravity-container">
 						<label className="gravity-label">
 							Original Gravity:
 						</label>
@@ -76,7 +70,9 @@ const Calculator: React.FC = () => {
 							className="gravity-input"
 							type="text"
 							value={originalGravity}
-							onChange={handleOriginalGravityChange}
+							onChange={(e) =>
+								handleGravityChange(e, setOriginalGravity)
+							}
 						/>
 					</div>
 					<div className="gravity-container">
@@ -85,7 +81,9 @@ const Calculator: React.FC = () => {
 							className="gravity-input"
 							type="text"
 							value={finalGravity}
-							onChange={handleFinalGravityChange}
+							onChange={(e) =>
+								handleGravityChange(e, setFinalGravity)
+							}
 						/>
 					</div>
 				</div>
