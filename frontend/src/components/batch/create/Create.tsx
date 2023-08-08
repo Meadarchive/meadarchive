@@ -206,7 +206,12 @@ export default function Create() {
 				equipment: "Equipment name is required.",
 			}));
 		}
-		if (equipment[0].quantity === 0) {
+		if (
+			equipment[0].quantity === 0 ||
+			equipment[0].quantity === null ||
+			equipment[0].quantity === undefined ||
+			equipment[0].quantity.toString() === ""
+		) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				equipment: "Equipment quantity is required.",
@@ -222,13 +227,8 @@ export default function Create() {
 			}
 		}
 
-		if (
-			!batchName ||
-			!water ||
-			!initialGravity ||
-			!dateStarted ||
-			initialGravity <= 0
-		) {
+		// if there are any errors, return
+		if (Object.values(errors).some((error) => error !== "")) {
 			return;
 		}
 
