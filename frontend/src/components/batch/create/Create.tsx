@@ -23,6 +23,7 @@ export default function Create() {
 		water: "",
 		initialGravity: "",
 		dateStarted: "",
+		equipment: "",
 	});
 
 	const [batchState, setBatchState] = useState<Batch>({
@@ -159,9 +160,11 @@ export default function Create() {
 			water: "",
 			initialGravity: "",
 			dateStarted: "",
+			equipment: "",
 		});
 
-		const { batchName, water, initialGravity, dateStarted } = batchState;
+		const { batchName, water, initialGravity, dateStarted, equipment } =
+			batchState;
 
 		const parsedBatchState: Batch = {
 			...batchState,
@@ -195,6 +198,18 @@ export default function Create() {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				dateStarted: "Date Started is required.",
+			}));
+		}
+		if (equipment[0].item === "") {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				equipment: "Equipment name is required.",
+			}));
+		}
+		if (equipment[0].quantity === 0) {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				equipment: "Equipment quantity is required.",
 			}));
 		} else {
 			const currentDate = new Date();
@@ -318,6 +333,9 @@ export default function Create() {
 						Add Equipment
 					</button>
 				</div>
+				{errors.equipment && (
+					<span className="error-message">{errors.equipment}</span>
+				)}
 				<div id="create-batch-stage-container">
 					<label className="bold-and-bigger">Stage:&nbsp;</label>
 					<select
