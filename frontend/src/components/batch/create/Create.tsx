@@ -10,6 +10,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import "./styles/create.css";
 import RecipeInterface from "../../recipe/view/interfaces/RecipeInterface";
 import getRecipeByRID from "../../../api/get/getRecipeByRID";
+import LoadingSpinner from "../../loading-spinner/LoadingSpinner";
 
 export default function Create() {
 	const { rid } = useParams();
@@ -17,15 +18,10 @@ export default function Create() {
 	const navigate = useNavigate();
 
 	const [loading, setLoading] = useState(false);
+	const [errorMessages, setErrorMessages] = useState<
+		{ path: string[]; message: string }[]
+	>([]);
 	const [recipeInfo, setRecipeInfo] = useState<RecipeInterface | null>();
-
-	const [errors, setErrors] = useState({
-		batchName: "",
-		water: "",
-		initialGravity: "",
-		dateStarted: "",
-		equipment: "",
-	});
 
 	const [batchState, setBatchState] = useState<Batch>({
 		author: "",
@@ -152,109 +148,61 @@ export default function Create() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		setErrors({
-			batchName: "",
-			water: "",
-			initialGravity: "",
-			dateStarted: "",
-			equipment: "",
-		});
-
-		const { batchName, water, initialGravity, dateStarted, equipment } =
-			batchState;
-
 		const parsedBatchState: Batch = {
 			...batchState,
-			initialGravity: parseFloat(initialGravity.toString()),
+			initialGravity: parseFloat(batchState.initialGravity.toString()),
 			equipment: batchState.equipment.map((item) => ({
 				...item,
 				quantity: parseInt(item.quantity.toString()),
 			})),
 			author: auth.user?.uid || "",
 		};
-
-		if (!batchName) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				batchName: "Batch Name is required.",
-			}));
-		}
-		if (!water) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				water: "Water is required.",
-			}));
-		}
-		if (!initialGravity) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				initialGravity: "Initial Gravity is required.",
-			}));
-		}
-		if (!dateStarted) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				dateStarted: "Date Started is required.",
-			}));
-		}
-		if (equipment[0].item === "") {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				equipment: "Equipment name is required.",
-			}));
-		}
-		if (
-			equipment[0].quantity === 0 ||
-			equipment[0].quantity === null ||
-			equipment[0].quantity === undefined ||
-			equipment[0].quantity.toString() === ""
-		) {
-			setErrors((prevErrors) => ({
-				...prevErrors,
-				equipment: "Equipment quantity is required.",
-			}));
-		} else {
-			const currentDate = new Date();
-			const selectedDate = new Date(dateStarted);
-			if (selectedDate > currentDate) {
-				setErrors((prevErrors) => ({
-					...prevErrors,
-					dateStarted: "Date Started cannot be in the future.",
-				}));
-			}
-		}
-
-
-		// if there are any errors, return
-		if (Object.values(errors).some((error) => error !== "")) {
-			return;
-		}
-
-		// if any inputs are empty, return
-		if (
-			!batchName ||
-			!water ||
-			!initialGravity ||
-			!dateStarted ||
-			equipment[0].item === "" ||
-			equipment[0].quantity === 0 ||
-			equipment[0].quantity === null ||
-			equipment[0].quantity === undefined ||
-			equipment[0].quantity.toString() === ""
-		) {
-			return;
-		}
-
 		async function handleCreateBatch() {
 			if (!auth.user) {
 				return;
 			}
-			setLoading(true)
-			const res = await createBatch(auth.user, parsedBatchState);
-			navigate(`/batch/${res.batchID}`);
+			try {
+				const res = await createBatch(auth.user, parsedBatchState);
+				if (res.error) {
+					const messages = res.error.issues.map(
+						(issue: { path: string[]; message: string }) => ({
+							path: issue.path,
+							message: issue.message,
+						})
+					);
+					setErrorMessages(messages);
+				} else {
+					navigate(`/batch/${res.batchID}`);
+				}
+			} catch (error) {
+				console.error("Error creating batch:", error);
+			}
 		}
 
-		handleCreateBatch();
+		setLoading(true);
+		await handleCreateBatch();
+		setLoading(false);
+	};
+
+	const renderErrorMessages = () => {
+		if (errorMessages.length === 0) {
+			return null;
+		}
+
+		return (
+			<div className="error-messages">
+				{errorMessages.map((error, index) => (
+					<div key={index} className="error-message">
+						<span className="error-message error-field">
+							{error.path.join(".")}
+						</span>
+						<span className="error-message error-text">
+							{error.message}
+						</span>
+					</div>
+				))}
+			</div>
+		);
 	};
 
 	return (
@@ -264,6 +212,7 @@ export default function Create() {
 				<Link to={`/recipe/${rid}`}>{recipeInfo?.recipeName}</Link>
 			</h2>
 			<form id="create-batch-form">
+				{renderErrorMessages()}
 				<div>
 					<label className="bold-and-bigger-and-bigger">
 						Batch Name:
@@ -276,9 +225,6 @@ export default function Create() {
 						required
 					/>
 				</div>
-				{errors.batchName && (
-					<span className="error-message">{errors.batchName}</span>
-				)}
 				<div>
 					<label className="bold-and-bigger">Water:</label>
 					<input
@@ -289,9 +235,6 @@ export default function Create() {
 						required
 					/>
 				</div>
-				{errors.water && (
-					<span className="error-message">{errors.water}</span>
-				)}
 				<div>
 					<label className="bold-and-bigger">Initial Gravity:</label>
 					<input
@@ -302,11 +245,6 @@ export default function Create() {
 						required
 					/>
 				</div>
-				{errors.initialGravity && (
-					<span className="error-message">
-						{errors.initialGravity}
-					</span>
-				)}
 				<div>
 					<label className="bold-and-bigger">
 						Date Started:&nbsp;
@@ -333,9 +271,6 @@ export default function Create() {
 						<span className="custom-icon">📅</span>
 					</div>
 				</div>
-				{errors.dateStarted && (
-					<span className="error-message">{errors.dateStarted}</span>
-				)}
 				<div>
 					<div className="bold-and-bigger">Equipment</div>
 					{renderEquipmentInputs()}
@@ -354,9 +289,6 @@ export default function Create() {
 						Add Equipment
 					</button>
 				</div>
-				{errors.equipment && (
-					<span className="error-message">{errors.equipment}</span>
-				)}
 				<div id="create-batch-stage-container">
 					<label className="bold-and-bigger">Stage:&nbsp;</label>
 					<select
@@ -373,7 +305,11 @@ export default function Create() {
 					</select>
 				</div>
 			</form>
-			<button disabled={loading} onClick={handleSubmit}>Save</button>
+			{loading ? (
+				<LoadingSpinner />
+			) : (
+				<button onClick={handleSubmit}>Save</button>
+			)}
 		</div>
 	);
 }
