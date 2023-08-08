@@ -1,19 +1,25 @@
-import { PropsWithChildren } from "react";
+import React from "react";
 import { useAuth } from "../hooks/useAuth";
-import GoogleButton from 'react-google-button'
+import GoogleButton from "react-google-button";
 
-interface Props {
-	children: string
+interface AuthProps {
+	children: React.ReactNode;
 }
 
-export default function Auth(props: PropsWithChildren<Props>) {
+function Auth({ children }: AuthProps): JSX.Element {
 	const { signIn } = useAuth();
+
+	const handleSignIn = () => {
+		signIn();
+	};
 
 	return (
 		<div>
-			<GoogleButton type="dark" onClick={signIn}>
-				{props.children}
+			<GoogleButton type="dark" onClick={handleSignIn}>
+				{children}
 			</GoogleButton>
 		</div>
 	);
 }
+
+export default Auth;
