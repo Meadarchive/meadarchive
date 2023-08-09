@@ -1,22 +1,26 @@
 import Auth from "../../auth/Auth";
 import { useAuth } from "../../hooks/useAuth";
-import "./styles/homepage.css";
 import { Link } from "react-router-dom";
+import "./styles/homepage.css";
 import Calculator from "../calculator/Calculator";
+import firebase from "../../service/firebase";
 
-export default function Homepage() {
+function WelcomeMessage({ user }: { user: firebase.User | null }) {
+	return (
+		<div className="bold">
+			Welcome to meadarchive{user ? " " + user.displayName : ""}!
+		</div>
+	);
+}
+
+function Homepage() {
 	const { user } = useAuth();
+
 	return (
 		<>
 			<div id="welcome-container">
 				<div id="welcome">
-					{user ? (
-						<div className="bold">
-							Welcome to meadarchive {user.displayName}!
-						</div>
-					) : (
-						<div className="bold">Welcome to meadarchive!</div>
-					)}
+					<WelcomeMessage user={user} />
 					<div>
 						Meadarchive is a passion project to create a way to
 						preserve and share mead recipes and brews. It is
@@ -29,9 +33,9 @@ export default function Homepage() {
 						{!user && (
 							<>
 								<div>Sign in below</div>
+								<Auth>Sign in</Auth>
 							</>
 						)}
-						{!user && <Auth>Sign in </Auth>}
 						<div>
 							<Link to="/recipe/create">Create a recipe</Link>
 						</div>
@@ -43,3 +47,5 @@ export default function Homepage() {
 		</>
 	);
 }
+
+export default Homepage;
