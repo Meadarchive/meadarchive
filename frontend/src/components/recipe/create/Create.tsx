@@ -7,6 +7,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import CreateFormState from "./interfaces/CreateFormState";
 import { useNavigate } from "react-router-dom";
 import createRecipe from "../../../api/create/createRecipe";
+import LoadingSpinner from "../../loading-spinner/LoadingSpinner";
 
 const CreateForm: React.FC = () => {
 	const [formState, setFormState] = useState<CreateFormState>({
@@ -172,53 +173,17 @@ const CreateForm: React.FC = () => {
 		});
 	};
 
-	const [formErrors, setFormErrors] = useState({
-		recipeName: "",
-		recipeDescription: "",
-		liquids: "",
-		yeastType: "",
-		yeastAmount: "",
-		honeyTypes: "",
-		recipeSize: "",
-	});
+	const [errorMessages, setErrorMessages] = useState<
+		{ path: string[]; message: string }[]
+	>([]);
+	const [loading, setLoading] = useState(false);
 
 	const handleFormSubmit = async (
 		event: React.FormEvent<HTMLFormElement>
 	) => {
 		event.preventDefault();
 		if (!user) return;
-		// Validate required fields
-		const errors: any = {};
-		if (!formState.recipeName.trim()) {
-			errors.recipeName = "Recipe Name is required";
-		}
-		if (!formState.recipeDescription.trim()) {
-			errors.recipeDescription = "Recipe Description is required";
-		}
-		if (formState.liquids.length === 0) {
-			errors.liquids = "At least one liquid is required";
-		}
-		if (!formState.yeastType.trim()) {
-			errors.yeastType = "Yeast Type is required";
-		}
-		if (formState.yeastAmount === 0) {
-			errors.yeastAmount = "Yeast Amount is required";
-		}
-		if (formState.honeyTypes.length === 0) {
-			errors.honeyTypes = "At least one honey type is required";
-		}
-		if (!formState.recipeSize) {
-			errors.recipeSize = "Recipe Size is required";
-		}
-		if (!formState.recipeSizeUnit) {
-			errors.recipeSizeUnit = "Recipe Size Unit is required";
-		}
 
-		// Check if any errors exist
-		if (Object.keys(errors).length > 0) {
-			setFormErrors(errors);
-			return;
-		}
 		// Convert numbers to integers
 		const parsedFormState = {
 			...formState,
@@ -242,13 +207,52 @@ const CreateForm: React.FC = () => {
 			recipeSize: Number(formState.recipeSize),
 		};
 
-		const data = await createRecipe(user, parsedFormState);
+		async function handleCreateRecipe() {
+			if (!user) {
+				return;
+			}
+			try {
+				const res = await createRecipe(user, parsedFormState);
+				if (res.error) {
+					const messages = res.error.issues.map(
+						(issue: { path: string[]; message: string }) => ({
+							path: issue.path,
+							message: issue.message,
+						})
+					);
+					setErrorMessages(messages);
+				} else {
+					navigate(`/recipe/${res.recipeID}`);
+				}
+			} catch (error) {
+				console.error("Error creating recipe:", error);
+			}
+		}
 
-		// You can perform additional actions with the form data here
-		console.log("Form submitted:", parsedFormState);
+		setLoading(true);
+		await handleCreateRecipe();
+		setLoading(false);
+	};
 
-		// redirect to recipe page
-		navigate(`/recipe/${data.recipeID}`);
+	const renderErrorMessages = () => {
+		if (errorMessages.length === 0) {
+			return null;
+		}
+
+		return (
+			<div className="error-messages">
+				{errorMessages.map((error, index) => (
+					<div key={index} className="error-message">
+						<span className="error-message error-field">
+							{error.path.join(".")}
+						</span>
+						<span className="error-message error-text">
+							{error.message}
+						</span>
+					</div>
+				))}
+			</div>
+		);
 	};
 
 	const renderLiquidInputs = () => {
@@ -404,10 +408,10 @@ const CreateForm: React.FC = () => {
 
 	return (
 		<form id="create-form" onSubmit={handleFormSubmit}>
+			{renderErrorMessages()}
 			<div>
 				<h3>Recipe Name</h3>
 				<div className="error-message recipe-error">
-					{formErrors.recipeName}
 				</div>
 				<div id="recipe-name-container">
 					<input
@@ -424,7 +428,6 @@ const CreateForm: React.FC = () => {
 			<div>
 				<h3>Liquids and Amounts</h3>
 				<div className="error-message recipe-error">
-					{formErrors.liquids}
 				</div>
 				{renderLiquidInputs()}
 				<button
@@ -447,8 +450,6 @@ const CreateForm: React.FC = () => {
 			<div>
 				<h3>Yeast</h3>
 				<div className="error-message recipe-error">
-					<div>{formErrors.yeastType}</div>
-					<div>{formErrors.yeastAmount}</div>
 				</div>
 				<div id="yeast-container">
 					<div>
@@ -484,7 +485,6 @@ const CreateForm: React.FC = () => {
 			<div>
 				<h3>Honey Types and Amounts</h3>
 				<div className="error-message recipe-error">
-					{formErrors.honeyTypes}
 				</div>
 				{renderHoneyInputs()}
 				<button
@@ -547,7 +547,6 @@ const CreateForm: React.FC = () => {
 			<div>
 				<h3>Recipe Size</h3>
 				<div className="error-message recipe-error">
-					{formErrors.recipeSize}
 				</div>
 				<div id="recipe-size-container">
 					<input
@@ -579,7 +578,6 @@ const CreateForm: React.FC = () => {
 			<div>
 				<h3>Recipe Description</h3>
 				<div className="error-message recipe-error">
-					{formErrors.recipeDescription}
 				</div>
 				<div id="recipe-description-container">
 					<MDEditor
@@ -595,7 +593,11 @@ const CreateForm: React.FC = () => {
 					/>
 				</div>
 			</div>
-			<button type="submit">Submit</button>
+			{loading ? (
+				<LoadingSpinner />
+			) : (
+			<button id="create-recipe-button" type="submit">Submit</button>
+			)}
 		</form>
 	);
 };
