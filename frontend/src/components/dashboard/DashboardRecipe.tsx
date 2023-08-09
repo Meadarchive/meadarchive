@@ -22,10 +22,13 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 		rid: string,
 		user: firebase.User | null
 	) => {
-		user && (await deleteRecipe(rid, user));
+		if (user) {
+			await deleteRecipe(rid, user);
+		}
 	};
 
 	const navigate = useNavigate();
+	const isAuthor = user && user.uid === recipe.author;
 
 	return (
 		<div className="dashboard-recipe-container">
@@ -35,7 +38,7 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 						<Link to={`/recipe/${rid}`}>{recipe.recipeName}</Link>
 					</div>
 					<div className="dashboard-recipe-yeast">
-						{recipe.yeastType} {recipe.yeastAmount}g
+						{`${recipe.yeastType} ${recipe.yeastAmount}g`}
 					</div>
 					<div className="dashboard-recipe-size">
 						{recipeSizeFormatter(
@@ -47,7 +50,7 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 				<div className="dashboard-delete-recipe">
 					{user ? (
 						<>
-							{user.uid == recipe.author && (
+							{isAuthor && (
 								<DeleteConfirmation
 									onConfirm={() =>
 										handleDeleteRecipe(rid, user)
@@ -63,7 +66,12 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 							</button>
 						</>
 					) : (
-						<Link className="sign-in-to-create-batch-link" to="/sign-in">Sign in to create batch!</Link>
+						<Link
+							className="sign-in-to-create-batch-link"
+							to="/sign-in"
+						>
+							Sign in to create batch!
+						</Link>
 					)}
 				</div>
 			</div>
