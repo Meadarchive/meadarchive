@@ -1,31 +1,32 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import SignOut from "../../auth/SignOut";
-import { useAuth } from "../../hooks/useAuth";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoCreateOutline } from "react-icons/io5";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { PiSignInLight, PiSignOutLight } from "react-icons/pi";
-import { useState } from "react";
+
+import { useAuth } from "../../hooks/useAuth";
+import SignOut from "../../auth/SignOut";
 import "./styles/header.css";
 
 export default function Header() {
 	const auth = useAuth();
 	const user = auth.user;
-
 	const [copied, setCopied] = useState(false);
 
-	const handleCopyClick = () => {
-		user?.getIdToken().then((token) => {
-			navigator.clipboard.writeText(token).then(() => {
+	const handleCopyClick = async () => {
+		if (user) {
+			try {
+				const token = await user.getIdToken();
+				await navigator.clipboard.writeText(token);
 				setCopied(true);
-				console.log("Copied to clipboard");
-				// Reset the "Copied to clipboard" text after a short delay (e.g., 3 seconds)
 				setTimeout(() => setCopied(false), 3000);
-			});
-		});
+			} catch (error) {
+				console.error("Error copying token:", error);
+			}
+		}
 	};
 
-	console.log(user);
 	return (
 		<>
 			<div id="header-container">
@@ -56,20 +57,19 @@ export default function Header() {
 					)}
 				</div>
 			</div>
-			{
-				/* if current user id == EGKwKPUpR3emxd6wsaW03WYXmJs1 || E7N5xAZYApd9LZyuDP4HQTOAoih1 show button with action to copy user's authentication token to clipboard */
-				user &&
+			<div>
+				{user &&
 					(user.uid === "EGKwKPUpR3emxd6wsaW03WYXmJs1" ||
-						user.uid == "MdI4Du5imwcExc7XiZvxDPwL8923" ||
-						user.uid == "E7N5xAZYApd9LZyuDP4HQTOAoih1") && (
+						user.uid === "MdI4Du5imwcExc7XiZvxDPwL8923" ||
+						user.uid === "E7N5xAZYApd9LZyuDP4HQTOAoih1") && (
 						<div>
 							<button onClick={handleCopyClick}>
 								Copy token
 							</button>
 							{copied && <div>Copied to clipboard</div>}
 						</div>
-					)
-			}
+					)}
+			</div>
 		</>
 	);
 }
