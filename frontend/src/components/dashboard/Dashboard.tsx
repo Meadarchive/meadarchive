@@ -1,45 +1,46 @@
-import { useAuth } from "../../hooks/useAuth";
-import { useState, useEffect } from "react";
-import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
-import LoadingSpinner from "../loading-spinner/LoadingSpinner";
-import "./styles/dashboard.css";
-import DashboardRecipe from "./DashboardRecipe";
-import getRecipesByUID from "../../api/get/getRecipesByUID";
-import getBatchesByUID from "../../api/get/getBatchesByUID";
-import { BatchWithUpdates } from "../../api/interfaces/batchInterface";
-import DashboardBatchInfo from "./DashboardBatchInfo";
-import "../batch/view/styles/view.css";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
+import { useAuth } from "../../hooks/useAuth";
+import LoadingSpinner from "../loading-spinner/LoadingSpinner";
+import DashboardRecipe from "./DashboardRecipe";
+import DashboardBatchInfo from "./DashboardBatchInfo";
 import DeleteConfirmation from "../recipe/view/DeleteConfirmation";
 import firebase from "../../service/firebase";
+import { BatchWithUpdates } from "../../api/interfaces/batchInterface";
+import getRecipesByUID from "../../api/get/getRecipesByUID";
+import getBatchesByUID from "../../api/get/getBatchesByUID";
 import deleteBatch from "../../api/delete/deleteBatch";
+import "./styles/dashboard.css";
+import "../batch/view/styles/view.css";
 
-export default function Dashboard() {
-	// get current user
+function Dashboard() {
 	const { user } = useAuth();
 
 	const handleDeleteBatch = async (
 		bid: string,
 		user: firebase.User | null
 	) => {
-		user && (await deleteBatch(bid, user));
+		if (user) {
+			await deleteBatch(bid, user);
+		}
 	};
 
-	const [recipes, setRecipes] = useState<RecipeInterface[]>();
-	const [batches, setBatches] = useState<BatchWithUpdates[]>();
+	const [recipes, setRecipes] = useState<RecipeInterface[] | null>(null);
+	const [batches, setBatches] = useState<BatchWithUpdates[] | null>(null);
 
 	useEffect(() => {
-		// get recipes from backend
-		user &&
-			(async () => {
-				setRecipes(await getRecipesByUID(user.uid));
-				setBatches(await getBatchesByUID(user.uid));
-			})();
+		const fetchData = async () => {
+			if (user) {
+				const userRecipes = await getRecipesByUID(user.uid);
+				const userBatches = await getBatchesByUID(user.uid);
+				setRecipes(userRecipes);
+				setBatches(userBatches);
+			}
+		};
+
+		fetchData();
 	}, [user]);
-
-	useEffect(() => {
-		batches && console.log(Object.keys(batches).length);
-	}, [batches]);
 
 	const scrollToRecipes = () => {
 		const recipesTitleElement = document.getElementById("recipes-title");
@@ -78,7 +79,7 @@ export default function Dashboard() {
 									create your own
 								</Link>
 							</div>
-						)}{" "}
+						)}
 					</>
 				) : (
 					<LoadingSpinner />
@@ -118,21 +119,17 @@ export default function Dashboard() {
 						) : (
 							<div className="no-batches">
 								No batches,{" "}
-								{
-									// if a user has recipes but no batches, prompt them to create a batch of one of their recipes
-									recipes &&
-										Object.keys(recipes).length > 0 && (
-											<>
-												<span
-													className="bold link"
-													onClick={scrollToRecipes}
-												>
-													create a batch
-												</span>{" "}
-												of one of your recipes or
-											</>
-										)
-								}{" "}
+								{recipes && Object.keys(recipes).length > 0 && (
+									<>
+										<span
+											className="bold link"
+											onClick={scrollToRecipes}
+										>
+											create a batch
+										</span>{" "}
+										of one of your recipes or
+									</>
+								)}{" "}
 								create one from our collection of{" "}
 								<Link className="bold" to="/browse">
 									community made recipes
@@ -147,3 +144,5 @@ export default function Dashboard() {
 		</div>
 	);
 }
+
+export default Dashboard;
