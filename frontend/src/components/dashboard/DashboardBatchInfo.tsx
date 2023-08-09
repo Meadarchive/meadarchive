@@ -7,15 +7,17 @@ interface BatchInfoProps {
 }
 
 const DashboardBatchInfo: React.FC<BatchInfoProps> = ({ batchInfo }) => {
+	const { stage, initialGravity, recipeID } = batchInfo;
+
 	return (
 		<div className="batch-info">
-			<div className="dashboard-batch-stage">Stage: {batchInfo.stage}</div>
-			<div className="dashboard-batch-gravity">Initial Gravity: {batchInfo.initialGravity}</div>
+			<div className="dashboard-batch-stage">Stage: {stage}</div>
+			<div className="dashboard-batch-gravity">
+				Initial Gravity: {initialGravity}
+			</div>
 			<div className="dashboard-batch-recipeid">
 				Recipe:&nbsp;
-				<Link to={`/recipe/${batchInfo.recipeID}`}>
-					{batchInfo.recipeID}
-				</Link>
+				<Link to={`/recipe/${recipeID}`}>{recipeID}</Link>
 			</div>
 		</div>
 	);
