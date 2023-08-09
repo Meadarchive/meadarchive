@@ -1,24 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import getAllRecipes from "../../api/get/getAllRecipes";
 import { useAuth } from "../../hooks/useAuth";
 import DashboardRecipe from "../dashboard/DashboardRecipe";
-import RecipeInterface from "./../recipe/view/interfaces/RecipeInterface";
+import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import "./styles/browse.css";
 
 function Browse() {
-	const [recipes, setRecipes] = useState<RecipeInterface[]>([]); // Explicitly define the type as an array of RecipeInterface
-	const [searchTerm, setSearchTerm] = useState<string>(""); // New state for search
+	const [recipes, setRecipes] = useState<{ [rid: string]: RecipeInterface }>(
+		{}
+	);
+	const [searchTerm, setSearchTerm] = useState<string>("");
 	const { user } = useAuth();
 
 	useEffect(() => {
-		// get recipes from backend
-		(async () => {
-			setRecipes(await getAllRecipes());
-		})();
+		const fetchRecipes = async () => {
+			const fetchedRecipes = await getAllRecipes();
+			setRecipes(fetchedRecipes);
+		};
+
+		fetchRecipes();
 	}, []);
 
-	// Function to update search term
-	const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
 	};
 
@@ -32,26 +35,24 @@ function Browse() {
 				placeholder="Search by recipe name"
 			/>
 			<div id="browse">
-				{recipes &&
-					Object.entries(recipes).map(([rid, recipe]) => {
-						// Filter recipes based on the search term
-						if (
-							!searchTerm ||
-							recipe.recipeName
-								.toLowerCase()
-								.includes(searchTerm.toLowerCase())
-						) {
-							return (
-								<DashboardRecipe
-									key={rid}
-									recipe={recipe}
-									user={user ? user : null}
-									rid={rid}
-								/>
-							);
-						}
-						return null; // Do not render if the recipe doesn't match the search
-					})}
+				{Object.entries(recipes).map(([rid, recipe]) => {
+					if (
+						!searchTerm ||
+						recipe.recipeName
+							.toLowerCase()
+							.includes(searchTerm.toLowerCase())
+					) {
+						return (
+							<DashboardRecipe
+								key={rid}
+								recipe={recipe}
+								user={user || null}
+								rid={rid}
+							/>
+						);
+					}
+					return null;
+				})}
 			</div>
 		</>
 	);
