@@ -42,10 +42,6 @@ function Dashboard() {
 		fetchData();
 	}, [user]);
 
-	useEffect(() => {
-		batches && console.log(Object.keys(batches).length);
-	}, [batches]);
-
 	const scrollToRecipes = () => {
 		const recipesTitleElement = document.getElementById("recipes-title");
 		if (recipesTitleElement) {
