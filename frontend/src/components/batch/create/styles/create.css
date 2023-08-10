@@ -28,6 +28,7 @@
 .error-message {
 	color: var(--danger);
 	font-weight: bold;
+	margin-left: 0.5rem;
 }
 
 #create-batch-stage-label {
