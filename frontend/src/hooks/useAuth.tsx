@@ -35,7 +35,7 @@ export const useAuth = () => {
 			await auth.signOut();
 			handleUser(null);
 		} catch (error) {
-			console.error("Sign out error:", error);
+			setAuthError(error as firebase.auth.Error);
 		}
 	};
 
