@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import { useAuth } from "../../hooks/useAuth";
 import LoadingSpinner from "../loading-spinner/LoadingSpinner";
@@ -16,13 +16,18 @@ import "../batch/view/styles/view.css";
 
 function Dashboard() {
 	const { user } = useAuth();
+	const navigate = useNavigate();
 
 	const handleDeleteBatch = async (
 		bid: string,
 		user: firebase.User | null
 	) => {
+		console.log("deleting batch");
 		if (user) {
-			await deleteBatch(bid, user);
+			const navigateUrl = await deleteBatch(bid, user);
+			if (navigateUrl) {
+				navigate(navigateUrl);
+			}
 		}
 	};
 
