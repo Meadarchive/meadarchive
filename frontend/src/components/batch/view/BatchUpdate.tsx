@@ -78,7 +78,7 @@ export default function Update() {
 			};
 		}
 
-		const res = await createBatchUpdate(auth.user, parsedBatchUpdate);
+		await createBatchUpdate(auth.user, parsedBatchUpdate);
 		navigate(`/batch/${batchUpdate.batchID}`);
 	};
 
