@@ -64,6 +64,7 @@ function Dashboard() {
 											rid={rid}
 											recipe={recipe}
 											user={user}
+											refetchData={fetchData}
 										/>
 									)
 								)}
