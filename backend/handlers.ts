@@ -315,6 +315,7 @@ export async function getBatchUpdate(req: express.Request, res: express.Response
 export async function whoami(req: express.Request, res: express.Response){
     try{
         const userID = req.query.userID as string | null
+        console.log(userID)
 
         if (userID){
             let userInfo  = await getUserInfoByID(userID)

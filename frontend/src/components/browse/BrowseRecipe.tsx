@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import recipeSizeFormatter from "../recipe/view/helpers/recipeSizeFormatter";
 import DeleteConfirmation from "../recipe/view/DeleteConfirmation";
 import deleteRecipe from "../../api/delete/deleteRecipe";
 import firebase from "../../service/firebase";
+import getUserByUID from "../../api/get/getUserByUID";
 
 interface BrowseRecipeProps {
 	recipe: RecipeInterface;
@@ -19,6 +20,8 @@ const BrowseRecipe: React.FC<BrowseRecipeProps> = ({
 	rid,
 	refetchData,
 }) => {
+	const [authorInfo, setAuthorInfo] = useState<firebase.User | null>(null);
+
 	const handleDeleteRecipe = async (
 		rid: string,
 		user: firebase.User | null
@@ -30,6 +33,15 @@ const BrowseRecipe: React.FC<BrowseRecipeProps> = ({
 			}
 		}
 	};
+
+	useEffect(() => {
+		const awaitgetUserByUID = async (uid: string) => {
+			const user = await getUserByUID(uid);
+			console.log(user);
+			setAuthorInfo(user.userInfo);
+		};
+		awaitgetUserByUID(recipe.author);
+	}, []);
 
 	const navigate = useNavigate();
 	const isAuthor = user && user.uid === recipe.author;
@@ -50,7 +62,9 @@ const BrowseRecipe: React.FC<BrowseRecipeProps> = ({
 							recipe.recipeSize
 						)}
 					</div>
-					<Link to={`/user/${recipe.author}`}>{recipe.author}</Link>
+					<Link to={`/user/${recipe.author}`}>
+						{authorInfo ? authorInfo.displayName : ""}
+					</Link>
 				</div>
 				<div className="dashboard-delete-recipe">
 					{user ? (
