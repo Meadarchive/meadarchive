@@ -50,6 +50,7 @@ const BrowseRecipe: React.FC<BrowseRecipeProps> = ({
 							recipe.recipeSize
 						)}
 					</div>
+					<Link to={`/user/${recipe.author}`}>{recipe.author}</Link>
 				</div>
 				<div className="dashboard-delete-recipe">
 					{user ? (
