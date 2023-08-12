@@ -283,7 +283,7 @@ const CreateForm: React.FC = () => {
 					<option value="ml">ml</option>
 					<option value="oz">oz</option>
 				</select>
-				<button type="button" onClick={() => handleRemoveLiquid(index)}>
+				<button className="remove-button" type="button" onClick={() => handleRemoveLiquid(index)}>
 					Remove
 				</button>
 			</div>
@@ -318,7 +318,7 @@ const CreateForm: React.FC = () => {
 					<option value="g">g</option>
 					<option value="oz">oz</option>
 				</select>
-				<button type="button" onClick={() => handleRemoveHoney(index)}>
+				<button className="remove-button" type="button" onClick={() => handleRemoveHoney(index)}>
 					Remove
 				</button>
 			</div>
@@ -353,7 +353,7 @@ const CreateForm: React.FC = () => {
 					<option value="g">g</option>
 					<option value="oz">oz</option>
 				</select>
-				<button type="button" onClick={() => handleRemoveAddon(index)}>
+				<button className="remove-button" type="button" onClick={() => handleRemoveAddon(index)}>
 					Remove
 				</button>
 			</div>
@@ -400,7 +400,7 @@ const CreateForm: React.FC = () => {
 					type="button"
 					onClick={() => handleRemoveChemical(index)}
 				>
-					Remove
+		 className="remove-button"			Remove
 				</button>
 			</div>
 		));
