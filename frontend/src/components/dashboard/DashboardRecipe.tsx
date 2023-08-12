@@ -23,7 +23,8 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 		user: firebase.User | null
 	) => {
 		if (user) {
-			await deleteRecipe(rid, user);
+			const navigateURL = await deleteRecipe(rid, user);
+			navigate(navigateURL);
 		}
 	};
 

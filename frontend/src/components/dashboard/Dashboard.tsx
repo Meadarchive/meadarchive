@@ -22,12 +22,9 @@ function Dashboard() {
 		bid: string,
 		user: firebase.User | null
 	) => {
-		console.log("deleting batch");
 		if (user) {
 			const navigateUrl = await deleteBatch(bid, user);
-			if (navigateUrl) {
-				navigate(navigateUrl);
-			}
+			navigate(navigateUrl);
 		}
 	};
 
