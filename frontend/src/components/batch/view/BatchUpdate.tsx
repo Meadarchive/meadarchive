@@ -50,7 +50,6 @@ export default function Update() {
 	};
 
 	const handleUpdate = async () => {
-		console.log("Updating batch...");
 
 		if (!auth.user || !batchUpdate.batchID) return;
 
@@ -80,8 +79,6 @@ export default function Update() {
 		}
 
 		const res = await createBatchUpdate(auth.user, parsedBatchUpdate);
-		console.log(res);
-		console.log("Batch updated with state:", batchUpdate);
 		navigate(`/batch/${batchUpdate.batchID}`);
 	};
 

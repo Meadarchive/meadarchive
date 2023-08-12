@@ -20,7 +20,6 @@ export default function View() {
 
 	useEffect(() => {
 		const fetchBatchInfo = async () => {
-			console.log(`Fetching batch info for ${bid}`);
 			const recipeInfo = await getBatchByBID(bid);
 			setBatchInfo(recipeInfo);
 		};

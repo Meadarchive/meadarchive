@@ -25,7 +25,6 @@ export async function getCreateRecipeOptions(user: firebase.User | null, body: C
 }
 
 export async function getDeleteRecipeOptions(user: firebase.User | null, rid: string) {
-	console.log(rid)
 	let options: Options = {
 		method: "POST",
 		headers: {
@@ -39,7 +38,6 @@ export async function getDeleteRecipeOptions(user: firebase.User | null, rid: st
 }
 
 export async function getDeleteBatchOptions(user: firebase.User | null, bid: string) {
-	console.log(bid)
 	let options: Options = {
 		method: "POST",
 		headers: {
@@ -53,7 +51,6 @@ export async function getDeleteBatchOptions(user: firebase.User | null, bid: str
 }
 
 export async function getDeleteUpdateOptions(user: firebase.User | null, bid: string, uid: string) {
-	console.log(bid)
 	let options: Options = {
 		method: "POST",
 		headers: {
