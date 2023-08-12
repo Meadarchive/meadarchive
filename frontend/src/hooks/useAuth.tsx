@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import firebase from "../service/firebase";
 
@@ -9,41 +9,40 @@ export const useAuth = () => {
 		null
 	);
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
-	const auth: firebase.auth.Auth = firebase.auth();
-	const provider: firebase.auth.GoogleAuthProvider =
-		new firebase.auth.GoogleAuthProvider();
-
+	const auth = firebase.auth();
+	const provider = new firebase.auth.GoogleAuthProvider();
 	provider.setCustomParameters({ prompt: "select_account" });
 
-	const handleUser = useCallback((user: firebase.User | null) => {
+	const handleUser = (user: firebase.User | null) => {
 		setUser(user);
 		setIsLoading(false);
-	}, []);
-
-	const signIn = (): void => {
-		auth.signInWithPopup(provider)
-			.then((res: firebase.auth.UserCredential): void => {
-				handleUser(res.user);
-				console.log(user)
-			})
-			.finally(
-				() =>
-					// redirect to homepage
-					(navigate("/"))
-			)
-			.catch((error: firebase.auth.Error): void => setAuthError(error));
 	};
 
-	const signOut = (): void => {
-		auth.signOut().then((): void => handleUser(null));
+	const signIn = async () => {
+		try {
+			const res = await auth.signInWithPopup(provider);
+			handleUser(res.user);
+			navigate("/");
+		} catch (error) {
+			setAuthError(error as firebase.auth.Error);
+		}
+	};
+
+	const signOut = async () => {
+		try {
+			await auth.signOut();
+			handleUser(null);
+		} catch (error) {
+			console.error("Sign out error:", error);
+		}
 	};
 
 	useEffect(() => {
-		const unsubscribe = auth.onIdTokenChanged((user) => handleUser(user));
+		const unsubscribe = auth.onIdTokenChanged(handleUser);
 		return () => unsubscribe();
-	}, [auth, handleUser]);
+	}, [auth]);
 
 	return { user, isLoading, authError, signIn, signOut };
 };
