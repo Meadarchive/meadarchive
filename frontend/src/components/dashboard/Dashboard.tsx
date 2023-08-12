@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import { useAuth } from "../../hooks/useAuth";
 import LoadingSpinner from "../loading-spinner/LoadingSpinner";
@@ -16,31 +16,29 @@ import "../batch/view/styles/view.css";
 
 function Dashboard() {
 	const { user } = useAuth();
-	const navigate = useNavigate();
 
 	const handleDeleteBatch = async (
 		bid: string,
 		user: firebase.User | null
 	) => {
 		if (user) {
-			const navigateUrl = await deleteBatch(bid, user);
-			navigate(navigateUrl);
+			await deleteBatch(bid, user);
+			fetchData();
 		}
 	};
 
 	const [recipes, setRecipes] = useState<RecipeInterface[] | null>(null);
 	const [batches, setBatches] = useState<BatchWithUpdates[] | null>(null);
 
+	const fetchData = async () => {
+		if (user) {
+			const userRecipes = await getRecipesByUID(user.uid);
+			const userBatches = await getBatchesByUID(user.uid);
+			setRecipes(userRecipes);
+			setBatches(userBatches);
+		}
+	};
 	useEffect(() => {
-		const fetchData = async () => {
-			if (user) {
-				const userRecipes = await getRecipesByUID(user.uid);
-				const userBatches = await getBatchesByUID(user.uid);
-				setRecipes(userRecipes);
-				setBatches(userBatches);
-			}
-		};
-
 		fetchData();
 	}, [user]);
 

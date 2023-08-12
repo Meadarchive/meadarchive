@@ -6,6 +6,4 @@ export default async function deleteRecipe(rid: string, user: firebase.User) {
 		`${import.meta.env.VITE_SERVER_URL}/recipe/delete`,
 		await getDeleteRecipeOptions(user, rid)
 	);
-
-	return "/dashboard";
 }

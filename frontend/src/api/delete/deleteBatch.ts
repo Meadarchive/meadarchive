@@ -6,6 +6,4 @@ export default async function deleteBatch(bid: string, user: firebase.User) {
 		`${import.meta.env.VITE_SERVER_URL}/batch/delete`,
 		await getDeleteBatchOptions(user, bid)
 	);
-
-	return "/dashboard";
 }

@@ -21,11 +21,8 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
 
 	const handleConfirmClick = async () => {
 		setConfirming(false);
-		console.log("confirming");
 		onConfirm();
 	};
-
-	
 
 	const capitalizeFirstLetter = (string: string) => {
 		return string.charAt(0).toUpperCase() + string.slice(1);
