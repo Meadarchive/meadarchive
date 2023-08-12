@@ -23,3 +23,9 @@
 #create-recipe-button {
 	margin: 1rem!important;
 }
+
+@media screen and (max-width: 768px) {
+	.remove-button {
+		margin-bottom: 1rem!important;
+	}
+}
