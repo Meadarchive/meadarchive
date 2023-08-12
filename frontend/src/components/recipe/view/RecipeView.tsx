@@ -11,12 +11,12 @@ import { BsPen } from "react-icons/bs";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import DeleteConfirmation from "./DeleteConfirmation";
 import deleteRecipe from "../../../api/delete/deleteRecipe";
-import RecipeInterface from "./interfaces/RecipeInterface";
-import firebase from "../../../service/firebase";
 import { Link } from "react-router-dom";
-import "./styles/view.css";
 import { useNavigate } from "react-router-dom";
+import "./styles/view.css";
 import recipeSizeFormatter from "./helpers/recipeSizeFormatter";
+import RecipeInterface from "./interfaces/RecipeInterface";
+import firebase from "../../../service/firebase"
 
 interface RecipeViewProps {
 	recipe: RecipeInterface;
@@ -24,13 +24,21 @@ interface RecipeViewProps {
 	rid: string;
 }
 
+const renderListItem = (item: { [key: string]: any }, index: number) => (
+	<div className="recipe-view-item recipe-view-list-item" key={index}>
+		{item.honey || item.liquid || item.chemical || item.addon} {item.amount}
+		{item.unit}
+	</div>
+);
+
 const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
 	const navigate = useNavigate();
+
 	return (
 		<div className="recipe-view">
 			<div className="recipe-view-title">{recipe.recipeName}</div>
 			<div>
-				<MarkdownPreview source={recipe.recipeDescription} />
+				<MarkdownPreview  source={recipe.recipeDescription} />
 			</div>
 			<div className="recipe-view-subtitle">
 				Yeast <GiPowder />
@@ -48,56 +56,31 @@ const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
 			<div className="recipe-view-subtitle">
 				Honey Types <GiHoneyJar />
 			</div>
-			{recipe.honeyTypes.map((honeyType, index) => (
-				<div
-					className="recipe-view-item recipe-view-list-item"
-					key={index}
-				>
-					{honeyType.honey} {honeyType.amount}
-					{honeyType.unit}
-				</div>
-			))}
+			{recipe.honeyTypes.map(renderListItem)}
+
 			<div className="recipe-view-subtitle">
 				Liquids <IoWaterOutline />
 			</div>
-			{recipe.liquids.map((liquid, index) => (
-				<div
-					className="recipe-view-item recipe-view-list-item"
-					key={index}
-				>
-					{liquid.liquid} {liquid.amount} {liquid.unit}
-				</div>
-			))}
+			{recipe.liquids.map(renderListItem)}
+
 			<div className="recipe-view-subtitle">
 				Chemicals <GiChemicalDrop />
 			</div>
 			{recipe.chemicals.length > 0 ? (
-				recipe.chemicals.map((chemical, index) => (
-					<div
-						className="recipe-view-item recipe-view-list-item"
-						key={index}
-					>
-						{chemical.chemical}
-					</div>
-				))
+				recipe.chemicals.map(renderListItem)
 			) : (
 				<div className="recipe-view-item">No chemicals used</div>
 			)}
+
 			<div className="recipe-view-subtitle">
 				Addons <MdOutlineAdd />
 			</div>
 			{recipe.addons.length > 0 ? (
-				recipe.addons.map((addon, index) => (
-					<div
-						className="recipe-view-item recipe-view-list-item"
-						key={index}
-					>
-						{addon.addon}
-					</div>
-				))
+				recipe.addons.map(renderListItem)
 			) : (
 				<div className="recipe-view-item">No addons</div>
 			)}
+
 			<div>
 				<span id="recipe-author">{recipe.author}</span> <BsPen />
 			</div>
@@ -117,7 +100,10 @@ const RecipeView: React.FC<RecipeViewProps> = ({ recipe, user, rid }) => {
 					</button>
 				) : (
 					<div>
-						<Link className="bold-link" to="/sign-in">Log in</Link> to create a batch
+						<Link className="bold-link" to="/sign-in">
+							Log in
+						</Link>{" "}
+						to create a batch
 					</div>
 				)}
 			</div>
