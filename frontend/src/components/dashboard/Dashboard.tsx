@@ -23,22 +23,22 @@ function Dashboard() {
 	) => {
 		if (user) {
 			await deleteBatch(bid, user);
+			fetchData();
 		}
 	};
 
 	const [recipes, setRecipes] = useState<RecipeInterface[] | null>(null);
 	const [batches, setBatches] = useState<BatchWithUpdates[] | null>(null);
 
+	const fetchData = async () => {
+		if (user) {
+			const userRecipes = await getRecipesByUID(user.uid);
+			const userBatches = await getBatchesByUID(user.uid);
+			setRecipes(userRecipes);
+			setBatches(userBatches);
+		}
+	};
 	useEffect(() => {
-		const fetchData = async () => {
-			if (user) {
-				const userRecipes = await getRecipesByUID(user.uid);
-				const userBatches = await getBatchesByUID(user.uid);
-				setRecipes(userRecipes);
-				setBatches(userBatches);
-			}
-		};
-
 		fetchData();
 	}, [user]);
 
@@ -64,6 +64,7 @@ function Dashboard() {
 											rid={rid}
 											recipe={recipe}
 											user={user}
+											refetchData={fetchData}
 										/>
 									)
 								)}

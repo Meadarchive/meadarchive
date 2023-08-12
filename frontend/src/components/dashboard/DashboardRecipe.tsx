@@ -11,12 +11,14 @@ interface DashboardRecipeProps {
 	recipe: RecipeInterface;
 	user: firebase.User | null;
 	rid: string;
+	refetchData?: () => void;
 }
 
 const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 	recipe,
 	user,
 	rid,
+	refetchData,
 }) => {
 	const handleDeleteRecipe = async (
 		rid: string,
@@ -24,6 +26,9 @@ const DashboardRecipe: React.FC<DashboardRecipeProps> = ({
 	) => {
 		if (user) {
 			await deleteRecipe(rid, user);
+			if (refetchData) {
+				refetchData();
+			}
 		}
 	};
 

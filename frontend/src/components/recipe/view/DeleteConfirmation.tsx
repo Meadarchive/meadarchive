@@ -19,7 +19,7 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
 		setConfirming(false);
 	};
 
-	const handleConfirmClick = () => {
+	const handleConfirmClick = async () => {
 		setConfirming(false);
 		onConfirm();
 	};

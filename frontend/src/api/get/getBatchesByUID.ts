@@ -5,7 +5,6 @@ export default async function getBatchByBID(uid: string): Promise<BatchWithUpdat
         `${import.meta.env.VITE_SERVER_URL}/batch?userID=${uid}`
     );
     const data = await res.json();
-    console.log(data)
-    const batch = data.batches
-    return batch;
+    const batches = data.batches
+    return batches;
 }
