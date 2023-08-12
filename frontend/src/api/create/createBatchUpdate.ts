@@ -6,7 +6,6 @@ export default async function createBatchUpdate(
 	user: firebase.User,
 	update: BatchUpdate
 ) {
-    console.log("createBatchUpdate")
 	const res = await fetch(
 		`${import.meta.env.VITE_SERVER_URL}/batch/update/create`,
 		await getCreateBatchUpdateOptions(user, update)
