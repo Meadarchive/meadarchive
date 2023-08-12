@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RecipeInterface from "./interfaces/RecipeInterface";
 import { useAuth } from "../../../hooks/useAuth";
@@ -9,24 +9,24 @@ import LoadingSpinner from "../../loading-spinner/LoadingSpinner";
 import RecipeView from "./RecipeView";
 import getRecipeByRID from "../../../api/get/getRecipeByRID";
 
-export default function View() {
-	// get recipe id from url
-	let params = useParams();
-	let rid: string = params.rid ? params.rid : "";
+interface ViewProps {}
 
-	// get current user
+const View: React.FC<ViewProps> = () => {
+	const params = useParams();
+	const rid = (params as { [key: string]: any }).rid;
+
 	const { user } = useAuth();
 
-	const [recipe, setRecipe] = useState<RecipeInterface>();
+	const [recipe, setRecipe] = useState<RecipeInterface | undefined>();
 
 	useEffect(() => {
-		// get recipe from backend
-		(async () => {
-			setRecipe(await getRecipeByRID(rid));
-		})();
-	}, []);
+		const fetchRecipe = async () => {
+			const fetchedRecipe = await getRecipeByRID(rid);
+			setRecipe(fetchedRecipe);
+		};
+		fetchRecipe();
+	}, [rid]);
 
-	// get recipe from backend
 	return (
 		<div>
 			{recipe ? (
@@ -36,4 +36,6 @@ export default function View() {
 			)}
 		</div>
 	);
-}
+};
+
+export default View;
