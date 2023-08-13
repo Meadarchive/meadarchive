@@ -283,7 +283,11 @@ const CreateForm: React.FC = () => {
 					<option value="ml">ml</option>
 					<option value="oz">oz</option>
 				</select>
-				<button className="remove-button" type="button" onClick={() => handleRemoveLiquid(index)}>
+				<button
+					className="remove-button"
+					type="button"
+					onClick={() => handleRemoveLiquid(index)}
+				>
 					Remove
 				</button>
 			</div>
@@ -318,7 +322,11 @@ const CreateForm: React.FC = () => {
 					<option value="g">g</option>
 					<option value="oz">oz</option>
 				</select>
-				<button className="remove-button" type="button" onClick={() => handleRemoveHoney(index)}>
+				<button
+					className="remove-button"
+					type="button"
+					onClick={() => handleRemoveHoney(index)}
+				>
 					Remove
 				</button>
 			</div>
@@ -353,7 +361,11 @@ const CreateForm: React.FC = () => {
 					<option value="g">g</option>
 					<option value="oz">oz</option>
 				</select>
-				<button className="remove-button" type="button" onClick={() => handleRemoveAddon(index)}>
+				<button
+					className="remove-button"
+					type="button"
+					onClick={() => handleRemoveAddon(index)}
+				>
 					Remove
 				</button>
 			</div>
@@ -398,9 +410,10 @@ const CreateForm: React.FC = () => {
 				</select>
 				<button
 					type="button"
+					className="remove-button"
 					onClick={() => handleRemoveChemical(index)}
 				>
-		 className="remove-button"			Remove
+					Remove
 				</button>
 			</div>
 		));
@@ -411,8 +424,7 @@ const CreateForm: React.FC = () => {
 			{renderErrorMessages()}
 			<div>
 				<h3>Recipe Name</h3>
-				<div className="error-message recipe-error">
-				</div>
+				<div className="error-message recipe-error"></div>
 				<div id="recipe-name-container">
 					<input
 						type="text"
@@ -427,8 +439,7 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Liquids and Amounts</h3>
-				<div className="error-message recipe-error">
-				</div>
+				<div className="error-message recipe-error"></div>
 				{renderLiquidInputs()}
 				<button
 					className="add-button"
@@ -449,8 +460,7 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Yeast</h3>
-				<div className="error-message recipe-error">
-				</div>
+				<div className="error-message recipe-error"></div>
 				<div id="yeast-container">
 					<div>
 						<input
@@ -484,8 +494,7 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Honey Types and Amounts</h3>
-				<div className="error-message recipe-error">
-				</div>
+				<div className="error-message recipe-error"></div>
 				{renderHoneyInputs()}
 				<button
 					className="add-button"
@@ -546,8 +555,7 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Recipe Size</h3>
-				<div className="error-message recipe-error">
-				</div>
+				<div className="error-message recipe-error"></div>
 				<div id="recipe-size-container">
 					<input
 						type="number"
@@ -577,8 +585,7 @@ const CreateForm: React.FC = () => {
 
 			<div>
 				<h3>Recipe Description</h3>
-				<div className="error-message recipe-error">
-				</div>
+				<div className="error-message recipe-error"></div>
 				<div id="recipe-description-container">
 					<MDEditor
 						value={formState.recipeDescription}
@@ -596,7 +603,9 @@ const CreateForm: React.FC = () => {
 			{loading ? (
 				<LoadingSpinner />
 			) : (
-			<button id="create-recipe-button" type="submit">Submit</button>
+				<button id="create-recipe-button" type="submit">
+					Submit
+				</button>
 			)}
 		</form>
 	);
