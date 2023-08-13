@@ -52,8 +52,23 @@
 	#liquids-container,
 	#yeast-container,
 	#honey-container,
-	#addons-container {
+	#addons-container,
+	#chemicals-container {
 		flex-direction: column;
+	}
+	#create-form > div {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+	#create-form,
+	#create-form > div
+	 {	
+		align-items: center;
+	}
+	h3 {
+		margin-left: 0rem!important;
 	}
 }
 
