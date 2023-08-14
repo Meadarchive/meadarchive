@@ -16,19 +16,19 @@ export default function Profile() {
 	const uid = params.uid ? params.uid : "";
 
 	useEffect(() => {
-		const fetchUser = async () => {
-			setUser((await getUserByUID(uid)).userInfo);
+		const fetchData = async () => {
+			const user = await getUserByUID(uid);
+			const recipes = await getRecipesByUID(uid);
+			const batches = await getBatchesByUID(uid);
+	
+			setUser(user.userInfo);
+			setUserRecipes(recipes);
+			setUserBatches(batches);
 		};
-		const fetchUserRecipes = async () => {
-			setUserRecipes(await getRecipesByUID(uid));
-		};
-		const fetchUserBatches = async () => {
-			setUserBatches(await getBatchesByUID(uid));
-		};
-		fetchUser();
-		fetchUserRecipes();
-		fetchUserBatches();
+	
+		fetchData();
 	}, []);
+	
 
 	useEffect(() => {
 		console.log(user);
