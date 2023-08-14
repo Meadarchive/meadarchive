@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import firebase from "../../service/firebase";
 import { useParams } from "react-router-dom";
-// import { Batch } from "../../api/interfaces/batchInterface";
+import { Batch } from "../../api/interfaces/batchInterface";
 import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import getUserByUID from "../../api/get/getUserByUID";
 import getRecipesByUID from "../../api/get/getRecipesByUID";
+import getBatchesByUID from "../../api/get/getBatchesByUID";
 import CountRecipes from "./CountRecipes";
 
 export default function Profile() {
 	const [user, setUser] = useState({} as firebase.User);
 	const [userRecipes, setUserRecipes] = useState([] as RecipeInterface[]);
-	// const [userBatches, setUserBatches] = useState([] as Batch[]);
+	const [userBatches, setUserBatches] = useState([] as Batch[]);
 	const params = useParams();
 	const uid = params.uid ? params.uid : "";
 
@@ -21,18 +22,19 @@ export default function Profile() {
 		const fetchUserRecipes = async () => {
 			setUserRecipes(await getRecipesByUID(uid));
 		};
-		// const fetchUserBatches = async () => {
-		// 	setUserBatches(await getBatchesByUID(uid));
-		// };
+		const fetchUserBatches = async () => {
+			setUserBatches(await getBatchesByUID(uid));
+		};
 		fetchUser();
 		fetchUserRecipes();
-		// fetchUserBatches();
+		fetchUserBatches();
 	}, []);
 
 	useEffect(() => {
 		console.log(user);
 		console.log(userRecipes);
-	}, [user, userRecipes]);
+		console.log(userBatches);
+	}, [user, userRecipes, userBatches]);
 
 	return (
 		<div>
@@ -40,7 +42,7 @@ export default function Profile() {
 				<>
 					<div>{user.displayName}</div>
 					{userRecipes && <CountRecipes userRecipes={userRecipes} />}
-					{/* {userBatches && <div>{userBatches.length} batches</div>} */}
+					{userBatches && <div>{userBatches.length} batches</div>}
 				</>
 			) : (
 				<div>No user data</div>
@@ -62,9 +64,9 @@ export default function Profile() {
 			) : (
 				<div>No recipe data</div>
 			)}
-			{/* {userBatches && userBatches.length > 0 ? <h2>Batches</h2> : <></>}
+			{userBatches && userBatches.length > 0 ? <h2>Batches</h2> : <></>}
 			{userBatches && Object.entries(userBatches).length > 0 ? (
-				Object.entries(userBatches).map(([string, batch], index) => {
+				Object.entries(userBatches).map(([_, batch], index) => {
 					console.log(batch);
 					return (
 						<div key={index}>
@@ -75,7 +77,7 @@ export default function Profile() {
 				})
 			) : (
 				<div>No batch data</div>
-			)} */}
+			)}
 		</div>
 	);
 }
