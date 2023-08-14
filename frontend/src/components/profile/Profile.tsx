@@ -13,6 +13,7 @@ import "./styles/profile.css";
 import DashboardRecipe from "../dashboard/DashboardRecipe";
 import { useAuth } from "../../hooks/useAuth";
 import DashboardBatchInfo from "../dashboard/DashboardBatchInfo";
+import LoadingSpinner from "../loading-spinner/LoadingSpinner";
 
 export default function Profile() {
 	const [userInfo, setUserInfo] = useState({} as firebase.User);
@@ -55,7 +56,7 @@ export default function Profile() {
 					{userBatches && <CountBatches userBatches={userBatches} />}
 				</div>
 			) : (
-				<div>No user data</div>
+				<LoadingSpinner />
 			)}
 			{userRecipes && Object.entries(userRecipes).length > 0 && (
 				<div className="user-recipes-container">
