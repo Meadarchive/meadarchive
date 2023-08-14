@@ -14,3 +14,37 @@
 	object-fit: cover;
 	border: 2px solid #ccc;
 }
+
+.user-recipes-container,
+.user-batches-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.user-recipes-container {
+	margin: 1rem 0;
+}
+
+.user-recipes-container > div,
+.user-batches-container > div {
+	width: 600px;
+}
+
+.user-recipes-title,
+.user-batches-title {
+	text-align: center;
+}
+
+.user-batches-container > div,
+.user-batches-container > div > div,
+.user-batches-container > div > div > a {
+	background: var(--background-secondary);
+}
+
+.user-batches-container > div {
+	padding: 1rem !important;
+	border-radius: 0.5rem;
+}
