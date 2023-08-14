@@ -37,6 +37,7 @@ export default function Profile() {
 				<div className="user-info-container">
 					{user.photoURL && (
 						<img
+							referrerPolicy="no-referrer"
 							src={user.photoURL}
 							alt={user.displayName}
 							className="profile-photo"
