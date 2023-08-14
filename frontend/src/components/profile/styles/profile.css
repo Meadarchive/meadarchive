@@ -4,4 +4,13 @@
 	justify-content: center;
 	text-align: center;
 	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.profile-photo {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid #ccc;
 }

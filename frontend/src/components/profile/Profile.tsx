@@ -8,7 +8,7 @@ import getRecipesByUID from "../../api/get/getRecipesByUID";
 import getBatchesByUID from "../../api/get/getBatchesByUID";
 import CountRecipes from "./CountRecipes";
 import CountBatches from "./CountBatches";
-import "./styles/profile.css"
+import "./styles/profile.css";
 
 export default function Profile() {
 	const [user, setUser] = useState({} as firebase.User);
@@ -35,6 +35,13 @@ export default function Profile() {
 		<div>
 			{user && user.displayName ? (
 				<div className="user-info-container">
+					{user.photoURL && (
+						<img
+							src={user.photoURL}
+							alt={user.displayName}
+							className="profile-photo"
+						/>
+					)}
 					<div className="bold">{user.displayName}</div>
 					{userRecipes && <CountRecipes userRecipes={userRecipes} />}
 					{userBatches && <CountBatches userBatches={userBatches} />}
