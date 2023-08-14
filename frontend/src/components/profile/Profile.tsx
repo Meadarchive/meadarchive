@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import firebase from "../../service/firebase";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Batch, BatchWithUpdates } from "../../api/interfaces/batchInterface";
 import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import getUserByUID from "../../api/get/getUserByUID";
@@ -78,11 +79,19 @@ export default function Profile() {
 						Batches
 					</div>
 					<div className="user-batches-container">
-						{Object.entries(userBatches).map(([_, batch]) => {
+						{Object.entries(userBatches).map(([bid, batch]) => {
 							return (
-								<DashboardBatchInfo
-									batchInfo={batch as BatchWithUpdates}
-								/>
+								<div className="batch-with-link">
+									<Link
+										className="bold-link bigger"
+										to={`/batch/${bid}`}
+									>
+										{batch.batchName}
+									</Link>
+									<DashboardBatchInfo
+										batchInfo={batch as BatchWithUpdates}
+									/>
+								</div>
 							);
 						})}
 					</div>

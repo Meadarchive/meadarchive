@@ -90,14 +90,14 @@ function Dashboard() {
 					<div id="dashboard-batches-container">
 						{Object.keys(batches).length !== 0 ? (
 							<>
-								{Object.entries(batches).map(([key, batch]) => (
-									<div key={key} className="dashboard-batch">
+								{Object.entries(batches).map(([bid, batch]) => (
+									<div key={bid} className="dashboard-batch">
 										<div className="batch-container">
 											<Link
 												className="bold-link bigger"
-												to={`/batch/${key}`}
+												to={`/batch/${bid}`}
 											>
-												{batch.batchName || "test"}
+												{batch.batchName}
 											</Link>
 											<DashboardBatchInfo
 												batchInfo={batch}
@@ -108,7 +108,7 @@ function Dashboard() {
 												whatIsBeingDeleted="batch"
 												onConfirm={() => {
 													handleDeleteBatch(
-														key,
+														bid,
 														user
 													);
 												}}

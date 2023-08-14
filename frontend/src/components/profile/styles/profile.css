@@ -21,7 +21,11 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	gap: 0.5rem;
+	gap: 1rem;
+}
+
+.user-batches-title {
+    margin-bottom: 1rem;
 }
 
 .user-recipes-container {
@@ -40,7 +44,9 @@
 
 .user-batches-container > div,
 .user-batches-container > div > div,
-.user-batches-container > div > div > a {
+.user-batches-container > div > div > div,
+.user-batches-container > div > div > div > a,
+.user-batches-container > div  > a {
 	background: var(--background-secondary);
 }
 
