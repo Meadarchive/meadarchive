@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "test": "vitest"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@uiw/react-md-editor": "^3.23.3",
