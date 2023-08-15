@@ -29,9 +29,20 @@ export default function Profile() {
 			const recipes = await getRecipesByUID(uid);
 			const batches = await getBatchesByUID(uid);
 
+			// limit recipes to 3
+			const recipesArray = Object.entries(recipes);
+			const limitedRecipes = recipesArray.slice(0, 3);
+			const limitedRecipesObject = Object.fromEntries(limitedRecipes);
+
+			// limit batches to 3
+			const batchesArray = Object.entries(batches);
+			const limitedBatches = batchesArray.slice(0, 3);
+			const limitedBatchesObject = Object.fromEntries(limitedBatches);
+			
+
 			setUserInfo(user.userInfo);
-			setUserRecipes(recipes);
-			setUserBatches(batches);
+			setUserRecipes(limitedRecipesObject as RecipeInterface[]);
+			setUserBatches(limitedBatchesObject as Batch[]);
 		};
 
 		fetchData();
@@ -66,6 +77,7 @@ export default function Profile() {
 					{Object.entries(userRecipes).map(([rid, recipe]) => {
 						return (
 							<DashboardRecipe
+								key={rid}
 								user={user}
 								rid={rid}
 								recipe={recipe}
