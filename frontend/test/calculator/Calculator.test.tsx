@@ -50,8 +50,12 @@ describe("Calculator Component", () => {
 
 	it("handles gravity input change correctly", () => {
 		render(<Calculator />);
-		const originalInput = screen.getByLabelText("Original Gravity:");
-		const finalInput = screen.getByLabelText("Final Gravity:");
+		const originalInput = screen.getByLabelText(
+			"Original Gravity:"
+		) as HTMLInputElement;
+		const finalInput = screen.getByLabelText(
+			"Final Gravity:"
+		) as HTMLInputElement;
 
 		fireEvent.change(originalInput, { target: { value: "1.050" } });
 		fireEvent.change(finalInput, { target: { value: "abc" } });

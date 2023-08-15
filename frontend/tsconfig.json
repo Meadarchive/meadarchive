@@ -20,9 +20,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "types": ["node", "jest", "@testing-library/jest-dom"],
   },
   "include": ["src", "getScopeCategories.js"],
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "types": ["node", "jest", "@testing-library/jest-dom"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
