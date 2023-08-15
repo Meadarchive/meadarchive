@@ -14,12 +14,12 @@ const Calculator: React.FC = () => {
 	};
 
 	const calculateABV = (og: number, fg: number): void => {
-		if (isValidGravity(og) && isValidGravity(fg)) {
-			setCalculatedABV((og - fg) * 131.25);
-			setError("");
-		} else if (og < fg) {
+		if (og < fg) {
 			setError("Final gravity must be less than original gravity");
 			setCalculatedABV(undefined);
+		} else if (isValidGravity(og) && isValidGravity(fg)) {
+			setCalculatedABV((og - fg) * 131.25);
+			setError("");
 		} else {
 			setError("Gravity must be between 0.9 and 2");
 			setCalculatedABV(undefined);
@@ -31,6 +31,7 @@ const Calculator: React.FC = () => {
 		const fgValue = parseFloat(finalGravity);
 
 		if (!isNaN(ogValue) && !isNaN(fgValue)) {
+			console.log("Calculating ABV");
 			calculateABV(ogValue, fgValue);
 		}
 	}, [originalGravity, finalGravity]);

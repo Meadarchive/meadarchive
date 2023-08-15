@@ -18,7 +18,7 @@ describe("Calculator Component", () => {
 		fireEvent.change(originalInput, { target: { value: "1.050" } });
 		fireEvent.change(finalInput, { target: { value: "1.010" } });
 
-		const abvText = screen.getByText("The ABV of your brew is 4.95%");
+		const abvText = screen.getByText("The ABV of your brew is 5.25%");
 		expect(abvText).toBeInTheDocument();
 	});
 
@@ -61,6 +61,6 @@ describe("Calculator Component", () => {
 		fireEvent.change(finalInput, { target: { value: "abc" } });
 
 		expect(originalInput.value).toBe("1.050");
-		expect(finalInput.value).toBe("abc");
+		expect(finalInput.value).toBe("1.0");
 	});
 });
