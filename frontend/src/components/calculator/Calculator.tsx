@@ -14,12 +14,12 @@ const Calculator: React.FC = () => {
 	};
 
 	const calculateABV = (og: number, fg: number): void => {
-		if (isValidGravity(og) && isValidGravity(fg)) {
-			setCalculatedABV((og - fg) * 131.25);
-			setError("");
-		} else if (og < fg) {
+		if (og < fg) {
 			setError("Final gravity must be less than original gravity");
 			setCalculatedABV(undefined);
+		} else if (isValidGravity(og) && isValidGravity(fg)) {
+			setCalculatedABV((og - fg) * 131.25);
+			setError("");
 		} else {
 			setError("Gravity must be between 0.9 and 2");
 			setCalculatedABV(undefined);
@@ -63,10 +63,14 @@ const Calculator: React.FC = () => {
 						)}
 					</div>
 					<div className="gravity-container">
-						<label className="gravity-label">
+						<label
+							htmlFor="original-gravity-input"
+							className="gravity-label"
+						>
 							Original Gravity:
 						</label>
 						<input
+							id="original-gravity-input"
 							className="gravity-input"
 							type="text"
 							value={originalGravity}
@@ -76,8 +80,14 @@ const Calculator: React.FC = () => {
 						/>
 					</div>
 					<div className="gravity-container">
-						<label className="gravity-label">Final Gravity:</label>
+						<label
+							htmlFor="final-gravity-input"
+							className="gravity-label"
+						>
+							Final Gravity:
+						</label>
 						<input
+							id="final-gravity-input"
 							className="gravity-input"
 							type="text"
 							value={finalGravity}
