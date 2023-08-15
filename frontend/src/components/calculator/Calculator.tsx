@@ -31,7 +31,6 @@ const Calculator: React.FC = () => {
 		const fgValue = parseFloat(finalGravity);
 
 		if (!isNaN(ogValue) && !isNaN(fgValue)) {
-			console.log("Calculating ABV");
 			calculateABV(ogValue, fgValue);
 		}
 	}, [originalGravity, finalGravity]);
