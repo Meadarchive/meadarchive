@@ -63,10 +63,14 @@ const Calculator: React.FC = () => {
 						)}
 					</div>
 					<div className="gravity-container">
-						<label className="gravity-label">
+						<label
+							htmlFor="original-gravity-input"
+							className="gravity-label"
+						>
 							Original Gravity:
 						</label>
 						<input
+							id="original-gravity-input"
 							className="gravity-input"
 							type="text"
 							value={originalGravity}
@@ -76,8 +80,14 @@ const Calculator: React.FC = () => {
 						/>
 					</div>
 					<div className="gravity-container">
-						<label className="gravity-label">Final Gravity:</label>
+						<label
+							htmlFor="final-gravity-input"
+							className="gravity-label"
+						>
+							Final Gravity:
+						</label>
 						<input
+							id="final-gravity-input"
 							className="gravity-input"
 							type="text"
 							value={finalGravity}
