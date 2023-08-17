@@ -30,14 +30,3 @@ export async function genUID(){
 
     return uuid
 }
-
-export async function genQRCode(url: string){
-    try {
-        var qr = await QRCode.toDataURL(url, { errorCorrectionLevel: 'H' })
-        return qr
-
-      } catch (err) {
-        console.error(`QRCode generation failed {${url}}: `, err)
-        return null
-      }
-}
