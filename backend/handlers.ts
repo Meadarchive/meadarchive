@@ -4,7 +4,7 @@ import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
 import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches, checkIfUserOwnsBatch, firebaseDeleteBatch, checkIfUpdateExits, firebaseDeleteBatchUpdate, firebaseGetBatchUpdate} from "./lib/batchLib"
-import { genUID, getUserInfoByID, genQRCode} from "./lib/util"
+import { genUID, getUserInfoByID} from "./lib/util"
 
 import QRCode from 'qrcode'
 
