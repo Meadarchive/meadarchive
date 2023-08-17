@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { firebaseApp, db } from "./firebaseApp"
+import QRCode from 'qrcode'
 
 
 export async function genUserAuthToken(uuid: string){
@@ -28,4 +29,15 @@ export async function genUID(){
     const uuid = uuidv4()
 
     return uuid
+}
+
+export async function genQRCode(url: string){
+    try {
+        var qr = await QRCode.toDataURL(url, { errorCorrectionLevel: 'H' })
+        return qr
+
+      } catch (err) {
+        console.error(`QRCode generation failed {${url}}: `, err)
+        return null
+      }
 }
