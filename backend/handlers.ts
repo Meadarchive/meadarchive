@@ -4,7 +4,9 @@ import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
 import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches, checkIfUserOwnsBatch, firebaseDeleteBatch, checkIfUpdateExits, firebaseDeleteBatchUpdate, firebaseGetBatchUpdate} from "./lib/batchLib"
-import { genUID, getUserInfoByID } from "./lib/util"
+import { genUID, getUserInfoByID, genQRCode} from "./lib/util"
+
+import QRCode from 'qrcode'
 
 export async function healthStatus(req: express.Request, res: express.Response) {
     try{
@@ -337,5 +339,34 @@ export async function whoami(req: express.Request, res: express.Response){
         console.log(err)
         res.status(500).send({ "error": `Internal server error while getting user info`});
     }
-} 
+}
+
+export async function genURLQRCode(req: express.Request, res: express.Response){
+
+    try{
+        const url = req.query.url as string | null
+        const correction = req.query.correction as QRCode.QRCodeErrorCorrectionLevel || "L"
+
+        if (!url){
+            res.status(400).send({"error": `URL is null or undefined`})
+            return
+        }
+
+        const qrCode = await QRCode.toBuffer(url, { type: 'png', errorCorrectionLevel: correction })
+
+        if(!qrCode){
+            res.status(400).send({"error": `QR code generation failed`})
+            return
+        }
+
+        res.setHeader('Content-Type', 'image/png');
+        res.send(qrCode)
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while generating QR code`});
+    }
+
+}
+
 
