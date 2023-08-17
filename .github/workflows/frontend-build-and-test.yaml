@@ -5,7 +5,7 @@ on:
       - 'frontend/**'
 
 jobs:
-  build-frontend:
+  build-and-test-frontend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,3 +20,7 @@ jobs:
       - name: Build frontend
         run: npm run build
         working-directory: frontend
+      - name: Run unit tests
+        run: jest test
+        working-directory: frontend
+
