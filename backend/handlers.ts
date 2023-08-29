@@ -345,6 +345,7 @@ export async function genURLQRCode(req: express.Request, res: express.Response){
 
     try{
         const url = req.query.url as string | null
+        const file_name = req.query.fn as string | null
         const correction = req.query.correction as QRCode.QRCodeErrorCorrectionLevel || "L"
 
         if (!url){
@@ -360,6 +361,11 @@ export async function genURLQRCode(req: express.Request, res: express.Response){
         }
 
         res.setHeader('Content-Type', 'image/png');
+
+        if (file_name){
+            res.setHeader('Content-Disposition', `attachment; filename="${file_name}.png"`);
+        }
+        
         res.send(qrCode)
 
     } catch (err){
