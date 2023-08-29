@@ -22,7 +22,7 @@ app.get("/whoami", whoami)
 app.get("/recipe",  getRecipe)
 app.get("/batch",  getBatch)
 app.get("/batch/update",  getBatchUpdate)
-app.get("/get-qr", restrictAccessMiddleware, genURLQRCode)
+app.get("/get-qr",  genURLQRCode)
 
 app.post("/recipe/create", restrictAccessMiddleware, createRecipe)
 app.post("/recipe/delete", restrictAccessMiddleware, deleteRecipe)
