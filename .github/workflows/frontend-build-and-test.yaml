@@ -21,6 +21,6 @@ jobs:
         run: npm run build
         working-directory: frontend
       - name: Run unit tests
-        run: jest test
+        run: npm test
         working-directory: frontend
 
