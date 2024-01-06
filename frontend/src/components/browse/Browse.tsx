@@ -1,7 +1,7 @@
 import { useEffect, useState, ChangeEvent } from "react";
 import getAllRecipes from "../../api/get/getAllRecipes";
 import { useAuth } from "../../hooks/useAuth";
-import DashboardRecipe from "../dashboard/DashboardRecipe";
+import BrowseRecipe from "./BrowseRecipe";
 import RecipeInterface from "../recipe/view/interfaces/RecipeInterface";
 import "./styles/browse.css";
 
@@ -43,7 +43,7 @@ function Browse() {
 							.includes(searchTerm.toLowerCase())
 					) {
 						return (
-							<DashboardRecipe
+							<BrowseRecipe
 								key={rid}
 								recipe={recipe}
 								user={user || null}
