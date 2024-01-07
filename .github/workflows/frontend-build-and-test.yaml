@@ -1,8 +1,9 @@
 name: frontend-build
 on:
   pull_request:
-    paths:
-      - 'frontend/**'
+  push:
+    branches:
+      - master
 
 jobs:
   build-and-test-frontend:
