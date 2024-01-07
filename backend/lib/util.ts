@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { firebaseApp, db } from "./firebaseApp"
+import QRCode from 'qrcode'
 
 
 export async function genUserAuthToken(uuid: string){

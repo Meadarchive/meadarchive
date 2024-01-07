@@ -4,7 +4,11 @@ import { config } from "./config"
 import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
 import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches, checkIfUserOwnsBatch, firebaseDeleteBatch, checkIfUpdateExits, firebaseDeleteBatchUpdate, firebaseGetBatchUpdate} from "./lib/batchLib"
-import { genUID, getUserInfoByID } from "./lib/util"
+import { genUID, getUserInfoByID} from "./lib/util"
+
+import QRCode from 'qrcode'
+import { Stream } from "stream";
+import fs from 'fs';
 
 export async function healthStatus(req: express.Request, res: express.Response) {
     try{
@@ -337,5 +341,54 @@ export async function whoami(req: express.Request, res: express.Response){
         console.log(err)
         res.status(500).send({ "error": `Internal server error while getting user info`});
     }
-} 
+}
+
+export async function genURLQRCode(req: express.Request, res: express.Response){
+
+    try{
+        const url = req.query.url as string
+        const fileName = req.query.file_name as string | null ?? null
+        const correction = req.query.correction as QRCode.QRCodeErrorCorrectionLevel ?? "L"
+
+        if (!url){
+            res.status(400).send({"error": `"url" is null or undefined`})
+            return
+        }
+
+        const qrCode = await QRCode.toBuffer(url, { type: 'png', errorCorrectionLevel: correction })
+
+        if(!qrCode){
+            res.status(400).send({"error": `QR code generation failed`})
+            return
+        }
+
+
+
+
+        if (fileName){
+            // Stream download
+
+            let readStream = new Stream.PassThrough();
+            readStream.end(qrCode);
+
+            res.setHeader('Content-Type', 'image/png');
+            res.setHeader('Content-Disposition', `attachment; filename="${fileName}.png"`);
+            
+            readStream.pipe(res);
+
+            
+        } else {
+            res.setHeader('Content-Type', 'image/png');
+            res.setHeader('Content-Disposition', `filename="${fileName}.png"`);
+            res.send(qrCode)
+        }
+    
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while generating QR code`});
+    }
+
+}
+
 
