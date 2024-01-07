@@ -23,7 +23,7 @@ app.get("/recipe",  getRecipe)
 app.get("/batch",  getBatch)
 app.get("/batch/update",  getBatchUpdate)
 app.get("/get-qr",  genURLQRCode)
-app.get("/batch/get-gravity", getBatchGravity)
+app.get("/batch/get-gravity-history", getBatchGravity)
 
 
 app.post("/recipe/create", restrictAccessMiddleware, createRecipe)
