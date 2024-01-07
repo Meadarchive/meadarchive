@@ -1,7 +1,7 @@
 import express from "express";
 
 import { config } from "./config"
-import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema} from "./lib/customTypes";
+import { Recipe, RecipeSchema, Batch, BatchSchema, BaseBatchUpdate, TextBatchUpdate, GravityBatchUpdate, StageBatchUpdate, TextBatchUpdateSchema, GravityBatchUpdateSchema, StageBatchUpdateSchema, BatchWithUpdates, DictionaryOfBatchUpdates} from "./lib/customTypes";
 import { firebaseInsertRecipe, firebaseGetRecipes, firebaseDeleteRecipe, checkIfUserOwnsRecipe, checkIfRecipeExists} from "./lib/recipeLib"
 import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, firebaseGetBatches, checkIfUserOwnsBatch, firebaseDeleteBatch, checkIfUpdateExits, firebaseDeleteBatchUpdate, firebaseGetBatchUpdate} from "./lib/batchLib"
 import { genUID, getUserInfoByID} from "./lib/util"
@@ -387,6 +387,55 @@ export async function genURLQRCode(req: express.Request, res: express.Response){
     } catch (err){
         console.log(err)
         res.status(500).send({ "error": `Internal server error while generating QR code`});
+    }
+
+}
+
+export async function getBatchGravity(req: express.Request, res: express.Response){
+    try{
+        const batchID = req.query.batchID as string | null ?? null
+        
+        // Check if batchID is null or undefined
+        if (!batchID){
+            res.status(400).send({"error": `"batchID" is null or undefined`})
+            return
+        }
+        
+        // Check if batch exists
+        const batchExists = await checkIfBatchExists(batchID, config.batchesCollectionName)
+
+        if(!batchExists){
+            res.status(400).send({"error": `No batch with id '${batchID}' exists`})
+            return
+        }
+
+        // Find gravity batch updates
+        let batches = await firebaseGetBatches(batchID, null, config.batchesCollectionName)
+        const batch: BatchWithUpdates = batches[batchID]
+        const initialGravity = batch.initialGravity
+
+        const updates: DictionaryOfBatchUpdates = batch.updates
+
+        let gravityUpdates = Object.values(updates).filter(update => update.updateType == "gravity") as GravityBatchUpdate[]
+
+        // Transform into an array of [{"date": "2021-01-01", "gravity": 1.000}, ...]
+        let gravityData = gravityUpdates.map(update => {
+            return {"date": update.updateDate, "gravity": update.newGravity}
+        })
+
+        // Insert the initial gravity at index 0
+        gravityData.unshift({"date": batch.dateStarted, "gravity": initialGravity})
+
+        // Sort by date, oldest to newest
+        gravityData.sort((a, b) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime()
+        })
+
+        res.send({"gravityData": gravityData})
+
+    } catch (err){
+        console.log(err)
+        res.status(500).send({ "error": `Internal server error while getting batch gravity`});
     }
 
 }
