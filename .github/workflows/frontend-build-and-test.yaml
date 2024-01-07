@@ -15,12 +15,12 @@ jobs:
         with:
           node-version: '18' # Set the desired Node.js version here
       - name: Install frontend dependencies
-        run: npm install
+        run: npm install --include=dev
         working-directory: frontend
       - name: Build frontend
         run: npm run build
         working-directory: frontend
       - name: Run unit tests
-        run: jest test
+        run: npm test
         working-directory: frontend
 

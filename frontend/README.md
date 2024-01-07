@@ -23,3 +23,9 @@ npm i
 npm run build
 npx serve -s dist -l 4000
 ```
+
+# run tests
+```
+npm i
+npm test
+```

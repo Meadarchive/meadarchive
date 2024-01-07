@@ -595,7 +595,9 @@ const CreateForm: React.FC = () => {
 						previewOptions={{
 							rehypePlugins: [[rehypeSanitize]],
 						}}
-						placeholder="Recipe Description"
+						textareaProps={{
+							placeholder: "Recipe Description"
+						}}
 						style={{ height: "300px" }}
 					/>
 				</div>
