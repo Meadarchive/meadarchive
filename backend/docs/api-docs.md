@@ -274,18 +274,8 @@ Parameters schema:
 | `correction`  | `string` | The level of error correction to be used. Allowed: (`L` \| `M` \| `Q` \| `H`). Will default to `L`| Optional
 | `file_name`  | `string` | Name must be without a file expension. If name is omitted base64 encoded data will be returned | Optional
 
-
-<br>
-
-Example params:
-```json
-{
-    "url": "https://dev.meadarchive.com/batch/aae2f0c1-1287-4c41-9756-87adc2be9582",
-    "correction": "M",
-    "file_name": "qr_code"
-}
-```
-
+Example request url:
+https://api.dev.meadarchive.com/get-qr?url=https://dev.meadarchive.com/batch/aae2f0c1-1287-4c41-9756-87adc2be9582&correction=H
 
 <br>
 
