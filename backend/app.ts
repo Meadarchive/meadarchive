@@ -3,7 +3,7 @@ import bodyParser from "body-parser"
 import cors from "cors"
 
 import { config } from "./config"
-import { healthStatus,  createRecipe, getRecipe, deleteRecipe, createBatch, createBatchUpdate, getBatch, deleteBatch, deleteBatchUpdate, getBatchUpdate, whoami, genURLQRCode} from "./handlers"
+import { healthStatus,  createRecipe, getRecipe, deleteRecipe, createBatch, createBatchUpdate, getBatch, deleteBatch, deleteBatchUpdate, getBatchUpdate, whoami, genURLQRCode, getBatchGravity} from "./handlers"
 import { authMiddleware } from "./lib/authMiddleware"
 import { restrictAccessMiddleware } from "./lib/restrictAccessMiddleware"
 
@@ -23,6 +23,8 @@ app.get("/recipe",  getRecipe)
 app.get("/batch",  getBatch)
 app.get("/batch/update",  getBatchUpdate)
 app.get("/get-qr",  genURLQRCode)
+app.get("/batch/get-gravity", getBatchGravity)
+
 
 app.post("/recipe/create", restrictAccessMiddleware, createRecipe)
 app.post("/recipe/delete", restrictAccessMiddleware, deleteRecipe)

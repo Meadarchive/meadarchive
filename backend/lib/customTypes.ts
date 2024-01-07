@@ -93,6 +93,15 @@ export type TextBatchUpdate = z.infer<typeof TextBatchUpdateSchema>
 export type GravityBatchUpdate = z.infer<typeof GravityBatchUpdateSchema>
 export type StageBatchUpdate = z.infer<typeof StageBatchUpdateSchema>
 
+export type DictionaryOfBatchUpdates = {
+    [key: string] : TextBatchUpdate | GravityBatchUpdate | StageBatchUpdate
+}
+
+// Batch with a dictionary of updates where the key is the updateID
+export type BatchWithUpdates = Batch & {updates: DictionaryOfBatchUpdates}
+
+
+
 export interface DictionaryOfRecipes {
     [key: string] : Recipe
 }
