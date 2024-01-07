@@ -394,12 +394,14 @@ export async function genURLQRCode(req: express.Request, res: express.Response){
 export async function getBatchGravity(req: express.Request, res: express.Response){
     try{
         const batchID = req.query.batchID as string | null ?? null
-
+        
+        // Check if batchID is null or undefined
         if (!batchID){
             res.status(400).send({"error": `"batchID" is null or undefined`})
             return
         }
-
+        
+        // Check if batch exists
         const batchExists = await checkIfBatchExists(batchID, config.batchesCollectionName)
 
         if(!batchExists){
@@ -407,6 +409,7 @@ export async function getBatchGravity(req: express.Request, res: express.Respons
             return
         }
 
+        // Find gravity batch updates
         let batches = await firebaseGetBatches(batchID, null, config.batchesCollectionName)
         const batch: BatchWithUpdates = batches[batchID]
         const initialGravity = batch.initialGravity
@@ -415,7 +418,7 @@ export async function getBatchGravity(req: express.Request, res: express.Respons
 
         let gravityUpdates = Object.values(updates).filter(update => update.updateType == "gravity") as GravityBatchUpdate[]
 
-        // transform into an array of [{"date": "2021-01-01", "gravity": 1.000}, ...]
+        // Transform into an array of [{"date": "2021-01-01", "gravity": 1.000}, ...]
         let gravityData = gravityUpdates.map(update => {
             return {"date": update.updateDate, "gravity": update.newGravity}
         })
@@ -428,15 +431,7 @@ export async function getBatchGravity(req: express.Request, res: express.Respons
             return new Date(a.date).getTime() - new Date(b.date).getTime()
         })
 
-        console.log(gravityData)
-
         res.send({"gravityData": gravityData})
-
-
-
-
-        
-
 
     } catch (err){
         console.log(err)

@@ -97,13 +97,8 @@ export type DictionaryOfBatchUpdates = {
     [key: string] : TextBatchUpdate | GravityBatchUpdate | StageBatchUpdate
 }
 
-// Batch with a dictionary of updates where the key is the updateID
-export type BatchWithUpdates = Batch & {updates: DictionaryOfBatchUpdates}
-
-
-
 export interface DictionaryOfRecipes {
     [key: string] : Recipe
 }
 
-
+export type BatchWithUpdates = Batch & {updates: DictionaryOfBatchUpdates}
