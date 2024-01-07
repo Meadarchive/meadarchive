@@ -4,13 +4,18 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "target": "es6",
-    "lib": ["dom", "es6"],
-
+    "lib": [
+      "dom",
+      "es6"
+    ],
     "paths": {
-      "react": ["./node_modules/react"],
-      "react-dom": ["./node_modules/react-dom"],
+      "react": [
+        "./node_modules/react"
+      ],
+      "react-dom": [
+        "./node_modules/react-dom"
+      ],
     },
-
     /* Bundler mode */
     "moduleResolution": "node",
     "declaration": true,
@@ -20,15 +25,25 @@
     "jsx": "react-jsx",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
-    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "types": [
+      "node",
+      "jest",
+      "@testing-library/jest-dom"
+    ],
   },
-  "include": ["src", "getScopeCategories.js"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src",
+    "getScopeCategories.js",
+    "test"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

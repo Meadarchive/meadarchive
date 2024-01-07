@@ -1,7 +1,9 @@
-import React from "react";
+// React needs to be in scope for tests to pass, but that makes ts complain
+// @ts-ignore
+import React from "react"; 
 import { render, fireEvent, screen } from "../test-utils";
 import Calculator from "../../src/components/calculator/Calculator";
-import "@testing-library/jest-dom/extend-expect";
+import '@testing-library/jest-dom';
 
 describe("Calculator Component", () => {
 	it("renders the calculator title", () => {
