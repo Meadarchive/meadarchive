@@ -17,6 +17,17 @@
 	width: fit-content;
 }
 
+.starting-container {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	border-radius: 0.5rem;
+	background: var(--background-secondary);
+	width: fit-content;
+	padding: 0rem;
+}
+
 .batch-info,
 .equipment-list {
 	display: flex;
@@ -26,19 +37,25 @@
 
 .equipment-item::before {
 	font-weight: bold;
-	content: "•"; /* Unicode for the bullet point (can be replaced with any other symbol or text) */
+	content: "•";
+	/* Unicode for the bullet point (can be replaced with any other symbol or text) */
 	margin-right: 0.5rem;
 }
 
-.update > *,
-.starting-container > *,
-.starting-container > * > *,
-.starting-container > * > * > *,
-.starting-container > * > * > * > *,
-.batch-container > *,
-.batch-container > * > *,
-.batch-container > * > * > *,
-.batch-container > * > * > * > * {
+.update>*,
+.starting-container>*,
+.starting-container>*>*,
+.starting-container>*>*>*,
+.starting-container>*>*>*>*,
+.batch-container>*,
+.batch-container>*>*,
+.batch-container>*>*>*,
+.batch-container>*>*>*>*,
+.batch-qr-code,
+.batch-qr-code>*,
+.batch-qr-code>*>*,
+.batch-qr-code>*>*>*,
+.batch-qr-code>*>*>*>* {
 	background: var(--background-secondary);
 }
 
@@ -66,7 +83,7 @@
 	flex-direction: column;
 }
 
-.starting-container > div > div:nth-child(4) {
+.starting-container>div>div:nth-child(4) {
 	word-break: anywhere;
 	overflow-wrap: anywhere;
 }
@@ -76,10 +93,43 @@
 	max-width: 300px;
 }
 
-.delete-update-container > * {
+.delete-update-container>* {
 	background-color: var(--background-secondary);
 }
 
 #update-batch-form-container {
 	padding: 1rem;
+}
+
+.batch-info-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--background-secondary);
+	padding: 1rem;
+	border-radius: 0.5rem;
+	gap: 1rem;
+}
+
+.download-qr {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	background: var(--background-secondary);
+}
+
+.batch-qr-code {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 1rem;
+	background: var(--background-secondary);
+	padding: 1rem;
+	border-radius: 0.5rem;
+}
+
+.download-qr-button {
+	background: var(--highlight);
 }

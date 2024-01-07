@@ -6,6 +6,8 @@ import UpdatesContainer from "./UpdatesContainer";
 import BatchInfo from "./BatchInfo";
 import EquipmentList from "./EquipmentList";
 import "./styles/view.css";
+import BatchQR from "../BatchQR";
+import getBatchQRCodeLink from "../../../api/get/getBatchQRCodeLink";
 
 interface Params {
 	bid?: string;
@@ -30,9 +32,21 @@ export default function View() {
 	const renderBatchInfo = () => (
 		<>
 			<div id="batch-created-title">Batch Created</div>
-			<div className="starting-container">
-				<BatchInfo batchInfo={batchInfo!} />
-				<EquipmentList equipment={batchInfo!.equipment} />
+			<div className="batch-info-container">
+				<div className="starting-container">
+					<BatchInfo batchInfo={batchInfo!} />
+					<EquipmentList equipment={batchInfo!.equipment} />
+				</div>
+				<div className="batch-qr-code">
+					<BatchQR batchLink={window.location.href} />
+					<div className="download-qr">
+						<a href={getBatchQRCodeLink(window.location.href, (batchInfo!.batchName))} download>
+							<button className='download-qr-button'>
+								Download
+							</button>
+						</a>
+					</div>
+				</div>
 			</div>
 		</>
 	);
