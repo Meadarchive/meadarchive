@@ -7,6 +7,8 @@ import { firebaseInsertBatch, firebaseInsertBatchUpdate, checkIfBatchExists, fir
 import { genUID, getUserInfoByID} from "./lib/util"
 
 import QRCode from 'qrcode'
+import { Stream } from "stream";
+import fs from 'fs';
 
 export async function healthStatus(req: express.Request, res: express.Response) {
     try{
@@ -344,12 +346,12 @@ export async function whoami(req: express.Request, res: express.Response){
 export async function genURLQRCode(req: express.Request, res: express.Response){
 
     try{
-        const url = req.query.url as string | null
-        const file_name = req.query.fn as string | null
-        const correction = req.query.correction as QRCode.QRCodeErrorCorrectionLevel || "L"
+        const url = req.query.url as string
+        const fileName = req.query.file_name as string | null ?? null
+        const correction = req.query.correction as QRCode.QRCodeErrorCorrectionLevel ?? "L"
 
         if (!url){
-            res.status(400).send({"error": `URL is null or undefined`})
+            res.status(400).send({"error": `"url" is null or undefined`})
             return
         }
 
@@ -360,13 +362,27 @@ export async function genURLQRCode(req: express.Request, res: express.Response){
             return
         }
 
-        res.setHeader('Content-Type', 'image/png');
 
-        if (file_name){
-            res.setHeader('Content-Disposition', `attachment; filename="${file_name}.png"`);
+
+
+        if (fileName){
+            // Stream download
+
+            let readStream = new Stream.PassThrough();
+            readStream.end(qrCode);
+
+            res.setHeader('Content-Type', 'image/png');
+            res.setHeader('Content-Disposition', `attachment; filename="${fileName}.png"`);
+            
+            readStream.pipe(res);
+
+            
+        } else {
+            res.setHeader('Content-Type', 'image/png');
+            res.setHeader('Content-Disposition', `filename="${fileName}.png"`);
+            res.send(qrCode)
         }
-        
-        res.send(qrCode)
+    
 
     } catch (err){
         console.log(err)

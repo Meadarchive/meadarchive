@@ -261,6 +261,34 @@ Status: `200`
 
 <br>
 
+### GET `/get-qr`
+This endpoint generates and a QR code for a url. This is inteded to be used to generate QR codes to link to a given batch. A full url to the batch page must be passed in the query string. The qr code endpoint accepts and optinal paramater name - if name is set the responce will pront a download of the qr code as a png, otherwise, it will return base64 encoded data that can be directly embedded in a page.
+
+Requires authentication: `No`
+
+Parameters schema:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `url`  | `string` | The url to be encoded in the qr code | Required
+| `correction`  | `string` | The level of error correction to be used. Allowed: (`L` \| `M` \| `Q` \| `H`). Will default to `L`| Optional
+| `file_name`  | `string` | Name must be without a file expension. If name is omitted base64 encoded data will be returned | Optional
+
+
+<br>
+
+Example params:
+```json
+{
+    "url": "https://dev.meadarchive.com/batch/aae2f0c1-1287-4c41-9756-87adc2be9582",
+    "correction": "M",
+    "file_name": "qr_code"
+}
+```
+
+
+<br>
+
 ### POST `/recipe/create`
 This endpoint creates a new recipe. The recipe object is passed in the request body.
 
