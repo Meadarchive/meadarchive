@@ -4,6 +4,12 @@ on:
     paths:
       - 'frontend/**'
 
+  push:
+    branches:
+      - master
+    paths:
+      - 'frontend/**'
+
 jobs:
   build-and-test-frontend:
     runs-on: ubuntu-latest
