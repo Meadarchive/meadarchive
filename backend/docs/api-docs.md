@@ -277,6 +277,68 @@ Parameters schema:
 Example request url:
 https://api.meadarchive.com/get-qr?url=https://meadarchive.com/batch/aae2f0c1-1287-4c41-9756-87adc2be9582&correction=H
 
+
+### GET `/batch/get-gravity-history`
+This endpoint returns the gravity history for a batch. The `batchID` must be passed in the query string. The responce will be an array of objects containing the gravity and date for each update (as a unix time stamp).
+
+Requires authentication: `No`
+
+Parameters schema:
+
+| Parameter | Type | Description | Optional/Required |
+| --- | --- | --- | --- |
+| `batchID`  | `string` | The id of the batch to return gravity history for | Required
+
+
+Example response:
+```json
+{
+    "gravityData": [
+        {
+            "date": "1704586077",
+            "gravity": 1
+        },
+        {
+            "date": "1704660861947",
+            "gravity": 0.99
+        },
+        {
+            "date": "1704660881084",
+            "gravity": 0.95
+        }
+    ]
+}
+```
+
+#### ok response:
+
+Status: `200`
+
+#### BatchID is null or undefined response:
+
+```json
+{"error": "Batch ID is null or undefined"}
+```
+
+Status: `400`
+
+#### Batch not found response:
+
+```json
+{"error": "No batch with id '7009363b-396b-4f65-89b7-f064e8c54ae9' exists"}
+```
+
+Status: `400`
+
+#### Any other error response:
+
+```json
+{"error": "Internal server error during gravity history retrival"}
+```
+
+Status: `500`
+
+
 <br>
 
 ### POST `/recipe/create`
