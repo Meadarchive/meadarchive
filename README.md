@@ -1,4 +1,4 @@
-## How to deply with docker compose
+## How to deploy with docker compose
 This project consists of two seperate componets, the backend and the frontend. This section will cover how to deploy both componets using docker compose. However more details about manual deployment can be found in the README.md files in the backend and frontend directories.
 
 ### Install docker and docker compose
