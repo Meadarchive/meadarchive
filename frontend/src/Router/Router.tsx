@@ -67,6 +67,7 @@ export default function Router() {
 						}
 					/>
 					<Route path="batch/update/:bid" element={<BatchUpdate />} />
+					<Route path="user/:uid" element={<Profile />} />
 					<Route path="browse" element={<Browse />} />
 					<Route path="*" element={<NoPath />} />
 				</Routes>
